@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cli/cli/v2/chacontainer/internal/api/middleware"
+	"github.com/chacontainer/backend/internal/api/middleware"
 )
 
 // DashboardStats aggregates KPIs for the operational dashboard.

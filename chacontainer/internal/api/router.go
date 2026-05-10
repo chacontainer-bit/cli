@@ -1,18 +1,19 @@
 package api
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
 
-	"github.com/cli/cli/v2/chacontainer/internal/api/handlers"
-	"github.com/cli/cli/v2/chacontainer/internal/api/middleware"
-	"github.com/cli/cli/v2/chacontainer/internal/config"
+	"github.com/chacontainer/backend/internal/api/handlers"
+	"github.com/chacontainer/backend/internal/api/middleware"
+	"github.com/chacontainer/backend/internal/config"
+	"github.com/chacontainer/backend/internal/repository/postgres"
 )
 
-// NewRouter wires all routes. Dependencies (stores, integrations) are injected
-// via the config at startup; replace stub implementations with postgres stores
-// before shipping.
-func NewRouter(cfg *config.Config) http.Handler {
+// NewRouter wires all routes with real PostgreSQL stores.
+// db must be an open, pinged *sql.DB from postgres.Open().
+func NewRouter(cfg *config.Config, db *sql.DB) http.Handler {
 	mux := http.NewServeMux()
 
 	// Health
@@ -21,27 +22,27 @@ func NewRouter(cfg *config.Config) http.Handler {
 		json.NewEncoder(w).Encode(map[string]string{"status": "ok", "service": "chacontainer"})
 	})
 
-	// Stub stores (replace with postgres implementations)
-	assetStore := &stubAssetStore{}
-	shipmentStore := &stubShipmentStore{}
-	clientStore := &stubClientStore{}
-	plantStore := &stubPlantStore{}
-	statsStore := &stubStatsStore{}
-	webhookProcessor := &stubWebhookProcessor{}
+	// Real stores
+	assetStore := postgres.NewAssetStore(db)
+	shipmentStore := postgres.NewShipmentStore(db)
+	clientStore := postgres.NewClientStore(db)
+	plantStore := postgres.NewPlantStore(db)
+	statsStore := postgres.NewStatsStore(db)
+	webhookProc := postgres.NewWebhookProcessor(db)
 
 	assetsH := handlers.NewAssetsHandler(assetStore)
 	shipmentsH := handlers.NewShipmentsHandler(shipmentStore)
 	clientsH := handlers.NewClientsHandler(clientStore)
 	plantsH := handlers.NewPlantsHandler(plantStore)
 	dashboardH := handlers.NewDashboardHandler(statsStore)
-	webhooksH := handlers.NewWebhooksHandler(webhookProcessor, cfg.MakeWebhookSecret)
+	webhooksH := handlers.NewWebhooksHandler(webhookProc, cfg.MakeWebhookSecret)
 
 	// Public webhook receivers (no JWT)
 	mux.HandleFunc("POST /webhooks/make", webhooksH.Make)
 	mux.HandleFunc("POST /webhooks/erp", webhooksH.ERP)
 	mux.HandleFunc("POST /webhooks/airtable", webhooksH.Airtable)
 
-	// Auth middleware
+	// Auth middleware chain
 	authed := chain(
 		middleware.Logger,
 		middleware.CORS,

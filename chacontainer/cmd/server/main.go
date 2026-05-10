@@ -10,8 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cli/cli/v2/chacontainer/internal/api"
-	"github.com/cli/cli/v2/chacontainer/internal/config"
+	"github.com/chacontainer/backend/internal/api"
+	"github.com/chacontainer/backend/internal/config"
+	"github.com/chacontainer/backend/internal/repository/postgres"
 )
 
 func main() {
@@ -20,7 +21,14 @@ func main() {
 		log.Fatalf("config: %v", err)
 	}
 
-	router := api.NewRouter(cfg)
+	db, err := postgres.Open(cfg.DatabaseURL)
+	if err != nil {
+		log.Fatalf("database: %v", err)
+	}
+	defer db.Close()
+	log.Println("database connected")
+
+	router := api.NewRouter(cfg, db)
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),
