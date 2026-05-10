@@ -2,6 +2,7 @@ name: Bump Go
 on:
   schedule:
     - cron: "0 3 * * *" # 3 AM UTC
+  workflow_dispatch:
 permissions:
   contents: write
   pull-requests: write
@@ -10,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Go
         uses: actions/setup-go@v6
