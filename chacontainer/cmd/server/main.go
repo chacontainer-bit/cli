@@ -42,9 +42,10 @@ func main() {
 	<-quit
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
+		cancel()
 		log.Fatalf("shutdown: %v", err)
 	}
+	cancel()
 	log.Println("server stopped")
 }
