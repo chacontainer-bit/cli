@@ -36,9 +36,9 @@ func (s *stubAssetStore) List(_ string, _ handlers.AssetFilter) ([]*asset.Asset,
 func (s *stubAssetStore) Update(_, id string, _ map[string]interface{}) (*asset.Asset, error) {
 	return nil, fmt.Errorf("not found: %s", id)
 }
-func (s *stubAssetStore) Delete(_, _ string) error                              { return nil }
-func (s *stubAssetStore) RecordEvent(_ *asset.AssetEvent) error                 { return nil }
-func (s *stubAssetStore) ListEvents(_, _ string) ([]*asset.AssetEvent, error)   { return nil, nil }
+func (s *stubAssetStore) Delete(_, _ string) error                            { return nil }
+func (s *stubAssetStore) RecordEvent(_ *asset.AssetEvent) error               { return nil }
+func (s *stubAssetStore) ListEvents(_, _ string) ([]*asset.AssetEvent, error) { return nil, nil }
 
 // ── Shipment stub ─────────────────────────────────────────────────────────────
 
@@ -89,9 +89,9 @@ func (s *stubClientStore) List(_ string, _ handlers.ClientFilter) ([]*client.Cli
 func (s *stubClientStore) Update(_, id string, _ map[string]interface{}) (*client.Client, error) {
 	return nil, fmt.Errorf("not found: %s", id)
 }
-func (s *stubClientStore) ListContacts(_, _ string) ([]*client.Contact, error)       { return nil, nil }
-func (s *stubClientStore) CreateContact(_ string, _ *client.Contact) error            { return nil }
-func (s *stubClientStore) CreateInteraction(_ string, _ *client.Interaction) error    { return nil }
+func (s *stubClientStore) ListContacts(_, _ string) ([]*client.Contact, error)     { return nil, nil }
+func (s *stubClientStore) CreateContact(_ string, _ *client.Contact) error         { return nil }
+func (s *stubClientStore) CreateInteraction(_ string, _ *client.Interaction) error { return nil }
 func (s *stubClientStore) ListInteractions(_, _ string) ([]*client.Interaction, error) {
 	return nil, nil
 }
@@ -109,12 +109,12 @@ func (s *stubPlantStore) Create(_ string, p *plant.Plant) error {
 func (s *stubPlantStore) GetByID(_, id string) (*plant.Plant, error) {
 	return nil, fmt.Errorf("not found: %s", id)
 }
-func (s *stubPlantStore) List(_ string) ([]*plant.Plant, error)           { return nil, nil }
+func (s *stubPlantStore) List(_ string) ([]*plant.Plant, error) { return nil, nil }
 func (s *stubPlantStore) Update(_, id string, _ map[string]interface{}) (*plant.Plant, error) {
 	return nil, fmt.Errorf("not found: %s", id)
 }
-func (s *stubPlantStore) CreateZone(_ string, _ *plant.Zone) error           { return nil }
-func (s *stubPlantStore) ListZones(_, _ string) ([]*plant.Zone, error)       { return nil, nil }
+func (s *stubPlantStore) CreateZone(_ string, _ *plant.Zone) error     { return nil }
+func (s *stubPlantStore) ListZones(_, _ string) ([]*plant.Zone, error) { return nil, nil }
 
 // ── Stats stub ────────────────────────────────────────────────────────────────
 

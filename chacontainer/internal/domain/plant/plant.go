@@ -33,8 +33,8 @@ type Address struct {
 }
 
 type Capacity struct {
-	TotalSlots int `json:"total_slots"`
-	UsedSlots  int `json:"used_slots"`
+	TotalSlots int     `json:"total_slots"`
+	UsedSlots  int     `json:"used_slots"`
 	MaxWeight  float64 `json:"max_weight_kg"`
 }
 
@@ -69,9 +69,9 @@ type Zone struct {
 type ZoneType string
 
 const (
-	ZoneTypeWarehouse ZoneType = "warehouse"
-	ZoneTypeDock      ZoneType = "dock"
-	ZoneTypeYard      ZoneType = "yard"
+	ZoneTypeWarehouse  ZoneType = "warehouse"
+	ZoneTypeDock       ZoneType = "dock"
+	ZoneTypeYard       ZoneType = "yard"
 	ZoneTypeProduction ZoneType = "production"
 	ZoneTypeQuarantine ZoneType = "quarantine"
 )

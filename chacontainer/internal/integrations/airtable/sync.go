@@ -33,14 +33,14 @@ func NewSyncService(apiKey, baseID string) *SyncService {
 // PushAsset upserts one asset to Airtable.
 func (s *SyncService) PushAsset(a *asset.Asset) (string, error) {
 	fields := map[string]interface{}{
-		"Code":          a.Code,
-		"QR Code":       a.QRCode,
-		"Type":          string(a.Type),
-		"Status":        string(a.Status),
-		"Description":   a.Description,
-		"Plant ID":      a.PlantID,
-		"Weight (kg)":   a.WeightKg,
-		"Last Scan":     formatTime(a.LastScanAt),
+		"Code":            a.Code,
+		"QR Code":         a.QRCode,
+		"Type":            string(a.Type),
+		"Status":          string(a.Status),
+		"Description":     a.Description,
+		"Plant ID":        a.PlantID,
+		"Weight (kg)":     a.WeightKg,
+		"Last Scan":       formatTime(a.LastScanAt),
 		"CHACONTAINER ID": a.ID,
 	}
 
@@ -91,16 +91,16 @@ func (s *SyncService) PushClient(c *client.Client) (string, error) {
 // PushShipment upserts a shipment record to Airtable.
 func (s *SyncService) PushShipment(sh *shipment.Shipment) (string, error) {
 	fields := map[string]interface{}{
-		"Reference":         sh.Reference,
-		"Status":            string(sh.Status),
-		"Mode":              string(sh.Mode),
-		"Carrier":           sh.CarrierName,
-		"Carrier Ref":       sh.CarrierRef,
-		"Scheduled Pickup":  sh.ScheduledPickup.Format(time.RFC3339),
+		"Reference":          sh.Reference,
+		"Status":             string(sh.Status),
+		"Mode":               string(sh.Mode),
+		"Carrier":            sh.CarrierName,
+		"Carrier Ref":        sh.CarrierRef,
+		"Scheduled Pickup":   sh.ScheduledPickup.Format(time.RFC3339),
 		"Scheduled Delivery": sh.ScheduledDelivery.Format(time.RFC3339),
-		"Total Weight (kg)": sh.TotalWeightKg,
-		"Total Items":       sh.TotalItems,
-		"CHACONTAINER ID":   sh.ID,
+		"Total Weight (kg)":  sh.TotalWeightKg,
+		"Total Items":        sh.TotalItems,
+		"CHACONTAINER ID":    sh.ID,
 	}
 
 	records := []*Record{{Fields: fields}}

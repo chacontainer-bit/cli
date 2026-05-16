@@ -28,15 +28,15 @@ func NewClient(baseURL, apiKey string) *Client {
 // ── Purchase Orders ───────────────────────────────────────────────────────────
 
 type PurchaseOrder struct {
-	ERPID       string     `json:"id"`
-	Reference   string     `json:"reference"`
-	VendorID    string     `json:"vendor_id"`
-	Status      string     `json:"status"`
-	TotalAmount float64    `json:"total_amount"`
-	Currency    string     `json:"currency"`
-	Lines       []POLine   `json:"lines"`
-	IssuedAt    time.Time  `json:"issued_at"`
-	ExpectedAt  time.Time  `json:"expected_at"`
+	ERPID       string    `json:"id"`
+	Reference   string    `json:"reference"`
+	VendorID    string    `json:"vendor_id"`
+	Status      string    `json:"status"`
+	TotalAmount float64   `json:"total_amount"`
+	Currency    string    `json:"currency"`
+	Lines       []POLine  `json:"lines"`
+	IssuedAt    time.Time `json:"issued_at"`
+	ExpectedAt  time.Time `json:"expected_at"`
 }
 
 type POLine struct {
@@ -58,11 +58,11 @@ func (c *Client) GetPurchaseOrder(erpID string) (*PurchaseOrder, error) {
 // ── Inventory ─────────────────────────────────────────────────────────────────
 
 type StockLevel struct {
-	SKU         string  `json:"sku"`
-	LocationID  string  `json:"location_id"`
-	Quantity    float64 `json:"quantity"`
-	UnitOfMeasure string `json:"uom"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	SKU           string    `json:"sku"`
+	LocationID    string    `json:"location_id"`
+	Quantity      float64   `json:"quantity"`
+	UnitOfMeasure string    `json:"uom"`
+	UpdatedAt     time.Time `json:"updated_at"`
 }
 
 func (c *Client) GetStockLevel(sku, locationID string) (*StockLevel, error) {
@@ -77,11 +77,11 @@ func (c *Client) GetStockLevel(sku, locationID string) (*StockLevel, error) {
 
 func (c *Client) AdjustStock(sku, locationID string, delta float64, reason string) error {
 	payload, _ := json.Marshal(map[string]interface{}{
-		"sku":        sku,
-		"location":   locationID,
-		"delta":      delta,
-		"reason":     reason,
-		"timestamp":  time.Now().UTC(),
+		"sku":       sku,
+		"location":  locationID,
+		"delta":     delta,
+		"reason":    reason,
+		"timestamp": time.Now().UTC(),
 	})
 	_, err := c.post("/api/inventory/adjustment", payload)
 	return err
@@ -90,11 +90,11 @@ func (c *Client) AdjustStock(sku, locationID string, delta float64, reason strin
 // ── GR / Goods Receipt ───────────────────────────────────────────────────────
 
 type GoodsReceipt struct {
-	ERPID     string    `json:"id"`
-	POID      string    `json:"po_id"`
-	PlantCode string    `json:"plant_code"`
+	ERPID      string    `json:"id"`
+	POID       string    `json:"po_id"`
+	PlantCode  string    `json:"plant_code"`
 	ReceivedAt time.Time `json:"received_at"`
-	Lines     []GRLine  `json:"lines"`
+	Lines      []GRLine  `json:"lines"`
 }
 
 type GRLine struct {

@@ -9,25 +9,25 @@ import (
 
 // DashboardStats aggregates KPIs for the operational dashboard.
 type DashboardStats struct {
-	AssetsByStatus    map[string]int     `json:"assets_by_status"`
-	AssetsByType      map[string]int     `json:"assets_by_type"`
-	ShipmentsByStatus map[string]int     `json:"shipments_by_status"`
-	PlantOccupancy    []PlantOccupancy   `json:"plant_occupancy"`
-	LateShipments     int                `json:"late_shipments"`
-	TotalAssets       int                `json:"total_assets"`
-	AssetsInTransit   int                `json:"assets_in_transit"`
-	ShipmentsToday    int                `json:"shipments_today"`
-	ScanEvents24h     int                `json:"scan_events_24h"`
-	TopClients        []ClientActivity   `json:"top_clients"`
-	GeneratedAt       time.Time          `json:"generated_at"`
+	AssetsByStatus    map[string]int   `json:"assets_by_status"`
+	AssetsByType      map[string]int   `json:"assets_by_type"`
+	ShipmentsByStatus map[string]int   `json:"shipments_by_status"`
+	PlantOccupancy    []PlantOccupancy `json:"plant_occupancy"`
+	LateShipments     int              `json:"late_shipments"`
+	TotalAssets       int              `json:"total_assets"`
+	AssetsInTransit   int              `json:"assets_in_transit"`
+	ShipmentsToday    int              `json:"shipments_today"`
+	ScanEvents24h     int              `json:"scan_events_24h"`
+	TopClients        []ClientActivity `json:"top_clients"`
+	GeneratedAt       time.Time        `json:"generated_at"`
 }
 
 type PlantOccupancy struct {
-	PlantID       string  `json:"plant_id"`
-	PlantName     string  `json:"plant_name"`
-	TotalSlots    int     `json:"total_slots"`
-	UsedSlots     int     `json:"used_slots"`
-	OccupancyPct  float64 `json:"occupancy_pct"`
+	PlantID      string  `json:"plant_id"`
+	PlantName    string  `json:"plant_name"`
+	TotalSlots   int     `json:"total_slots"`
+	UsedSlots    int     `json:"used_slots"`
+	OccupancyPct float64 `json:"occupancy_pct"`
 }
 
 type ClientActivity struct {

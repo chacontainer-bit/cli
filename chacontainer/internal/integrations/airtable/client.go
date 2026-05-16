@@ -13,9 +13,9 @@ const baseURL = "https://api.airtable.com/v0"
 
 // Client wraps the Airtable REST API.
 type Client struct {
-	apiKey  string
-	baseID  string
-	http    *http.Client
+	apiKey string
+	baseID string
+	http   *http.Client
 }
 
 func NewClient(apiKey, baseID string) *Client {
