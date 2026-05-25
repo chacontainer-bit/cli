@@ -15,8 +15,8 @@ type Config struct {
 	AirtableAPIKey string
 	AirtableBaseID string
 
-	ERPBaseURL  string
-	ERPAPIKey   string
+	ERPBaseURL string
+	ERPAPIKey  string
 
 	MakeWebhookSecret string
 

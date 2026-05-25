@@ -10,20 +10,20 @@ import (
 
 // ScanEvent is recorded every time a QR code is scanned.
 type ScanEvent struct {
-	ID         string    `json:"id" db:"id"`
-	TenantID   string    `json:"tenant_id" db:"tenant_id"`
-	AssetID    string    `json:"asset_id" db:"asset_id"`
-	QRCode     string    `json:"qr_code" db:"qr_code"`
-	ScannedBy  string    `json:"scanned_by" db:"scanned_by"`
-	PlantID    string    `json:"plant_id,omitempty" db:"plant_id"`
-	ZoneID     string    `json:"zone_id,omitempty" db:"zone_id"`
-	Lat        float64   `json:"lat,omitempty" db:"lat"`
-	Lng        float64   `json:"lng,omitempty" db:"lng"`
-	DeviceID   string    `json:"device_id,omitempty" db:"device_id"`
-	AppVersion string    `json:"app_version,omitempty" db:"app_version"`
+	ID         string     `json:"id" db:"id"`
+	TenantID   string     `json:"tenant_id" db:"tenant_id"`
+	AssetID    string     `json:"asset_id" db:"asset_id"`
+	QRCode     string     `json:"qr_code" db:"qr_code"`
+	ScannedBy  string     `json:"scanned_by" db:"scanned_by"`
+	PlantID    string     `json:"plant_id,omitempty" db:"plant_id"`
+	ZoneID     string     `json:"zone_id,omitempty" db:"zone_id"`
+	Lat        float64    `json:"lat,omitempty" db:"lat"`
+	Lng        float64    `json:"lng,omitempty" db:"lng"`
+	DeviceID   string     `json:"device_id,omitempty" db:"device_id"`
+	AppVersion string     `json:"app_version,omitempty" db:"app_version"`
 	Action     ScanAction `json:"action" db:"action"`
-	Notes      string    `json:"notes,omitempty" db:"notes"`
-	ScannedAt  time.Time `json:"scanned_at" db:"scanned_at"`
+	Notes      string     `json:"notes,omitempty" db:"notes"`
+	ScannedAt  time.Time  `json:"scanned_at" db:"scanned_at"`
 }
 
 type ScanAction string

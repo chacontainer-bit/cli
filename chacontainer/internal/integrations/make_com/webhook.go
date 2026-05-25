@@ -20,23 +20,23 @@ func NewSender() *Sender {
 
 // ShipmentEvent is sent to Make when a shipment changes status.
 type ShipmentEvent struct {
-	TenantID     string    `json:"tenant_id"`
-	ShipmentRef  string    `json:"shipment_ref"`
-	ClientID     string    `json:"client_id"`
-	FromStatus   string    `json:"from_status"`
-	ToStatus     string    `json:"to_status"`
-	CarrierName  string    `json:"carrier_name"`
-	OccurredAt   time.Time `json:"occurred_at"`
+	TenantID    string    `json:"tenant_id"`
+	ShipmentRef string    `json:"shipment_ref"`
+	ClientID    string    `json:"client_id"`
+	FromStatus  string    `json:"from_status"`
+	ToStatus    string    `json:"to_status"`
+	CarrierName string    `json:"carrier_name"`
+	OccurredAt  time.Time `json:"occurred_at"`
 }
 
 // AssetAlertEvent is sent when an asset enters an alert state.
 type AssetAlertEvent struct {
-	TenantID  string    `json:"tenant_id"`
-	AssetID   string    `json:"asset_id"`
-	AssetCode string    `json:"asset_code"`
-	AlertType string    `json:"alert_type"` // overdue_maintenance, lost, in_wrong_zone
-	PlantID   string    `json:"plant_id"`
-	Message   string    `json:"message"`
+	TenantID   string    `json:"tenant_id"`
+	AssetID    string    `json:"asset_id"`
+	AssetCode  string    `json:"asset_code"`
+	AlertType  string    `json:"alert_type"` // overdue_maintenance, lost, in_wrong_zone
+	PlantID    string    `json:"plant_id"`
+	Message    string    `json:"message"`
 	OccurredAt time.Time `json:"occurred_at"`
 }
 

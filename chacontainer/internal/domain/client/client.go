@@ -5,11 +5,11 @@ import "time"
 type ClientType string
 
 const (
-	ClientTypeShipper    ClientType = "shipper"
-	ClientTypeReceiver   ClientType = "receiver"
-	ClientTypeForwarder  ClientType = "forwarder"
+	ClientTypeShipper      ClientType = "shipper"
+	ClientTypeReceiver     ClientType = "receiver"
+	ClientTypeForwarder    ClientType = "forwarder"
 	ClientTypeManufacturer ClientType = "manufacturer"
-	ClientTypeDistributor ClientType = "distributor"
+	ClientTypeDistributor  ClientType = "distributor"
 )
 
 type ClientStatus string
@@ -52,16 +52,16 @@ type Address struct {
 
 // Contact is a person associated with a Client.
 type Contact struct {
-	ID          string    `json:"id" db:"id"`
-	TenantID    string    `json:"tenant_id" db:"tenant_id"`
-	ClientID    string    `json:"client_id" db:"client_id"`
-	FirstName   string    `json:"first_name" db:"first_name"`
-	LastName    string    `json:"last_name" db:"last_name"`
-	Email       string    `json:"email" db:"email"`
-	Phone       string    `json:"phone,omitempty" db:"phone"`
-	Position    string    `json:"position,omitempty" db:"position"`
-	IsPrimary   bool      `json:"is_primary" db:"is_primary"`
-	CreatedAt   time.Time `json:"created_at" db:"created_at"`
+	ID        string    `json:"id" db:"id"`
+	TenantID  string    `json:"tenant_id" db:"tenant_id"`
+	ClientID  string    `json:"client_id" db:"client_id"`
+	FirstName string    `json:"first_name" db:"first_name"`
+	LastName  string    `json:"last_name" db:"last_name"`
+	Email     string    `json:"email" db:"email"`
+	Phone     string    `json:"phone,omitempty" db:"phone"`
+	Position  string    `json:"position,omitempty" db:"position"`
+	IsPrimary bool      `json:"is_primary" db:"is_primary"`
+	CreatedAt time.Time `json:"created_at" db:"created_at"`
 }
 
 func (c Contact) FullName() string {
@@ -70,16 +70,16 @@ func (c Contact) FullName() string {
 
 // Interaction logs every CRM touchpoint.
 type Interaction struct {
-	ID          string          `json:"id" db:"id"`
-	TenantID    string          `json:"tenant_id" db:"tenant_id"`
-	ClientID    string          `json:"client_id" db:"client_id"`
-	ContactID   string          `json:"contact_id,omitempty" db:"contact_id"`
-	UserID      string          `json:"user_id" db:"user_id"`
-	Type        InteractionType `json:"type" db:"type"`
-	Subject     string          `json:"subject" db:"subject"`
-	Notes       string          `json:"notes,omitempty" db:"notes"`
-	OccurredAt  time.Time       `json:"occurred_at" db:"occurred_at"`
-	CreatedAt   time.Time       `json:"created_at" db:"created_at"`
+	ID         string          `json:"id" db:"id"`
+	TenantID   string          `json:"tenant_id" db:"tenant_id"`
+	ClientID   string          `json:"client_id" db:"client_id"`
+	ContactID  string          `json:"contact_id,omitempty" db:"contact_id"`
+	UserID     string          `json:"user_id" db:"user_id"`
+	Type       InteractionType `json:"type" db:"type"`
+	Subject    string          `json:"subject" db:"subject"`
+	Notes      string          `json:"notes,omitempty" db:"notes"`
+	OccurredAt time.Time       `json:"occurred_at" db:"occurred_at"`
+	CreatedAt  time.Time       `json:"created_at" db:"created_at"`
 }
 
 type InteractionType string
