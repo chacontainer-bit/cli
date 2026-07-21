@@ -89,6 +89,7 @@ Registro central de los procesos ya documentados por el agente, para mantener un
 |---|---|---|---|---|
 | SOP-01 | Prospección inversa (LinkedIn y Google) | Comercial (paso 2 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-01-prospeccion-inversa-linkedin-google.md](./sop/SOP-01-prospeccion-inversa-linkedin-google.md) |
 | SOP-02 | Lavado de activos retornables | Operativo | Borrador v0.1 — pendiente de validación | [sop/SOP-02-lavado-de-activos-retornables.md](./sop/SOP-02-lavado-de-activos-retornables.md) |
+| SOP-03 | Diagnóstico consultivo | Comercial (paso 5 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-03-diagnostico-consultivo.md](./sop/SOP-03-diagnostico-consultivo.md) |
 
 ## Reglas del agente
 
