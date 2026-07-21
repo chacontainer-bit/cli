@@ -79,7 +79,7 @@ No basta con documentar cómo se vende hoy: el agente también define el proceso
 11. **Implementación, entrega y capacitación.**
 12. **Postventa y expansión.** Medir, documentar resultados y buscar contratos recurrentes.
 
-**Progreso:** de los 12 pasos, ya están documentados como borrador los pasos 2 (SOP-01, prospección) y del 5 al 12 (SOP-03 a SOP-10: diagnóstico consultivo, calificación como proveedor, levantamiento técnico, diseño de la solución, cotización, negociación y cierre, implementación y postventa). Ver el índice completo en [SOPs documentados](#sops-documentados). Solo faltan el paso 1 (definición del cliente ideal) y el paso 3 (calificación inicial). Ningún SOP debe declararse estándar hasta completar el Paso 1 (captura real con el responsable) y el Paso 6 (validación en operación) de la metodología.
+**Progreso:** de los 12 pasos, ya están documentados como borrador los pasos 1 y 2 (SOP-11 y SOP-01) y del 5 al 12 (SOP-03 a SOP-10). Ver el índice completo en [SOPs documentados](#sops-documentados). Solo falta el paso 3 (calificación inicial) para tener el ciclo comercial completo. Ningún SOP debe declararse estándar hasta completar el Paso 1 (captura real con el responsable) y el Paso 6 (validación en operación) de la metodología.
 
 ## SOPs documentados
 
@@ -97,6 +97,7 @@ Registro central de los procesos ya documentados por el agente, para mantener un
 | SOP-08 | Negociación y cierre | Comercial (paso 10 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-08-negociacion-y-cierre.md](./sop/SOP-08-negociacion-y-cierre.md) |
 | SOP-09 | Implementación, entrega y capacitación | Comercial (paso 11 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-09-implementacion-entrega-y-capacitacion.md](./sop/SOP-09-implementacion-entrega-y-capacitacion.md) |
 | SOP-10 | Postventa y expansión | Comercial (paso 12 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-10-postventa-y-expansion.md](./sop/SOP-10-postventa-y-expansion.md) |
+| SOP-11 | Definición del cliente ideal | Comercial (paso 1 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-11-definicion-del-cliente-ideal.md](./sop/SOP-11-definicion-del-cliente-ideal.md) |
 
 ## Reglas del agente
 
