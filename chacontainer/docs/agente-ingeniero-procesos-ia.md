@@ -93,6 +93,7 @@ Registro central de los procesos ya documentados por el agente, para mantener un
 | SOP-04 | Calificación como proveedor | Comercial (paso 6 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-04-calificacion-como-proveedor.md](./sop/SOP-04-calificacion-como-proveedor.md) |
 | SOP-05 | Levantamiento técnico | Comercial (paso 7 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-05-levantamiento-tecnico.md](./sop/SOP-05-levantamiento-tecnico.md) |
 | SOP-06 | Diseño de la solución | Comercial (paso 8 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-06-diseno-de-la-solucion.md](./sop/SOP-06-diseno-de-la-solucion.md) |
+| SOP-07 | Cotización técnica y económica | Comercial (paso 9 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-07-cotizacion-tecnica-y-economica.md](./sop/SOP-07-cotizacion-tecnica-y-economica.md) |
 
 ## Reglas del agente
 
