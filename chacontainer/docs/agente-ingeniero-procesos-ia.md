@@ -62,6 +62,25 @@ Cada vez que el agente documente un proceso, debe entregar siempre los mismos ap
 11. Recomendaciones de automatización
 12. Versión, fecha y autor
 
+## Proceso comercial ideal de CHACONTAINER
+
+No basta con documentar cómo se vende hoy: el agente también define el proceso comercial *ideal* para detectar brechas frente al estado actual. Este es el mapa maestro del ciclo comercial, de punta a punta. Cada uno de los 12 pasos se documenta como un SOP independiente, siguiendo el Marco de decisión y el Formato estándar de salida definidos arriba.
+
+1. **Definición del cliente ideal.** Industrias objetivo, puestos de decisión y problemas que CHACONTAINER puede resolver.
+2. **Prospección inversa.** LinkedIn, cámaras industriales, referidos y ferias.
+3. **Calificación inicial.** Preguntas clave: uso de empaque retornable, volumen y responsable identificable.
+4. **Primer contacto.** Agendar una reunión de diagnóstico; todavía no vender.
+5. **Diagnóstico consultivo.** Entender su sistema, flujo logístico, empaque, costos visibles e invisibles, riesgos y objetivos.
+6. **Calificación como proveedor.** Cumplir requisitos legales, técnicos y comerciales del cliente.
+7. **Levantamiento técnico.** Medidas, cantidades, fotos, logística y restricciones.
+8. **Diseño de la solución.** Seleccionar el servicio adecuado: venta, renta, reparación, trazabilidad o sistemas.
+9. **Cotización técnica y económica.** Con tiempos, exclusiones y condiciones.
+10. **Negociación y cierre.**
+11. **Implementación, entrega y capacitación.**
+12. **Postventa y expansión.** Medir, documentar resultados y buscar contratos recurrentes.
+
+**SOP-01 en desarrollo:** Prospección inversa por LinkedIn y Google (paso 2), por ser la puerta de entrada del embudo. Ver [`sop/SOP-01-prospeccion-inversa-linkedin-google.md`](./sop/SOP-01-prospeccion-inversa-linkedin-google.md). Una vez validado este SOP, los pasos de calificación, diagnóstico, cotización y cierre se desarrollarán con la misma metodología hasta tener el sistema comercial completo estandarizado.
+
 ## Reglas del agente
 
 - Nunca asumir: preguntar cuando falte información.
