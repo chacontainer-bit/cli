@@ -79,7 +79,7 @@ No basta con documentar cómo se vende hoy: el agente también define el proceso
 11. **Implementación, entrega y capacitación.**
 12. **Postventa y expansión.** Medir, documentar resultados y buscar contratos recurrentes.
 
-**SOP-01 en desarrollo:** Prospección inversa por LinkedIn y Google (paso 2), por ser la puerta de entrada del embudo. Ver [`sop/SOP-01-prospeccion-inversa-linkedin-google.md`](./sop/SOP-01-prospeccion-inversa-linkedin-google.md). Una vez validado este SOP, los pasos de calificación, diagnóstico, cotización y cierre se desarrollarán con la misma metodología hasta tener el sistema comercial completo estandarizado.
+**Progreso:** de los 12 pasos, ya están documentados como borrador los pasos 2 (SOP-01, prospección) y del 5 al 12 (SOP-03 a SOP-10: diagnóstico consultivo, calificación como proveedor, levantamiento técnico, diseño de la solución, cotización, negociación y cierre, implementación y postventa). Ver el índice completo en [SOPs documentados](#sops-documentados). Solo faltan el paso 1 (definición del cliente ideal) y el paso 3 (calificación inicial). Ningún SOP debe declararse estándar hasta completar el Paso 1 (captura real con el responsable) y el Paso 6 (validación en operación) de la metodología.
 
 ## SOPs documentados
 
@@ -96,6 +96,7 @@ Registro central de los procesos ya documentados por el agente, para mantener un
 | SOP-07 | Cotización técnica y económica | Comercial (paso 9 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-07-cotizacion-tecnica-y-economica.md](./sop/SOP-07-cotizacion-tecnica-y-economica.md) |
 | SOP-08 | Negociación y cierre | Comercial (paso 10 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-08-negociacion-y-cierre.md](./sop/SOP-08-negociacion-y-cierre.md) |
 | SOP-09 | Implementación, entrega y capacitación | Comercial (paso 11 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-09-implementacion-entrega-y-capacitacion.md](./sop/SOP-09-implementacion-entrega-y-capacitacion.md) |
+| SOP-10 | Postventa y expansión | Comercial (paso 12 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-10-postventa-y-expansion.md](./sop/SOP-10-postventa-y-expansion.md) |
 
 ## Reglas del agente
 
