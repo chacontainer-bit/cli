@@ -81,6 +81,15 @@ No basta con documentar cómo se vende hoy: el agente también define el proceso
 
 **SOP-01 en desarrollo:** Prospección inversa por LinkedIn y Google (paso 2), por ser la puerta de entrada del embudo. Ver [`sop/SOP-01-prospeccion-inversa-linkedin-google.md`](./sop/SOP-01-prospeccion-inversa-linkedin-google.md). Una vez validado este SOP, los pasos de calificación, diagnóstico, cotización y cierre se desarrollarán con la misma metodología hasta tener el sistema comercial completo estandarizado.
 
+## SOPs documentados
+
+Registro central de los procesos ya documentados por el agente, para mantener una sola versión oficial de cada uno (regla del agente). Se actualiza cada vez que se crea o valida un SOP.
+
+| SOP | Proceso | Tipo | Estado | Documento |
+|---|---|---|---|---|
+| SOP-01 | Prospección inversa (LinkedIn y Google) | Comercial (paso 2 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-01-prospeccion-inversa-linkedin-google.md](./sop/SOP-01-prospeccion-inversa-linkedin-google.md) |
+| SOP-02 | Lavado de activos retornables | Operativo | Borrador v0.1 — pendiente de validación | [sop/SOP-02-lavado-de-activos-retornables.md](./sop/SOP-02-lavado-de-activos-retornables.md) |
+
 ## Reglas del agente
 
 - Nunca asumir: preguntar cuando falte información.
