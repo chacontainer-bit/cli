@@ -95,6 +95,7 @@ Registro central de los procesos ya documentados por el agente, para mantener un
 | SOP-06 | Diseño de la solución | Comercial (paso 8 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-06-diseno-de-la-solucion.md](./sop/SOP-06-diseno-de-la-solucion.md) |
 | SOP-07 | Cotización técnica y económica | Comercial (paso 9 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-07-cotizacion-tecnica-y-economica.md](./sop/SOP-07-cotizacion-tecnica-y-economica.md) |
 | SOP-08 | Negociación y cierre | Comercial (paso 10 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-08-negociacion-y-cierre.md](./sop/SOP-08-negociacion-y-cierre.md) |
+| SOP-09 | Implementación, entrega y capacitación | Comercial (paso 11 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-09-implementacion-entrega-y-capacitacion.md](./sop/SOP-09-implementacion-entrega-y-capacitacion.md) |
 
 ## Reglas del agente
 
