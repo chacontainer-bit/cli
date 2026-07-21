@@ -91,6 +91,7 @@ Registro central de los procesos ya documentados por el agente, para mantener un
 | SOP-02 | Lavado de activos retornables | Operativo | Borrador v0.1 — pendiente de validación | [sop/SOP-02-lavado-de-activos-retornables.md](./sop/SOP-02-lavado-de-activos-retornables.md) |
 | SOP-03 | Diagnóstico consultivo | Comercial (paso 5 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-03-diagnostico-consultivo.md](./sop/SOP-03-diagnostico-consultivo.md) |
 | SOP-04 | Calificación como proveedor | Comercial (paso 6 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-04-calificacion-como-proveedor.md](./sop/SOP-04-calificacion-como-proveedor.md) |
+| SOP-05 | Levantamiento técnico | Comercial (paso 7 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-05-levantamiento-tecnico.md](./sop/SOP-05-levantamiento-tecnico.md) |
 
 ## Reglas del agente
 
