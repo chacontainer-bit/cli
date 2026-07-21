@@ -79,7 +79,7 @@ No basta con documentar cómo se vende hoy: el agente también define el proceso
 11. **Implementación, entrega y capacitación.**
 12. **Postventa y expansión.** Medir, documentar resultados y buscar contratos recurrentes.
 
-**Progreso:** los 12 pasos del proceso comercial ideal ya están documentados como borrador (SOP-01 a SOP-12). Ver el índice completo en [SOPs documentados](#sops-documentados). Ninguno debe declararse estándar todavía: todos están pendientes de captura real con el responsable de cada paso (Paso 1 de la metodología) y de validación en operación (Paso 6). El siguiente hito no es escribir más SOPs, sino validar estos doce con las personas reales de CHACONTAINER y ajustarlos con evidencia de campo.
+**Progreso:** los 12 pasos del proceso comercial ideal ya tienen su propio SOP documentado como borrador (SOP-01, SOP-03 a SOP-13). Ver el índice completo en [SOPs documentados](#sops-documentados). Ninguno debe declararse estándar todavía: todos están pendientes de captura real con el responsable de cada paso (Paso 1 de la metodología) y de validación en operación (Paso 6). El siguiente hito no es escribir más SOPs, sino validar estos doce con las personas reales de CHACONTAINER y ajustarlos con evidencia de campo.
 
 ## SOPs documentados
 
@@ -99,6 +99,7 @@ Registro central de los procesos ya documentados por el agente, para mantener un
 | SOP-10 | Postventa y expansión | Comercial (paso 12 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-10-postventa-y-expansion.md](./sop/SOP-10-postventa-y-expansion.md) |
 | SOP-11 | Definición del cliente ideal | Comercial (paso 1 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-11-definicion-del-cliente-ideal.md](./sop/SOP-11-definicion-del-cliente-ideal.md) |
 | SOP-12 | Calificación inicial | Comercial (paso 3 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-12-calificacion-inicial.md](./sop/SOP-12-calificacion-inicial.md) |
+| SOP-13 | Primer contacto | Comercial (paso 4 del proceso ideal) | Borrador v0.1 — pendiente de validación | [sop/SOP-13-primer-contacto.md](./sop/SOP-13-primer-contacto.md) |
 
 ## Reglas del agente
 
