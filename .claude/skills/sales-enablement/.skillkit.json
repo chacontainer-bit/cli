@@ -1,0 +1,10 @@
+{
+  "name": "sales-enablement",
+  "description": "",
+  "source": "coreyhaines31/marketingskills",
+  "sourceType": "github",
+  "subpath": "sales-enablement",
+  "installedAt": "2026-06-15T12:29:54.215Z",
+  "enabled": true,
+  "checksum": "f75d33a50c514e22"
+}
