@@ -10,6 +10,7 @@ export function AppProvider({ children }) {
   const [activity, setActivity] = useState(recentActivity)
   const [alerts, setAlerts] = useState(initialAlerts)
   const [selectedWarehouse, setSelectedWarehouse] = useState('bodega_norte')
+  const [starredAds, setStarredAds] = useState(new Set())
 
   const addToCart = useCallback((product, qty) => {
     setCart(prev => {
@@ -43,6 +44,15 @@ export function AppProvider({ children }) {
     setAlerts(prev => [alert, ...prev].slice(0, 10))
   }, [])
 
+  const toggleStarAd = useCallback((adId) => {
+    setStarredAds(prev => {
+      const next = new Set(prev)
+      if (next.has(adId)) next.delete(adId)
+      else next.add(adId)
+      return next
+    })
+  }, [])
+
   const cartTotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0)
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)
 
@@ -55,6 +65,7 @@ export function AppProvider({ children }) {
       activity, addActivity,
       alerts, addAlert,
       selectedWarehouse, setSelectedWarehouse,
+      starredAds, toggleStarAd,
     }}>
       {children}
     </AppContext.Provider>
