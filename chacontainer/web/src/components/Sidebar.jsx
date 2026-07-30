@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, ShoppingCart, FolderKanban, MapPin,
-  Calculator, Settings, LogOut, Package, ChevronRight
+  Calculator, Settings, LogOut, Package, ChevronRight, Bot
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { roles } from '../data/mockData'
@@ -13,6 +13,7 @@ const navItems = [
   { to: '/traceability', icon: MapPin, label: 'Trazabilidad' },
   { to: '/calculator', icon: Calculator, label: 'Calculadora' },
   { to: '/backoffice', icon: Settings, label: 'Backoffice' },
+  { to: '/asistente', icon: Bot, label: 'Asistente' },
 ]
 
 export default function Sidebar() {

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Bell, ShoppingCart } from 'lucide-react'
 import Sidebar from './Sidebar'
+import AssistantWidget from './AssistantWidget'
 import { useApp } from '../context/AppContext'
 import { useSimulator } from '../hooks/useSimulator'
 import { roles } from '../data/mockData'
@@ -77,6 +78,7 @@ export default function Layout() {
           <Outlet />
         </div>
       </main>
+      <AssistantWidget />
     </div>
   )
 }
