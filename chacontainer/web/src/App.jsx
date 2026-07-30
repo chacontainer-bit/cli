@@ -8,6 +8,7 @@ import Projects from './pages/Projects'
 import Traceability from './pages/Traceability'
 import Calculator from './pages/Calculator'
 import Backoffice from './pages/Backoffice'
+import Asistente from './pages/Asistente'
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="traceability" element={<Traceability />} />
             <Route path="calculator" element={<Calculator />} />
             <Route path="backoffice" element={<Backoffice />} />
+            <Route path="asistente" element={<Asistente />} />
           </Route>
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
