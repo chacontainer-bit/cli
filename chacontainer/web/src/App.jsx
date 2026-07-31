@@ -9,6 +9,7 @@ import Traceability from './pages/Traceability'
 import Calculator from './pages/Calculator'
 import Backoffice from './pages/Backoffice'
 import Asistente from './pages/Asistente'
+import AssetFactory from './pages/AssetFactory'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="calculator" element={<Calculator />} />
             <Route path="backoffice" element={<Backoffice />} />
             <Route path="asistente" element={<Asistente />} />
+            <Route path="assets" element={<AssetFactory />} />
           </Route>
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
