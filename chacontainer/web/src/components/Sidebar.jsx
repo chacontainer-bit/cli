@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, ShoppingCart, FolderKanban, MapPin,
-  Calculator, Settings, LogOut, Package, ChevronRight, Bot
+  Calculator, Settings, LogOut, Package, ChevronRight, Bot, Layers
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { roles } from '../data/mockData'
@@ -14,6 +14,7 @@ const navItems = [
   { to: '/calculator', icon: Calculator, label: 'Calculadora' },
   { to: '/backoffice', icon: Settings, label: 'Backoffice' },
   { to: '/asistente', icon: Bot, label: 'Asistente' },
+  { to: '/assets', icon: Layers, label: 'Fábrica de Assets' },
 ]
 
 export default function Sidebar() {
