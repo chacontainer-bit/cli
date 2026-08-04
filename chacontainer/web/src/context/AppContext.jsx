@@ -9,7 +9,7 @@ export function AppProvider({ children }) {
   const [cartOpen, setCartOpen] = useState(false)
   const [activity, setActivity] = useState(recentActivity)
   const [alerts, setAlerts] = useState(initialAlerts)
-  const [selectedWarehouse, setSelectedWarehouse] = useState('bodega_norte')
+  const [selectedWarehouse, setSelectedWarehouse] = useState('bodega_edomex')
 
   const addToCart = useCallback((product, qty) => {
     setCart(prev => {

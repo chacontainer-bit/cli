@@ -150,7 +150,7 @@ export default function Backoffice() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-[#1f2937]">
-                  {['Producto', 'SKU', 'Norte', 'Sur', 'Valpo', 'Total', 'Estado'].map(h => (
+                  {['Producto', 'SKU', 'Edomex', 'Qro', 'Puebla', 'Total', 'Estado'].map(h => (
                     <th key={h} className="px-3 py-2 text-left text-xs text-[#6b7280] font-semibold uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
@@ -164,7 +164,7 @@ export default function Backoffice() {
                     <td className="px-3 py-2.5">
                       <span className="text-[#6b7280] text-xs font-mono">{p.sku}</span>
                     </td>
-                    {['bodega_norte', 'bodega_sur', 'bodega_valpo'].map(wh => (
+                    {['bodega_edomex', 'bodega_queretaro', 'bodega_puebla'].map(wh => (
                       <td key={wh} className="px-3 py-2.5 text-center">
                         <span className={`text-xs font-mono ${
                           p.stock[wh] === 999 ? 'text-[#6b7280]' :

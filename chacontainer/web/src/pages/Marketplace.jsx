@@ -3,11 +3,11 @@ import { ShoppingCart, X, Plus, Minus, Package, CheckCircle, Truck, ChevronDown 
 import { useApp } from '../context/AppContext'
 import { products } from '../data/mockData'
 
-const categories = ['Todos', 'IBC', 'Tambores', 'Servicios', 'Pallets']
+const categories = ['Todos', 'Contenedor Colapsable', 'Contenedor / Caja Rígida', 'KLT', 'Rack Metálico', 'Tarima / Pallet', 'Charola', 'Separador', 'Servicios']
 const warehouses = [
-  { id: 'bodega_norte', label: 'Bodega Norte' },
-  { id: 'bodega_sur', label: 'Bodega Sur' },
-  { id: 'bodega_valpo', label: 'Bodega Valparaíso' },
+  { id: 'bodega_edomex', label: 'Bodega Estado de México' },
+  { id: 'bodega_queretaro', label: 'Bodega Querétaro' },
+  { id: 'bodega_puebla', label: 'Bodega Puebla' },
 ]
 
 function StockBadge({ stock }) {

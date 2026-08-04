@@ -83,7 +83,7 @@ export default function Login() {
       </div>
 
       <div className="mt-12 text-center">
-        <p className="text-[#374151] text-xs font-mono">v2.4.1 · Chacontainer SpA · Santiago, Chile</p>
+        <p className="text-[#374151] text-xs font-mono">v2.4.1 · Chacontainer S.A. de C.V. · Querétaro, México</p>
       </div>
     </div>
   )
