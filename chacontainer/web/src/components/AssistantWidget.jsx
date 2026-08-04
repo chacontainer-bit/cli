@@ -26,7 +26,7 @@ export default function AssistantWidget() {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
   }, [messages, open])
 
-  if (location.pathname === '/asistente') return null
+  if (location.pathname === '/app/asistente') return null
 
   function handleSend(e) {
     e.preventDefault()

@@ -17,7 +17,7 @@ export default function Login() {
 
   function handleSelect(roleId) {
     setRole(roleId)
-    navigate('/dashboard')
+    navigate('/app/dashboard')
   }
 
   return (
