@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { Bell, ShoppingCart } from 'lucide-react'
+import { Bell, ShoppingCart, AlertTriangle } from 'lucide-react'
 import Sidebar from './Sidebar'
 import AssistantWidget from './AssistantWidget'
 import { useApp } from '../context/AppContext'
@@ -17,7 +17,11 @@ function TopBar() {
 
   return (
     <div className="h-14 bg-[#111827] border-b border-[#1f2937] flex items-center justify-between px-6 fixed top-0 left-60 right-0 z-30">
-      <div>
+      <div className="flex items-center gap-3">
+        <span className="flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold px-2.5 py-1 rounded-full">
+          <AlertTriangle size={12} />
+          Datos de ejemplo
+        </span>
         <p className="text-[#6b7280] text-xs capitalize">{dateStr}</p>
       </div>
       <div className="flex items-center gap-4">

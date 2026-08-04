@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Package, ChevronRight, Shield, Truck, Wrench, BarChart3, Leaf } from 'lucide-react'
+import { Package, ChevronRight, Shield, Truck, Wrench, BarChart3, Leaf, AlertTriangle } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { roles } from '../data/mockData'
 
@@ -22,6 +22,11 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-[#0a0f1a] flex flex-col items-center justify-center p-8">
+      <div className="fixed top-0 left-0 right-0 bg-amber-500/10 border-b border-amber-500/30 text-amber-400 text-xs font-semibold text-center py-2 flex items-center justify-center gap-1.5 z-50">
+        <AlertTriangle size={13} />
+        Ambiente de demostración — todos los datos (clientes, inventario, cifras) son de ejemplo, no reflejan la operación real
+      </div>
+
       {/* Logo */}
       <div className="mb-12 text-center">
         <div className="flex items-center justify-center gap-3 mb-3">
