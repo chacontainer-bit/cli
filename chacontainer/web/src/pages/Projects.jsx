@@ -171,11 +171,11 @@ function ProjectDetail({ project, onClose }) {
             <div className="flex justify-between mb-2">
               <div>
                 <p className="text-xs text-[#6b7280]">Presupuesto Total</p>
-                <p className="text-[#f9fafb] font-mono font-bold">${project.budget.toLocaleString('es-CL')}</p>
+                <p className="text-[#f9fafb] font-mono font-bold">${project.budget.toLocaleString('es-MX')}</p>
               </div>
               <div className="text-right">
                 <p className="text-xs text-[#6b7280]">Ejecutado</p>
-                <p className="text-[#f97316] font-mono font-bold">${project.spent.toLocaleString('es-CL')}</p>
+                <p className="text-[#f97316] font-mono font-bold">${project.spent.toLocaleString('es-MX')}</p>
               </div>
             </div>
             <div className="h-2 bg-[#1f2937] rounded-full overflow-hidden">

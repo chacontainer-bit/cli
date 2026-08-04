@@ -13,7 +13,7 @@ function TopBar() {
   const roleData = roles.find(r => r.id === role)
 
   const now = new Date()
-  const dateStr = now.toLocaleDateString('es-CL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+  const dateStr = now.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
 
   return (
     <div className="h-14 bg-[#111827] border-b border-[#1f2937] flex items-center justify-between px-6 fixed top-0 left-60 right-0 z-30">

@@ -11,9 +11,9 @@ const scanEvents = [
 ]
 
 const orderEvents = [
-  { order: 'ORD-2852', detail: '10x Contenedor Colapsable → BASF Querétaro', user: 'Sistema' },
-  { order: 'ORD-2853', detail: '30x KLT → Codelco Puebla', user: 'Sistema' },
-  { order: 'ORD-2854', detail: '5x Tarima/Pallet → ENAP Guanajuato', user: 'Sistema' },
+  { order: 'ORD-2852', detail: '10x Contenedor Colapsable → Grupo Bajío Querétaro', user: 'Sistema' },
+  { order: 'ORD-2853', detail: '30x KLT → Manufacturas del Centro Puebla', user: 'Sistema' },
+  { order: 'ORD-2854', detail: '5x Tarima/Pallet → Autopartes Industriales Guanajuato', user: 'Sistema' },
 ]
 
 const washEvents = [

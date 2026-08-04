@@ -22,42 +22,45 @@ export const familias = [
 ]
 
 export const containers = [
-  { id: 'CHC-0421', type: 'Tarima/Pallet (CHA6548-50)', status: 'disponible', location: 'Bodega Estado de México', client: 'CMPC', washes: 12, lastEvent: '2026-05-15 08:32', lat: 19.6465, lng: -99.1968 },
-  { id: 'CHC-0422', type: 'Tarima/Pallet (CHA6548-44)', status: 'en_lavado', location: 'Taller Querétaro', client: 'BASF', washes: 8, lastEvent: '2026-05-15 11:20', lat: 20.5888, lng: -100.3899 },
-  { id: 'CHC-0423', type: 'KLT (CHA3032-25)', status: 'en_transito', location: 'Ruta Querétaro–CDMX', client: 'Codelco', washes: 15, lastEvent: '2026-05-15 09:45', lat: 20.10, lng: -99.90 },
-  { id: 'CHC-0424', type: 'Contenedor Colapsable (CHA4845-42)', status: 'en_reparacion', location: 'Taller Puebla', client: 'ENAP', washes: 22, lastEvent: '2026-05-14 16:10', lat: 19.0414, lng: -98.2063 },
-  { id: 'CHC-0425', type: 'Tarima/Pallet (CHA6548-50)', status: 'no_conforme', location: 'Bodega Puebla', client: 'CMPC', washes: 31, lastEvent: '2026-05-13 14:55', lat: 19.0414, lng: -98.2063 },
-  { id: 'CHC-0426', type: 'KLT (CHA3032-34)', status: 'asignado', location: 'Planta Cliente Puebla', client: 'Arauco', washes: 5, lastEvent: '2026-05-15 07:30', lat: 19.03, lng: -98.19 },
+  { id: 'CHC-0421', type: 'Tarima/Pallet (CHA6548-50)', status: 'disponible', location: 'Bodega Estado de México', client: 'CPDI', washes: 12, lastEvent: '2026-05-15 08:32', lat: 19.6465, lng: -99.1968 },
+  { id: 'CHC-0422', type: 'Tarima/Pallet (CHA6548-44)', status: 'en_lavado', location: 'Taller Querétaro', client: 'Grupo Bajío', washes: 8, lastEvent: '2026-05-15 11:20', lat: 20.5888, lng: -100.3899 },
+  { id: 'CHC-0423', type: 'KLT (CHA3032-25)', status: 'en_transito', location: 'Ruta Querétaro–CDMX', client: 'Manufacturas del Centro', washes: 15, lastEvent: '2026-05-15 09:45', lat: 20.10, lng: -99.90 },
+  { id: 'CHC-0424', type: 'Contenedor Colapsable (CHA4845-42)', status: 'en_reparacion', location: 'Taller Puebla', client: 'Autopartes Industriales', washes: 22, lastEvent: '2026-05-14 16:10', lat: 19.0414, lng: -98.2063 },
+  { id: 'CHC-0425', type: 'Tarima/Pallet (CHA6548-50)', status: 'no_conforme', location: 'Bodega Puebla', client: 'CPDI', washes: 31, lastEvent: '2026-05-13 14:55', lat: 19.0414, lng: -98.2063 },
+  { id: 'CHC-0426', type: 'KLT (CHA3032-34)', status: 'asignado', location: 'Planta Cliente Puebla', client: 'Envases Corporativos', washes: 5, lastEvent: '2026-05-15 07:30', lat: 19.03, lng: -98.19 },
   { id: 'CHC-0427', type: 'Tarima/Pallet (CHA6548-34)', status: 'disponible', location: 'Bodega Estado de México', client: null, washes: 3, lastEvent: '2026-05-14 12:00', lat: 19.6465, lng: -99.1968 },
-  { id: 'CHC-0428', type: 'Tarima/Pallet (CHA6548-50)', status: 'perdido', location: 'Desconocido', client: 'BASF', washes: 18, lastEvent: '2026-05-10 09:00', lat: null, lng: null },
+  { id: 'CHC-0428', type: 'Tarima/Pallet (CHA6548-50)', status: 'perdido', location: 'Desconocido', client: 'Grupo Bajío', washes: 18, lastEvent: '2026-05-10 09:00', lat: null, lng: null },
   { id: 'CHC-0429', type: 'Contenedor Colapsable (CHA4845-25)', status: 'disponible', location: 'Bodega Querétaro', client: null, washes: 7, lastEvent: '2026-05-15 06:15', lat: 20.5888, lng: -100.3899 },
-  { id: 'CHC-0430', type: 'KLT (CHA3032-25)', status: 'en_lavado', location: 'Taller Villa de Reyes', client: 'Arauco', washes: 11, lastEvent: '2026-05-15 10:00', lat: 21.8078, lng: -100.9271 },
-  { id: 'CHC-0431', type: 'Rack Metálico (CHA64.548-34)', status: 'asignado', location: 'Planta Cliente Toluca', client: 'CMPC', washes: 6, lastEvent: '2026-05-15 08:00', lat: 19.2826, lng: -99.6557 },
-  { id: 'CHC-0432', type: 'Contenedor Colapsable (CHA4845-34)', status: 'en_transito', location: 'Ruta San Luis Potosí–Querétaro', client: 'Codelco', washes: 9, lastEvent: '2026-05-15 05:30', lat: 22.1565, lng: -100.9855 },
+  { id: 'CHC-0430', type: 'KLT (CHA3032-25)', status: 'en_lavado', location: 'Taller Villa de Reyes', client: 'Envases Corporativos', washes: 11, lastEvent: '2026-05-15 10:00', lat: 21.8078, lng: -100.9271 },
+  { id: 'CHC-0431', type: 'Rack Metálico (CHA64.548-34)', status: 'asignado', location: 'Planta Cliente Toluca', client: 'CPDI', washes: 6, lastEvent: '2026-05-15 08:00', lat: 19.2826, lng: -99.6557 },
+  { id: 'CHC-0432', type: 'Contenedor Colapsable (CHA4845-34)', status: 'en_transito', location: 'Ruta San Luis Potosí–Querétaro', client: 'Manufacturas del Centro', washes: 9, lastEvent: '2026-05-15 05:30', lat: 22.1565, lng: -100.9855 },
   { id: 'CHC-0433', type: 'Contenedor / Caja Rígida (CHA4856-34)', status: 'disponible', location: 'Bodega Estado de México', client: null, washes: 14, lastEvent: '2026-05-14 15:20', lat: 19.6465, lng: -99.1968 },
-  { id: 'CHC-0434', type: 'Charola (CHA7048-50)', status: 'en_reparacion', location: 'Taller Querétaro', client: 'ENAP', washes: 27, lastEvent: '2026-05-14 11:45', lat: 20.5888, lng: -100.3899 },
+  { id: 'CHC-0434', type: 'Charola (CHA7048-50)', status: 'en_reparacion', location: 'Taller Querétaro', client: 'Autopartes Industriales', washes: 27, lastEvent: '2026-05-14 11:45', lat: 20.5888, lng: -100.3899 },
   { id: 'CHC-0435', type: 'KLT (CHA3032-34)', status: 'disponible', location: 'Bodega Puebla', client: null, washes: 4, lastEvent: '2026-05-13 09:30', lat: 19.0414, lng: -98.2063 },
-  { id: 'CHC-0436', type: 'Rack Metálico (CHA64.548-25)', status: 'asignado', location: 'Planta Cliente Guanajuato', client: 'ENAP', washes: 19, lastEvent: '2026-05-15 07:00', lat: 21.0190, lng: -101.2574 },
-  { id: 'CHC-0437', type: 'Contenedor Colapsable (CHA4845-42)', status: 'no_conforme', location: 'Bodega Estado de México', client: 'BASF', washes: 33, lastEvent: '2026-05-12 14:00', lat: 19.6465, lng: -99.1968 },
-  { id: 'CHC-0438', type: 'Separador (CHA7848-34)', status: 'en_lavado', location: 'Taller Puebla', client: 'Codelco', washes: 10, lastEvent: '2026-05-15 09:15', lat: 19.0414, lng: -98.2063 },
+  { id: 'CHC-0436', type: 'Rack Metálico (CHA64.548-25)', status: 'asignado', location: 'Planta Cliente Guanajuato', client: 'Autopartes Industriales', washes: 19, lastEvent: '2026-05-15 07:00', lat: 21.0190, lng: -101.2574 },
+  { id: 'CHC-0437', type: 'Contenedor Colapsable (CHA4845-42)', status: 'no_conforme', location: 'Bodega Estado de México', client: 'Grupo Bajío', washes: 33, lastEvent: '2026-05-12 14:00', lat: 19.6465, lng: -99.1968 },
+  { id: 'CHC-0438', type: 'Separador (CHA7848-34)', status: 'en_lavado', location: 'Taller Puebla', client: 'Manufacturas del Centro', washes: 10, lastEvent: '2026-05-15 09:15', lat: 19.0414, lng: -98.2063 },
   { id: 'CHC-0439', type: 'Tarima/Pallet (CHA6548-25)', status: 'disponible', location: 'Bodega Querétaro', client: null, washes: 2, lastEvent: '2026-05-15 06:45', lat: 20.5888, lng: -100.3899 },
-  { id: 'CHC-0440', type: 'Contenedor / Caja Rígida (CHA4857-34)', status: 'en_transito', location: 'Ruta Puebla–Villa de Reyes', client: 'Arauco', washes: 8, lastEvent: '2026-05-15 08:30', lat: 20.42, lng: -99.57 },
+  { id: 'CHC-0440', type: 'Contenedor / Caja Rígida (CHA4857-34)', status: 'en_transito', location: 'Ruta Puebla–Villa de Reyes', client: 'Envases Corporativos', washes: 8, lastEvent: '2026-05-15 08:30', lat: 20.42, lng: -99.57 },
 ]
+
+// Nota: CPDI = Comercializadora de Plásticos y Derivados Industriales (primer cliente de referencia).
+// Los demás clientes son genéricos/de ejemplo — reemplázalos por tu cartera real cuando la tengas.
 
 export const containerEvents = {
   'CHC-0421': [
     { time: '2026-05-15 08:32', event: 'Ingreso Bodega', detail: 'Bodega Estado de México - Zona A3', user: 'Sistema QR' },
     { time: '2026-05-14 17:15', event: 'Lavado Completo', detail: 'Ciclo 12 finalizado - Aprobado QC', user: 'Taller Qro' },
     { time: '2026-05-14 09:00', event: 'Ingreso Lavado', detail: 'Taller Querétaro Centro', user: 'Pedro L.' },
-    { time: '2026-05-13 14:30', event: 'Devolución Cliente', detail: 'CMPC Planta Toluca → Taller', user: 'Transportes XY' },
+    { time: '2026-05-13 14:30', event: 'Devolución Cliente', detail: 'CPDI Planta Toluca → Taller', user: 'Transportes XY' },
   ],
   'CHC-0422': [
     { time: '2026-05-15 11:20', event: 'En Lavado', detail: 'Taller Querétaro - Iniciado ciclo 9', user: 'Operador M.' },
-    { time: '2026-05-15 09:45', event: 'Ingreso Taller', detail: 'Devolución BASF Querétaro', user: 'Camión XYZ-123' },
-    { time: '2026-05-10 08:00', event: 'Despacho', detail: 'Enviado a BASF Querétaro', user: 'Sistema' },
+    { time: '2026-05-15 09:45', event: 'Ingreso Taller', detail: 'Devolución Grupo Bajío Querétaro', user: 'Camión XYZ-123' },
+    { time: '2026-05-10 08:00', event: 'Despacho', detail: 'Enviado a Grupo Bajío Querétaro', user: 'Sistema' },
   ],
   'CHC-0428': [
-    { time: '2026-05-10 09:00', event: 'Último Escaneo', detail: 'BASF Planta Estado de México - Ingreso', user: 'Guardia BASF' },
+    { time: '2026-05-10 09:00', event: 'Último Escaneo', detail: 'Grupo Bajío Planta Estado de México - Ingreso', user: 'Guardia Grupo Bajío' },
     { time: '2026-05-08 14:00', event: 'Despacho', detail: 'Enviado desde Bodega Estado de México', user: 'Sistema' },
     { time: '2026-05-05 11:30', event: 'Lavado Completo', detail: 'Ciclo 18 finalizado', user: 'Taller Qro' },
   ],
@@ -76,19 +79,19 @@ export const products = [
 ]
 
 export const projects = [
-  { id: 'PRJ-001', name: 'Migración Embalaje CMPC Planta Toluca', client: 'CMPC', manager: 'Andrea Vásquez', status: 'en_curso', phase: 3, totalPhases: 5, startDate: '2026-03-01', endDate: '2026-07-30', budget: 45000000, spent: 28500000, containers: 180, risk: 'medio' },
-  { id: 'PRJ-002', name: 'Implementación Contenedores BASF Querétaro', client: 'BASF', manager: 'Carlos Muñoz', status: 'en_curso', phase: 2, totalPhases: 4, startDate: '2026-04-15', endDate: '2026-09-15', budget: 32000000, spent: 12800000, containers: 120, risk: 'bajo' },
-  { id: 'PRJ-003', name: 'Piloto Tarimas Codelco Puebla', client: 'Codelco', manager: 'María Torres', status: 'propuesta', phase: 1, totalPhases: 3, startDate: '2026-06-01', endDate: '2026-10-31', budget: 18000000, spent: 0, containers: 300, risk: 'alto' },
-  { id: 'PRJ-004', name: 'Renovación Flota ENAP Guanajuato', client: 'ENAP', manager: 'Roberto Silva', status: 'cerrado', phase: 5, totalPhases: 5, startDate: '2025-09-01', endDate: '2026-03-31', budget: 28000000, spent: 27200000, containers: 95, risk: 'bajo' },
-  { id: 'PRJ-005', name: 'Expansión Arauco Villa de Reyes', client: 'Arauco', manager: 'Andrea Vásquez', status: 'en_curso', phase: 1, totalPhases: 6, startDate: '2026-05-01', endDate: '2026-12-31', budget: 55000000, spent: 4200000, containers: 250, risk: 'medio' },
-  { id: 'PRJ-006', name: 'Evaluación Contenedores BASF Estado de México', client: 'BASF', manager: 'Carlos Muñoz', status: 'propuesta', phase: 1, totalPhases: 4, startDate: '2026-07-01', endDate: '2027-01-31', budget: 22000000, spent: 0, containers: 80, risk: 'bajo' },
+  { id: 'PRJ-001', name: 'Migración Embalaje CPDI Planta Toluca', client: 'CPDI', manager: 'Andrea Vásquez', status: 'en_curso', phase: 3, totalPhases: 5, startDate: '2026-03-01', endDate: '2026-07-30', budget: 45000000, spent: 28500000, containers: 180, risk: 'medio' },
+  { id: 'PRJ-002', name: 'Implementación Contenedores Grupo Bajío Querétaro', client: 'Grupo Bajío', manager: 'Carlos Muñoz', status: 'en_curso', phase: 2, totalPhases: 4, startDate: '2026-04-15', endDate: '2026-09-15', budget: 32000000, spent: 12800000, containers: 120, risk: 'bajo' },
+  { id: 'PRJ-003', name: 'Piloto Tarimas Manufacturas del Centro Puebla', client: 'Manufacturas del Centro', manager: 'María Torres', status: 'propuesta', phase: 1, totalPhases: 3, startDate: '2026-06-01', endDate: '2026-10-31', budget: 18000000, spent: 0, containers: 300, risk: 'alto' },
+  { id: 'PRJ-004', name: 'Renovación Flota Autopartes Industriales Guanajuato', client: 'Autopartes Industriales', manager: 'Roberto Silva', status: 'cerrado', phase: 5, totalPhases: 5, startDate: '2025-09-01', endDate: '2026-03-31', budget: 28000000, spent: 27200000, containers: 95, risk: 'bajo' },
+  { id: 'PRJ-005', name: 'Expansión Envases Corporativos Villa de Reyes', client: 'Envases Corporativos', manager: 'Andrea Vásquez', status: 'en_curso', phase: 1, totalPhases: 6, startDate: '2026-05-01', endDate: '2026-12-31', budget: 55000000, spent: 4200000, containers: 250, risk: 'medio' },
+  { id: 'PRJ-006', name: 'Evaluación Contenedores Grupo Bajío Estado de México', client: 'Grupo Bajío', manager: 'Carlos Muñoz', status: 'propuesta', phase: 1, totalPhases: 4, startDate: '2026-07-01', endDate: '2027-01-31', budget: 22000000, spent: 0, containers: 80, risk: 'bajo' },
 ]
 
 export const alerts = [
   { id: 'A001', type: 'critico', message: 'CHC-0428 sin escaneo hace 5 días - posible pérdida', module: 'trazabilidad', time: '10:32' },
   { id: 'A002', type: 'advertencia', message: 'Stock Tarima/Pallet Bodega Querétaro bajo mínimo (7 un)', module: 'marketplace', time: '09:15' },
   { id: 'A003', type: 'info', message: 'Pedido #ORD-2847 despachado desde Bodega Estado de México', module: 'marketplace', time: '08:50' },
-  { id: 'A004', type: 'advertencia', message: 'PRJ-003 Codelco: aprobación pendiente hace 3 días', module: 'proyectos', time: '08:20' },
+  { id: 'A004', type: 'advertencia', message: 'PRJ-003 Manufacturas del Centro: aprobación pendiente hace 3 días', module: 'proyectos', time: '08:20' },
   { id: 'A005', type: 'critico', message: '3 contenedores con vencimiento de certificación esta semana', module: 'trazabilidad', time: 'ayer' },
 ]
 
@@ -137,10 +140,10 @@ export const kpis = {
 
 export const recentActivity = [
   { time: '11:42', event: 'QR Escaneado', detail: 'CHC-0421 → Bodega Estado de México - Ingreso', user: 'Carlos M.' },
-  { time: '11:38', event: 'Pedido Creado', detail: 'ORD-2851: 20x Tarima/Pallet → CMPC Toluca', user: 'Sistema' },
+  { time: '11:38', event: 'Pedido Creado', detail: 'ORD-2851: 20x Tarima/Pallet → CPDI Toluca', user: 'Sistema' },
   { time: '11:25', event: 'Lavado Completo', detail: 'CHC-0419 → Disponible (ciclo 9)', user: 'Taller Qro' },
   { time: '11:10', event: 'NC Registrada', detail: 'CHC-0425 → Válvula dañada - Requiere reparación', user: 'Pedro L.' },
-  { time: '10:55', event: 'Despacho', detail: 'ORD-2847: 15x Contenedor Colapsable → ENAP Guanajuato', user: 'Sistema' },
+  { time: '10:55', event: 'Despacho', detail: 'ORD-2847: 15x Contenedor Colapsable → Autopartes Industriales Guanajuato', user: 'Sistema' },
   { time: '10:32', event: 'Alerta Crítica', detail: 'CHC-0428 sin escaneo hace 5 días', user: 'Sistema' },
 ]
 

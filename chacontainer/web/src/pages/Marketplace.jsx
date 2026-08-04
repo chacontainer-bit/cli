@@ -84,7 +84,7 @@ function CartDrawer({ onClose }) {
                       </button>
                     </div>
                     <p className="text-[#f97316] text-sm font-mono font-bold">
-                      ${(item.price * item.qty).toLocaleString('es-CL')}
+                      ${(item.price * item.qty).toLocaleString('es-MX')}
                     </p>
                   </div>
                 </div>
@@ -94,15 +94,15 @@ function CartDrawer({ onClose }) {
             <div className="p-4 border-t border-[#1f2937] space-y-3">
               <div className="flex justify-between text-sm">
                 <span className="text-[#9ca3af]">Subtotal</span>
-                <span className="text-[#f9fafb] font-mono font-bold">${cartTotal.toLocaleString('es-CL')}</span>
+                <span className="text-[#f9fafb] font-mono font-bold">${cartTotal.toLocaleString('es-MX')}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#6b7280]">IVA (19%)</span>
-                <span className="text-[#9ca3af] font-mono">${Math.round(cartTotal * 0.19).toLocaleString('es-CL')}</span>
+                <span className="text-[#6b7280]">IVA (16%)</span>
+                <span className="text-[#9ca3af] font-mono">${Math.round(cartTotal * 0.16).toLocaleString('es-MX')}</span>
               </div>
               <div className="flex justify-between text-sm font-bold border-t border-[#1f2937] pt-2">
                 <span className="text-[#f9fafb]">Total</span>
-                <span className="text-[#f97316] font-mono">${Math.round(cartTotal * 1.19).toLocaleString('es-CL')}</span>
+                <span className="text-[#f97316] font-mono">${Math.round(cartTotal * 1.16).toLocaleString('es-MX')}</span>
               </div>
               <button onClick={() => setShowModal(true)}
                 className="w-full bg-[#f97316] hover:bg-[#ea6c0a] text-white py-2.5 rounded-lg text-sm font-semibold transition-colors">
@@ -136,12 +136,12 @@ function CartDrawer({ onClose }) {
                 {cart.map(item => (
                   <div key={item.id} className="flex justify-between text-xs">
                     <span className="text-[#9ca3af]">{item.qty}x {item.name}</span>
-                    <span className="text-[#f9fafb] font-mono">${(item.price * item.qty).toLocaleString('es-CL')}</span>
+                    <span className="text-[#f9fafb] font-mono">${(item.price * item.qty).toLocaleString('es-MX')}</span>
                   </div>
                 ))}
                 <div className="border-t border-[#1f2937] pt-1 mt-1 flex justify-between text-sm font-bold">
                   <span className="text-[#f9fafb]">Total c/IVA</span>
-                  <span className="text-[#f97316] font-mono">${Math.round(cartTotal * 1.19).toLocaleString('es-CL')}</span>
+                  <span className="text-[#f97316] font-mono">${Math.round(cartTotal * 1.16).toLocaleString('es-MX')}</span>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -253,7 +253,7 @@ export default function Marketplace() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-[#f97316] text-lg font-bold font-mono">
-                      ${product.price.toLocaleString('es-CL')}
+                      ${product.price.toLocaleString('es-MX')}
                     </p>
                     <p className="text-[#6b7280] text-xs">por {product.unit}</p>
                   </div>

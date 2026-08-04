@@ -93,9 +93,9 @@ export default function Dashboard() {
             {greeting}, <span style={{ color: roleData?.color }}>{roleData?.name}</span>
           </h1>
           <p className="text-[#6b7280] text-sm mt-0.5">
-            {now.toLocaleDateString('es-CL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+            {now.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             {' · '}
-            <span className="font-mono">{now.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })}</span>
+            <span className="font-mono">{now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' })}</span>
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
