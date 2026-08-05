@@ -1,15 +1,16 @@
+import { useState } from 'react'
 import {
   Package, RefreshCw, ShoppingCart, Leaf, AlertTriangle, FolderOpen,
   Droplets, Wrench, XCircle, Clock, CheckCircle, Truck, MapPin, Map,
   FileText, CheckSquare, Layers, AlertCircle, FlaskConical, Shield,
-  ClipboardCheck, Recycle, TrendingUp, TrendingDown, Minus
+  ClipboardCheck, Recycle, TrendingUp, TrendingDown, Minus, Plus, X
 } from 'lucide-react'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend
 } from 'recharts'
 import { useApp } from '../context/AppContext'
-import { kpis, chartDataContainers, monthlyData, roles } from '../data/mockData'
+import { kpis, chartDataContainers, monthlyData, roles, products } from '../data/mockData'
 
 const iconMap = {
   Package, RefreshCw, ShoppingCart, Leaf, AlertTriangle, FolderOpen,
@@ -59,6 +60,85 @@ function KPICard({ label, value, delta, trend, icon }) {
   )
 }
 
+function NuevoPedidoModal({ onClose, onSubmit }) {
+  const [productId, setProductId] = useState(products[0]?.id || '')
+  const [cliente, setCliente] = useState('')
+  const [cantidad, setCantidad] = useState(1)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!cliente.trim()) return
+    const producto = products.find(p => p.id === productId)
+    onSubmit({ producto, cliente: cliente.trim(), cantidad })
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4">
+      <div className="bg-[#111827] border border-[#1f2937] rounded-xl w-full max-w-md p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-bold text-[#f9fafb] text-lg flex items-center gap-2">
+            <ShoppingCart size={20} className="text-[#f97316]" />
+            Nuevo Pedido
+          </h3>
+          <button onClick={onClose} className="text-[#6b7280] hover:text-[#f9fafb]">
+            <X size={18} />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="text-xs text-[#9ca3af] block mb-1">Cliente</label>
+            <input
+              type="text"
+              value={cliente}
+              onChange={e => setCliente(e.target.value)}
+              placeholder="Ej: CMPC"
+              autoFocus
+              className="w-full bg-[#0a0f1a] border border-[#374151] rounded-lg px-3 py-2 text-[#f9fafb] text-sm focus:outline-none focus:border-[#f97316]"
+            />
+          </div>
+          <div>
+            <label className="text-xs text-[#9ca3af] block mb-1">Producto / Servicio</label>
+            <select
+              value={productId}
+              onChange={e => setProductId(e.target.value)}
+              className="w-full bg-[#0a0f1a] border border-[#374151] rounded-lg px-3 py-2 text-[#f9fafb] text-sm focus:outline-none focus:border-[#f97316]"
+            >
+              {products.map(p => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="text-xs text-[#9ca3af] block mb-1">Cantidad</label>
+            <input
+              type="number"
+              min={1}
+              value={cantidad}
+              onChange={e => setCantidad(Math.max(1, Number(e.target.value)))}
+              className="w-full bg-[#0a0f1a] border border-[#374151] rounded-lg px-3 py-2 text-[#f9fafb] text-sm focus:outline-none focus:border-[#f97316]"
+            />
+          </div>
+          <div className="flex gap-2 pt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 py-2 rounded-lg border border-[#374151] text-[#9ca3af] text-sm hover:bg-[#1f2937]"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="flex-1 py-2 rounded-lg bg-[#f97316] text-white text-sm font-semibold hover:bg-[#ea6a0f]"
+            >
+              Crear Pedido
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -76,13 +156,24 @@ const CustomTooltip = ({ active, payload, label }) => {
 }
 
 export default function Dashboard() {
-  const { role, alerts, activity } = useApp()
+  const { role, alerts, activity, addActivity } = useApp()
   const roleData = roles.find(r => r.id === role)
   const roleKpis = kpis[role] || kpis.supply_chain
+  const [pedidoModalOpen, setPedidoModalOpen] = useState(false)
 
   const now = new Date()
   const hour = now.getHours()
   const greeting = hour < 12 ? 'Buenos días' : hour < 18 ? 'Buenas tardes' : 'Buenas noches'
+
+  const handleNuevoPedido = ({ producto, cliente, cantidad }) => {
+    addActivity({
+      time: new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' }),
+      event: 'Pedido Creado',
+      detail: `${producto?.name || 'Producto'} x${cantidad} — ${cliente}`,
+      user: roleData?.name || 'Usuario',
+    })
+    setPedidoModalOpen(false)
+  }
 
   return (
     <div className="space-y-6">
@@ -98,11 +189,27 @@ export default function Dashboard() {
             <span className="font-mono">{now.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })}</span>
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-          <span className="text-emerald-400 text-xs font-medium">Sistema Operativo</span>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setPedidoModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#f97316] hover:bg-[#ea6a0f] text-white text-xs font-semibold rounded-full transition-colors"
+          >
+            <Plus size={14} />
+            Nuevo Pedido
+          </button>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
+            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+            <span className="text-emerald-400 text-xs font-medium">Sistema Operativo</span>
+          </div>
         </div>
       </div>
+
+      {pedidoModalOpen && (
+        <NuevoPedidoModal
+          onClose={() => setPedidoModalOpen(false)}
+          onSubmit={handleNuevoPedido}
+        />
+      )}
 
       {/* KPI Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
