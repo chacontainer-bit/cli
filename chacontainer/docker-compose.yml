@@ -1,0 +1,54 @@
+# Runs the entire CHACONTAINER stack on one machine: no managed database, no
+# cloud integrations, no external network calls at runtime. Everything a
+# browser talks to lives in these three containers.
+#
+# Usage: from this directory, `docker compose up --build`, then open
+# http://localhost:8080. See docs/local-deployment.md for details.
+name: chacontainer
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: chacontainer
+      POSTGRES_PASSWORD: chacontainer
+      POSTGRES_DB: chacontainer
+    volumes:
+      - chacontainer_pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432" # optional: only for local psql/GUI access
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chacontainer -d chacontainer"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ..
+      dockerfile: chacontainer/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: "8080"
+      DATABASE_URL: postgres://chacontainer:chacontainer@db:5432/chacontainer?sslmode=disable
+      # CHANGE THIS before exposing the stack beyond your own machine.
+      JWT_SECRET: ${JWT_SECRET:-local-dev-secret-change-me}
+      ENVIRONMENT: development
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
+      # Airtable/ERP/Make.com are intentionally left unset: with no API
+      # keys configured, nothing in this server ever calls out to them.
+    ports:
+      - "127.0.0.1:8081:8080" # direct API access, e.g. for a mobile QR scanner on the same LAN
+
+  web:
+    build:
+      context: ./web
+    depends_on:
+      - api
+    ports:
+      - "127.0.0.1:8080:80"
+
+volumes:
+  chacontainer_pgdata:

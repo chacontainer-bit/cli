@@ -2,13 +2,15 @@
 -- PostgreSQL 15+
 -- Multi-tenant: every table carries tenant_id with RLS enforced at the app layer.
 -- Run with: psql $DATABASE_URL -f 001_initial_schema.sql
-
-BEGIN;
+-- (no BEGIN/COMMIT here: the server's migration runner wraps each file in
+-- its own transaction; psql --single-transaction does the same manually)
 
 -- ─── Extensions ──────────────────────────────────────────────────────────────
+-- No PostGIS: no column in this schema uses a native geometry type (geo/lat/lng
+-- are plain JSONB/NUMERIC), so a plain postgres:15 image is enough to run this
+-- fully offline on a local machine.
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pg_trgm";    -- fuzzy search on names
-CREATE EXTENSION IF NOT EXISTS "postgis";    -- geo support (optional)
 
 -- ─── TENANTS ─────────────────────────────────────────────────────────────────
 CREATE TABLE tenants (
@@ -37,7 +39,7 @@ CREATE TABLE users (
     password_hash VARCHAR(255),
     role          VARCHAR(20)   NOT NULL DEFAULT 'operator'
                     CHECK (role IN ('admin','manager','operator','viewer','api')),
-    plant_ids     UUID[]        NOT NULL DEFAULT '{}',
+    plant_ids     JSONB         NOT NULL DEFAULT '[]', -- array of plant UUIDs (driver-agnostic)
     active        BOOLEAN       NOT NULL DEFAULT TRUE,
     last_login_at TIMESTAMPTZ,
     created_at    TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
@@ -93,7 +95,7 @@ CREATE TABLE clients (
     address           JSONB         NOT NULL DEFAULT '{}',
     airtable_id       VARCHAR(50),
     erp_id            VARCHAR(50),
-    tags              TEXT[]        NOT NULL DEFAULT '{}',
+    tags              JSONB         NOT NULL DEFAULT '[]', -- array of strings (driver-agnostic)
     created_at        TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
     updated_at        TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
     UNIQUE (tenant_id, code)
@@ -132,7 +134,9 @@ CREATE TABLE assets (
     tenant_id     UUID          NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
     plant_id      UUID          NOT NULL REFERENCES plants(id),
     zone_id       UUID          REFERENCES plant_zones(id),
+    name          VARCHAR(200),
     code          VARCHAR(50)   NOT NULL,
+    airtable_id   VARCHAR(50),
     qr_code       VARCHAR(200)  NOT NULL,
     barcode       VARCHAR(100),
     type          VARCHAR(30)   NOT NULL
@@ -309,5 +313,3 @@ CREATE TRIGGER trg_plants_updated    BEFORE UPDATE ON plants    FOR EACH ROW EXE
 CREATE TRIGGER trg_clients_updated   BEFORE UPDATE ON clients   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trg_assets_updated    BEFORE UPDATE ON assets    FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trg_shipments_updated BEFORE UPDATE ON shipments FOR EACH ROW EXECUTE FUNCTION set_updated_at();
-
-COMMIT;

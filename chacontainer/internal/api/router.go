@@ -1,18 +1,24 @@
 package api
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
 
 	"github.com/cli/cli/v2/chacontainer/internal/api/handlers"
 	"github.com/cli/cli/v2/chacontainer/internal/api/middleware"
 	"github.com/cli/cli/v2/chacontainer/internal/config"
+	"github.com/cli/cli/v2/chacontainer/internal/store/postgres"
 )
 
-// NewRouter wires all routes. Dependencies (stores, integrations) are injected
-// via the config at startup; replace stub implementations with postgres stores
-// before shipping.
-func NewRouter(cfg *config.Config) http.Handler {
+// NewRouter wires all routes against real PostgreSQL-backed stores, so the
+// whole API runs with genuine persistence on a single local machine. The
+// only network calls this server ever makes are to the database given in
+// cfg.DatabaseURL - Airtable/ERP/Make.com are only contacted if their own
+// client code is explicitly invoked, which nothing here does. Webhook
+// receivers stay wired to a no-op processor: this server accepts inbound
+// webhooks but never calls out to those third-party services itself.
+func NewRouter(cfg *config.Config, db *sql.DB) http.Handler {
 	mux := http.NewServeMux()
 
 	// Health
@@ -21,12 +27,12 @@ func NewRouter(cfg *config.Config) http.Handler {
 		json.NewEncoder(w).Encode(map[string]string{"status": "ok", "service": "chacontainer"})
 	})
 
-	// Stub stores (replace with postgres implementations)
-	assetStore := &stubAssetStore{}
-	shipmentStore := &stubShipmentStore{}
-	clientStore := &stubClientStore{}
-	plantStore := &stubPlantStore{}
-	statsStore := &stubStatsStore{}
+	assetStore := postgres.NewAssetStore(db)
+	shipmentStore := postgres.NewShipmentStore(db)
+	clientStore := postgres.NewClientStore(db)
+	plantStore := postgres.NewPlantStore(db)
+	statsStore := postgres.NewStatsStore(db)
+	userStore := postgres.NewUserStore(db)
 	webhookProcessor := &stubWebhookProcessor{}
 
 	assetsH := handlers.NewAssetsHandler(assetStore)
@@ -35,11 +41,19 @@ func NewRouter(cfg *config.Config) http.Handler {
 	plantsH := handlers.NewPlantsHandler(plantStore)
 	dashboardH := handlers.NewDashboardHandler(statsStore)
 	webhooksH := handlers.NewWebhooksHandler(webhookProcessor, cfg.MakeWebhookSecret)
+	authH := handlers.NewAuthHandler(userStore, cfg.JWTSecret)
 
-	// Public webhook receivers (no JWT)
+	// Public webhook receivers: called server-to-server, never from a
+	// browser, so they don't need CORS.
 	mux.HandleFunc("POST /webhooks/make", webhooksH.Make)
 	mux.HandleFunc("POST /webhooks/erp", webhooksH.ERP)
 	mux.HandleFunc("POST /webhooks/airtable", webhooksH.Airtable)
+
+	// Login is public (no JWT yet - that's the whole point) but is still
+	// called from the browser, so it needs the same CORS header handling as
+	// every authenticated route below.
+	public := chain(middleware.Logger, middleware.CORS)
+	mux.Handle("POST /api/v1/auth/login", public(http.HandlerFunc(authH.Login)))
 
 	// Auth middleware
 	authed := chain(
@@ -91,7 +105,7 @@ func NewRouter(cfg *config.Config) http.Handler {
 	mux.Handle("GET /api/v1/plants/{id}/zones", authed(http.HandlerFunc(plantsH.ListZones)))
 	mux.Handle("POST /api/v1/plants/{id}/zones", authed(http.HandlerFunc(plantsH.CreateZone)))
 
-	return mux
+	return withCORSPreflight(mux)
 }
 
 func chain(middlewares ...func(http.Handler) http.Handler) func(http.Handler) http.Handler {
@@ -101,4 +115,21 @@ func chain(middlewares ...func(http.Handler) http.Handler) func(http.Handler) ht
 		}
 		return final
 	}
+}
+
+// withCORSPreflight answers every OPTIONS request directly, before it ever
+// reaches the mux. net/http's ServeMux only matches the exact HTTP method a
+// route was registered with (e.g. "GET /api/v1/assets"), so a browser's
+// preflight OPTIONS request - triggered by cross-origin calls that send an
+// Authorization header, like the dev workflow in docs/local-deployment.md
+// where the web UI and API run on different ports - would otherwise get a
+// 405 from the mux itself, never reaching middleware.CORS on the real route.
+func withCORSPreflight(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodOptions {
+			middleware.CORS(next).ServeHTTP(w, r)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }

@@ -44,3 +44,6 @@ gh
 # Test coverage artifacts
 coverage.out
 lcov.info
+
+# CHACONTAINER local deployment (real secrets, never the .env.example)
+/chacontainer/.env

@@ -1,10 +1,26 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 import { recentActivity, alerts as initialAlerts } from '../data/mockData'
+import { getSession, setSession as persistSession, clearSession as clearPersistedSession } from '../lib/api'
 
 const AppContext = createContext(null)
 
 export function AppProvider({ children }) {
   const [role, setRole] = useState(null)
+  // `session` is only set when logged in against the real local backend
+  // (see Login.jsx "Modo local"). The demo role picker never touches this,
+  // so the existing mock-data experience is unaffected either way.
+  const [session, setSessionState] = useState(() => getSession())
+
+  const loginWithSession = useCallback((session) => {
+    persistSession(session)
+    setSessionState(session)
+  }, [])
+
+  const logout = useCallback(() => {
+    clearPersistedSession()
+    setSessionState(null)
+    setRole(null)
+  }, [])
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
   const [activity, setActivity] = useState(recentActivity)
@@ -49,6 +65,7 @@ export function AppProvider({ children }) {
   return (
     <AppContext.Provider value={{
       role, setRole,
+      session, loginWithSession, logout,
       cart, cartOpen, setCartOpen,
       addToCart, removeFromCart, updateCartQty, clearCart,
       cartTotal, cartCount,
