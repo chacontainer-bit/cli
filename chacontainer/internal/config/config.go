@@ -22,7 +22,11 @@ type Config struct {
 
 	QRBaseURL string
 
-	RedisURL string
+	// SeedDemoData bootstraps a demo tenant/admin user/plant/assets on first
+	// run so a fresh local install has something to look at immediately.
+	// It only ever writes when the tenants table is empty (see
+	// postgres.SeedDemoData), so leaving this on is safe after the first run.
+	SeedDemoData bool
 }
 
 func Load() (*Config, error) {
@@ -45,6 +49,15 @@ func Load() (*Config, error) {
 		return nil, fmt.Errorf("JWT_SECRET is required")
 	}
 
+	seedDemoData := true
+	if v := os.Getenv("SEED_DEMO_DATA"); v != "" {
+		b, err := strconv.ParseBool(v)
+		if err != nil {
+			return nil, fmt.Errorf("invalid SEED_DEMO_DATA: %w", err)
+		}
+		seedDemoData = b
+	}
+
 	return &Config{
 		Port:              port,
 		DatabaseURL:       dbURL,
@@ -56,7 +69,7 @@ func Load() (*Config, error) {
 		ERPAPIKey:         os.Getenv("ERP_API_KEY"),
 		MakeWebhookSecret: os.Getenv("MAKE_WEBHOOK_SECRET"),
 		QRBaseURL:         getEnv("QR_BASE_URL", "https://api.chacontainer.com/qr"),
-		RedisURL:          getEnv("REDIS_URL", "redis://localhost:6379"),
+		SeedDemoData:      seedDemoData,
 	}, nil
 }
 

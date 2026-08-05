@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Package, ChevronRight, Shield, Truck, Wrench, BarChart3, Leaf } from 'lucide-react'
+import { Package, ChevronRight, Shield, Truck, Wrench, BarChart3, Leaf, Lock, Loader2 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { roles } from '../data/mockData'
+import { api } from '../lib/api'
 
 const roleIcons = {
   supply_chain: BarChart3,
@@ -9,6 +11,67 @@ const roleIcons = {
   logistics: Truck,
   packaging: Package,
   ehs: Leaf,
+}
+
+function LocalLoginForm() {
+  const { setRole, loginWithSession } = useApp()
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('admin@chacontainer.local')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      const res = await api.login(email, password)
+      loginWithSession({ token: res.token, user: res.user })
+      setRole('supply_chain') // unlocks the shared Layout; real data replaces the demo KPIs
+      navigate('/dashboard')
+    } catch (err) {
+      setError(err.message || 'No se pudo iniciar sesión')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="w-full max-w-sm bg-[#111827] border border-[#1f2937] rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-4 text-[#f9fafb] font-semibold text-sm">
+        <Lock size={16} className="text-[#f97316]" />
+        Modo local (API real en tu máquina)
+      </div>
+      <input
+        type="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        placeholder="Email"
+        className="w-full mb-2 px-3 py-2 rounded-lg bg-[#0a0f1a] border border-[#1f2937] text-sm text-[#f9fafb] focus:outline-none focus:border-[#f97316]"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        placeholder="Contraseña"
+        className="w-full mb-3 px-3 py-2 rounded-lg bg-[#0a0f1a] border border-[#1f2937] text-sm text-[#f9fafb] focus:outline-none focus:border-[#f97316]"
+      />
+      {error && <p className="text-red-400 text-xs mb-3">{error}</p>}
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-[#f97316] text-white text-sm font-semibold hover:bg-[#ea580c] transition-colors disabled:opacity-50"
+      >
+        {loading && <Loader2 size={14} className="animate-spin" />}
+        Ingresar con datos reales
+      </button>
+      <p className="text-[#6b7280] text-xs mt-3">
+        Usuario demo tras <code className="text-[#9ca3af]">docker compose up</code>:{' '}
+        <code className="text-[#9ca3af]">admin@chacontainer.local</code> / <code className="text-[#9ca3af]">chacontainer123</code>
+      </p>
+    </form>
+  )
 }
 
 export default function Login() {
@@ -80,6 +143,16 @@ export default function Login() {
             </button>
           )
         })}
+      </div>
+
+      <div className="mt-10 flex items-center gap-3 max-w-5xl w-full">
+        <div className="h-px flex-1 bg-[#1f2937]" />
+        <span className="text-[#6b7280] text-xs">o</span>
+        <div className="h-px flex-1 bg-[#1f2937]" />
+      </div>
+
+      <div className="mt-6">
+        <LocalLoginForm />
       </div>
 
       <div className="mt-12 text-center">

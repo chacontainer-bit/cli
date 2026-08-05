@@ -1,7 +1,7 @@
 -- CHACONTAINER - Dashboard Materialized Views & Analytics Queries
 -- Refresh: CALL refresh_dashboard_views(); (scheduled every 5 min via pg_cron or cron job)
-
-BEGIN;
+-- (no BEGIN/COMMIT here: the server's migration runner wraps this file in
+-- its own transaction)
 
 -- ─── Asset inventory snapshot per plant ──────────────────────────────────────
 CREATE MATERIALIZED VIEW mv_plant_inventory AS
@@ -63,8 +63,6 @@ BEGIN
     REFRESH MATERIALIZED VIEW CONCURRENTLY mv_daily_scans;
 END;
 $$;
-
-COMMIT;
 
 -- ─── Useful ad-hoc queries ───────────────────────────────────────────────────
 

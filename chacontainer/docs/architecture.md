@@ -1,5 +1,12 @@
 # CHACONTAINER — Technical Architecture
 
+> **Running this on your own machine only?** See
+> [`local-deployment.md`](./local-deployment.md) for the single-command
+> Docker Compose setup (local Postgres, no Redis, no cloud integrations
+> wired in by default). The multi-tenant SaaS design below is the target
+> architecture for a hosted deployment; the local stack is a deliberately
+> smaller subset of it.
+
 ## System Overview
 
 ```
@@ -226,7 +233,7 @@ mv_daily_scans       -- scan activity over 90 days
 | Transport | TLS 1.3 enforced |
 | Passwords | bcrypt (cost 12) |
 | Secrets | Environment variables, never in code |
-| Rate limiting | Per tenant_id, Redis token bucket |
+| Rate limiting | Per tenant_id, Redis token bucket (target design; today's middleware is a passthrough - add this before exposing the API beyond your own machine) |
 
 ## Deployment
 
@@ -244,13 +251,13 @@ Production stack:
 PORT=8080
 DATABASE_URL=postgres://...
 JWT_SECRET=<256-bit random>
-AIRTABLE_API_KEY=pat...
-AIRTABLE_BASE_ID=app...
-ERP_BASE_URL=https://erp.client.com
-ERP_API_KEY=...
-MAKE_WEBHOOK_SECRET=...
+AIRTABLE_API_KEY=pat...       # optional, unused unless you wire up the integration
+AIRTABLE_BASE_ID=app...       # optional, unused unless you wire up the integration
+ERP_BASE_URL=https://erp.client.com   # optional, unused unless you wire up the integration
+ERP_API_KEY=...               # optional, unused unless you wire up the integration
+MAKE_WEBHOOK_SECRET=...       # optional, only verifies inbound webhook signatures
 QR_BASE_URL=https://app.chacontainer.com/qr
-REDIS_URL=redis://...
+SEED_DEMO_DATA=true           # inserts demo tenant/user/data on first empty run
 ENVIRONMENT=production
 ```
 

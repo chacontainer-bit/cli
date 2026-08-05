@@ -12,6 +12,7 @@ import (
 
 	"github.com/cli/cli/v2/chacontainer/internal/api"
 	"github.com/cli/cli/v2/chacontainer/internal/config"
+	"github.com/cli/cli/v2/chacontainer/internal/store/postgres"
 )
 
 func main() {
@@ -20,7 +21,23 @@ func main() {
 		log.Fatalf("config: %v", err)
 	}
 
-	router := api.NewRouter(cfg)
+	db, err := postgres.Connect(cfg.DatabaseURL)
+	if err != nil {
+		log.Fatalf("database: %v", err)
+	}
+	defer db.Close()
+
+	if err := postgres.Migrate(db); err != nil {
+		log.Fatalf("migrate: %v", err)
+	}
+
+	if cfg.SeedDemoData {
+		if err := postgres.SeedDemoData(db); err != nil {
+			log.Fatalf("seed: %v", err)
+		}
+	}
+
+	router := api.NewRouter(cfg, db)
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),

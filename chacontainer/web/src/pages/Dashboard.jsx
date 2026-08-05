@@ -8,8 +8,10 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend
 } from 'recharts'
+import { useEffect, useState } from 'react'
 import { useApp } from '../context/AppContext'
 import { kpis, chartDataContainers, monthlyData, roles } from '../data/mockData'
+import { api } from '../lib/api'
 
 const iconMap = {
   Package, RefreshCw, ShoppingCart, Leaf, AlertTriangle, FolderOpen,
@@ -75,8 +77,57 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null
 }
 
+// Shown only when logged in via "Modo local" (see Login.jsx) with a real JWT
+// against the local API. The demo KPI grid below is unaffected either way -
+// this is additive, not a replacement for the mock-data experience.
+function LiveSummary({ session }) {
+  const [summary, setSummary] = useState(null)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    let cancelled = false
+    api.dashboardSummary()
+      .then(data => { if (!cancelled) setSummary(data) })
+      .catch(err => { if (!cancelled) setError(err.message) })
+    return () => { cancelled = true }
+  }, [session])
+
+  if (error) {
+    return (
+      <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-red-400 text-sm">
+        No se pudo cargar el resumen en vivo: {error}
+      </div>
+    )
+  }
+  if (!summary) return null
+
+  const tiles = [
+    { label: 'Assets totales', value: summary.total_assets },
+    { label: 'En tránsito', value: summary.assets_in_transit },
+    { label: 'Envíos atrasados', value: summary.late_shipments },
+    { label: 'Escaneos 24h', value: summary.scan_events_24h },
+  ]
+
+  return (
+    <div className="bg-[#111827] border border-emerald-500/30 rounded-xl p-4">
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+        <h2 className="text-sm font-semibold text-[#f9fafb]">Datos en vivo (base de datos local)</h2>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {tiles.map(t => (
+          <div key={t.label} className="bg-[#0a0f1a] border border-[#1f2937] rounded-lg p-3">
+            <p className="text-2xl font-bold text-[#f9fafb] font-mono">{t.value}</p>
+            <p className="text-[#6b7280] text-xs mt-0.5">{t.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Dashboard() {
-  const { role, alerts, activity } = useApp()
+  const { role, alerts, activity, session } = useApp()
   const roleData = roles.find(r => r.id === role)
   const roleKpis = kpis[role] || kpis.supply_chain
 
@@ -103,6 +154,8 @@ export default function Dashboard() {
           <span className="text-emerald-400 text-xs font-medium">Sistema Operativo</span>
         </div>
       </div>
+
+      {session && <LiveSummary session={session} />}
 
       {/* KPI Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
