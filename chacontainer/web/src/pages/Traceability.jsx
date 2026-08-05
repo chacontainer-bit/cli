@@ -181,7 +181,8 @@ export default function Traceability() {
           </div>
 
           {/* Container table */}
-          <div className="bg-[#111827] border border-[#1f2937] rounded-xl overflow-hidden">
+          <div className="bg-[#111827] border border-[#1f2937] rounded-xl overflow-x-auto">
+            <div className="min-w-[720px]">
             <div className="grid grid-cols-12 gap-2 px-4 py-2 border-b border-[#1f2937] text-xs text-[#6b7280] font-semibold uppercase tracking-wide">
               <div className="col-span-2">ID</div>
               <div className="col-span-2">Tipo</div>
@@ -233,6 +234,7 @@ export default function Traceability() {
                 <p className="text-sm">No se encontraron contenedores</p>
               </div>
             )}
+            </div>
           </div>
 
           <p className="text-xs text-[#6b7280] font-mono">{filtered.length} de {containers.length} contenedores</p>
