@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 )
@@ -9,6 +10,7 @@ import (
 type Config struct {
 	Port        int
 	DatabaseURL string
+	DBPath      string
 	JWTSecret   string
 	Environment string
 
@@ -42,12 +44,17 @@ func Load() (*Config, error) {
 
 	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
-		return nil, fmt.Errorf("JWT_SECRET is required")
+		if getEnv("ENVIRONMENT", "development") != "development" {
+			return nil, fmt.Errorf("JWT_SECRET is required")
+		}
+		jwtSecret = "dev-only-insecure-secret-change-me"
+		log.Println("WARNING: JWT_SECRET not set — using an insecure development default. Set JWT_SECRET in production.")
 	}
 
 	return &Config{
 		Port:              port,
 		DatabaseURL:       dbURL,
+		DBPath:            getEnv("DB_PATH", "./chacontainer.db"),
 		JWTSecret:         jwtSecret,
 		Environment:       getEnv("ENVIRONMENT", "development"),
 		AirtableAPIKey:    os.Getenv("AIRTABLE_API_KEY"),

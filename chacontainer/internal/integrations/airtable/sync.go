@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/cli/cli/v2/chacontainer/internal/domain/asset"
-	"github.com/cli/cli/v2/chacontainer/internal/domain/client"
-	"github.com/cli/cli/v2/chacontainer/internal/domain/shipment"
+	"github.com/chacontainer/backend/internal/domain/asset"
+	"github.com/chacontainer/backend/internal/domain/client"
+	"github.com/chacontainer/backend/internal/domain/shipment"
 )
 
 // TableNames maps domain entities to Airtable table names.

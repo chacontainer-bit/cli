@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cli/cli/v2/chacontainer/internal/api/middleware"
-	"github.com/cli/cli/v2/chacontainer/internal/domain/asset"
+	"github.com/chacontainer/backend/internal/api/middleware"
+	"github.com/chacontainer/backend/internal/domain/asset"
 )
 
 // AssetStore is the persistence interface for assets.

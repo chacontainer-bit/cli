@@ -10,8 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cli/cli/v2/chacontainer/internal/api"
-	"github.com/cli/cli/v2/chacontainer/internal/config"
+	"github.com/chacontainer/backend/internal/api"
+	"github.com/chacontainer/backend/internal/config"
+	"github.com/chacontainer/backend/internal/store/sqlite"
 )
 
 func main() {
@@ -20,7 +21,21 @@ func main() {
 		log.Fatalf("config: %v", err)
 	}
 
-	router := api.NewRouter(cfg)
+	db, err := sqlite.Open(cfg.DBPath)
+	if err != nil {
+		log.Fatalf("db: %v", err)
+	}
+	defer db.Close()
+
+	seeded, err := sqlite.SeedIfEmpty(db)
+	if err != nil {
+		log.Fatalf("seed: %v", err)
+	}
+	if seeded {
+		log.Printf("seeded demo tenant — login with %s / %s", sqlite.DemoEmail, sqlite.DemoPassword)
+	}
+
+	router := api.NewRouter(cfg, db)
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),

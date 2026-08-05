@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/cli/cli/v2/chacontainer/internal/api/middleware"
-	"github.com/cli/cli/v2/chacontainer/internal/domain/plant"
+	"github.com/chacontainer/backend/internal/api/middleware"
+	"github.com/chacontainer/backend/internal/domain/plant"
 )
 
 type PlantStore interface {

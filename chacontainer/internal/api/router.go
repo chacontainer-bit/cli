@@ -1,18 +1,19 @@
 package api
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
+	"time"
 
-	"github.com/cli/cli/v2/chacontainer/internal/api/handlers"
-	"github.com/cli/cli/v2/chacontainer/internal/api/middleware"
-	"github.com/cli/cli/v2/chacontainer/internal/config"
+	"github.com/chacontainer/backend/internal/api/handlers"
+	"github.com/chacontainer/backend/internal/api/middleware"
+	"github.com/chacontainer/backend/internal/config"
+	"github.com/chacontainer/backend/internal/store/sqlite"
 )
 
-// NewRouter wires all routes. Dependencies (stores, integrations) are injected
-// via the config at startup; replace stub implementations with postgres stores
-// before shipping.
-func NewRouter(cfg *config.Config) http.Handler {
+// NewRouter wires all routes against a real SQLite-backed persistence layer.
+func NewRouter(cfg *config.Config, db *sql.DB) http.Handler {
 	mux := http.NewServeMux()
 
 	// Health
@@ -21,14 +22,19 @@ func NewRouter(cfg *config.Config) http.Handler {
 		json.NewEncoder(w).Encode(map[string]string{"status": "ok", "service": "chacontainer"})
 	})
 
-	// Stub stores (replace with postgres implementations)
-	assetStore := &stubAssetStore{}
-	shipmentStore := &stubShipmentStore{}
-	clientStore := &stubClientStore{}
-	plantStore := &stubPlantStore{}
-	statsStore := &stubStatsStore{}
-	webhookProcessor := &stubWebhookProcessor{}
+	authStore := sqlite.NewAuthStore(db)
+	assetStore := sqlite.NewAssetStore(db)
+	shipmentStore := sqlite.NewShipmentStore(db)
+	clientStore := sqlite.NewClientStore(db)
+	plantStore := sqlite.NewPlantStore(db)
+	statsStore := sqlite.NewStatsStore(db)
+	webhookProcessor := sqlite.NewWebhookProcessor(db)
 
+	issue := func(tenantID, userID, role string, plantIDs []string, ttl time.Duration) (string, error) {
+		return middleware.GenerateToken(tenantID, userID, role, plantIDs, cfg.JWTSecret, ttl)
+	}
+
+	authH := handlers.NewAuthHandler(authStore, issue)
 	assetsH := handlers.NewAssetsHandler(assetStore)
 	shipmentsH := handlers.NewShipmentsHandler(shipmentStore)
 	clientsH := handlers.NewClientsHandler(clientStore)
@@ -36,7 +42,9 @@ func NewRouter(cfg *config.Config) http.Handler {
 	dashboardH := handlers.NewDashboardHandler(statsStore)
 	webhooksH := handlers.NewWebhooksHandler(webhookProcessor, cfg.MakeWebhookSecret)
 
-	// Public webhook receivers (no JWT)
+	// Public auth + webhook receivers (no JWT)
+	mux.HandleFunc("POST /api/v1/auth/register", authH.Register)
+	mux.HandleFunc("POST /api/v1/auth/login", authH.Login)
 	mux.HandleFunc("POST /webhooks/make", webhooksH.Make)
 	mux.HandleFunc("POST /webhooks/erp", webhooksH.ERP)
 	mux.HandleFunc("POST /webhooks/airtable", webhooksH.Airtable)
