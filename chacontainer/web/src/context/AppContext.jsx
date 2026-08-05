@@ -7,6 +7,7 @@ export function AppProvider({ children }) {
   const [role, setRole] = useState(null)
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activity, setActivity] = useState(recentActivity)
   const [alerts, setAlerts] = useState(initialAlerts)
   const [selectedWarehouse, setSelectedWarehouse] = useState('bodega_norte')
@@ -50,6 +51,7 @@ export function AppProvider({ children }) {
     <AppContext.Provider value={{
       role, setRole,
       cart, cartOpen, setCartOpen,
+      sidebarOpen, setSidebarOpen,
       addToCart, removeFromCart, updateCartQty, clearCart,
       cartTotal, cartCount,
       activity, addActivity,

@@ -25,7 +25,7 @@ function CartDrawer({ onClose }) {
 
   if (checkedOut) {
     return (
-      <div className="fixed right-0 top-0 h-full w-96 bg-[#111827] border-l border-[#1f2937] z-50 flex flex-col items-center justify-center p-8">
+      <div className="fixed right-0 top-0 h-full w-full max-w-sm bg-[#111827] border-l border-[#1f2937] z-50 flex flex-col items-center justify-center p-8">
         <CheckCircle size={48} className="text-emerald-400 mb-4" />
         <h3 className="text-xl font-bold text-[#f9fafb] mb-2">¡Pedido Confirmado!</h3>
         <p className="text-[#6b7280] text-sm text-center mb-2">ORD-{Math.floor(Math.random() * 1000 + 2850)}</p>
@@ -41,7 +41,7 @@ function CartDrawer({ onClose }) {
   return (
     <>
       <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
-      <div className="fixed right-0 top-0 h-full w-96 bg-[#111827] border-l border-[#1f2937] z-50 flex flex-col">
+      <div className="fixed right-0 top-0 h-full w-full max-w-sm bg-[#111827] border-l border-[#1f2937] z-50 flex flex-col">
         <div className="p-4 border-b border-[#1f2937] flex items-center justify-between">
           <h3 className="font-bold text-[#f9fafb] flex items-center gap-2">
             <ShoppingCart size={18} className="text-[#f97316]" />

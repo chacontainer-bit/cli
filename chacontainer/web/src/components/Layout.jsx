@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { Bell, ShoppingCart } from 'lucide-react'
+import { Bell, Menu, ShoppingCart } from 'lucide-react'
 import Sidebar from './Sidebar'
 import AssistantWidget from './AssistantWidget'
 import { useApp } from '../context/AppContext'
@@ -8,7 +8,7 @@ import { useSimulator } from '../hooks/useSimulator'
 import { roles } from '../data/mockData'
 
 function TopBar() {
-  const { alerts, cartCount, setCartOpen, role } = useApp()
+  const { alerts, cartCount, setCartOpen, role, setSidebarOpen } = useApp()
   const criticalAlerts = alerts.filter(a => a.type === 'critico').length
   const roleData = roles.find(r => r.id === role)
 
@@ -16,11 +16,18 @@ function TopBar() {
   const dateStr = now.toLocaleDateString('es-CL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
 
   return (
-    <div className="h-14 bg-[#111827] border-b border-[#1f2937] flex items-center justify-between px-6 fixed top-0 left-60 right-0 z-30">
-      <div>
-        <p className="text-[#6b7280] text-xs capitalize">{dateStr}</p>
+    <div className="h-14 bg-[#111827] border-b border-[#1f2937] flex items-center justify-between px-4 sm:px-6 fixed top-0 left-0 md:left-60 right-0 z-30">
+      <div className="flex items-center gap-3 min-w-0">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="md:hidden text-[#9ca3af] hover:text-[#f9fafb] transition-colors flex-shrink-0"
+          aria-label="Abrir menú"
+        >
+          <Menu size={20} />
+        </button>
+        <p className="text-[#6b7280] text-xs capitalize truncate hidden sm:block">{dateStr}</p>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 sm:gap-4">
         <button
           onClick={() => setCartOpen(true)}
           className="relative flex items-center gap-1.5 text-[#9ca3af] hover:text-[#f9fafb] transition-colors"
@@ -42,7 +49,7 @@ function TopBar() {
         </div>
         {roleData && (
           <div
-            className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
+            className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
             style={{ backgroundColor: roleData.color }}
           >
             {roleData.avatar}
@@ -73,8 +80,8 @@ export default function Layout() {
       <SimulatorRunner />
       <Sidebar />
       <TopBar />
-      <main className="ml-60 pt-14 min-h-screen">
-        <div className="p-6">
+      <main className="md:ml-60 pt-14 min-h-screen">
+        <div className="p-4 sm:p-6">
           <Outlet />
         </div>
       </main>

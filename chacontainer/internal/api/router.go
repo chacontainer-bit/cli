@@ -49,6 +49,16 @@ func NewRouter(cfg *config.Config) http.Handler {
 		middleware.Auth(cfg.JWTSecret),
 	)
 
+	// Write middleware: same as authed, plus role enforcement. Viewers are
+	// read-only; admin/manager/operator/api may create, update, or delete.
+	written := chain(
+		middleware.Logger,
+		middleware.CORS,
+		middleware.RateLimit,
+		middleware.Auth(cfg.JWTSecret),
+		middleware.RequireRole("admin", "manager", "operator", "api"),
+	)
+
 	// Dashboard
 	mux.Handle("GET /api/v1/dashboard/summary", authed(http.HandlerFunc(dashboardH.Summary)))
 	mux.Handle("GET /api/v1/dashboard/assets/trend", authed(http.HandlerFunc(dashboardH.AssetTrend)))
@@ -57,39 +67,39 @@ func NewRouter(cfg *config.Config) http.Handler {
 
 	// Assets
 	mux.Handle("GET /api/v1/assets", authed(http.HandlerFunc(assetsH.List)))
-	mux.Handle("POST /api/v1/assets", authed(http.HandlerFunc(assetsH.Create)))
+	mux.Handle("POST /api/v1/assets", written(http.HandlerFunc(assetsH.Create)))
 	mux.Handle("GET /api/v1/assets/{id}", authed(http.HandlerFunc(assetsH.Get)))
-	mux.Handle("PATCH /api/v1/assets/{id}", authed(http.HandlerFunc(assetsH.Update)))
-	mux.Handle("DELETE /api/v1/assets/{id}", authed(http.HandlerFunc(assetsH.Delete)))
+	mux.Handle("PATCH /api/v1/assets/{id}", written(http.HandlerFunc(assetsH.Update)))
+	mux.Handle("DELETE /api/v1/assets/{id}", written(http.HandlerFunc(assetsH.Delete)))
 	mux.Handle("GET /api/v1/assets/{id}/events", authed(http.HandlerFunc(assetsH.GetEvents)))
-	mux.Handle("POST /api/v1/assets/scan", authed(http.HandlerFunc(assetsH.ScanQR)))
+	mux.Handle("POST /api/v1/assets/scan", written(http.HandlerFunc(assetsH.ScanQR)))
 
 	// Shipments
 	mux.Handle("GET /api/v1/shipments", authed(http.HandlerFunc(shipmentsH.List)))
-	mux.Handle("POST /api/v1/shipments", authed(http.HandlerFunc(shipmentsH.Create)))
+	mux.Handle("POST /api/v1/shipments", written(http.HandlerFunc(shipmentsH.Create)))
 	mux.Handle("GET /api/v1/shipments/{id}", authed(http.HandlerFunc(shipmentsH.Get)))
-	mux.Handle("POST /api/v1/shipments/{id}/transition", authed(http.HandlerFunc(shipmentsH.Transition)))
+	mux.Handle("POST /api/v1/shipments/{id}/transition", written(http.HandlerFunc(shipmentsH.Transition)))
 	mux.Handle("GET /api/v1/shipments/{id}/lines", authed(http.HandlerFunc(shipmentsH.GetLines)))
-	mux.Handle("POST /api/v1/shipments/{id}/lines", authed(http.HandlerFunc(shipmentsH.AddLine)))
+	mux.Handle("POST /api/v1/shipments/{id}/lines", written(http.HandlerFunc(shipmentsH.AddLine)))
 	mux.Handle("GET /api/v1/shipments/{id}/timeline", authed(http.HandlerFunc(shipmentsH.GetTimeline)))
 
 	// Clients / CRM
 	mux.Handle("GET /api/v1/clients", authed(http.HandlerFunc(clientsH.List)))
-	mux.Handle("POST /api/v1/clients", authed(http.HandlerFunc(clientsH.Create)))
+	mux.Handle("POST /api/v1/clients", written(http.HandlerFunc(clientsH.Create)))
 	mux.Handle("GET /api/v1/clients/{id}", authed(http.HandlerFunc(clientsH.Get)))
-	mux.Handle("PATCH /api/v1/clients/{id}", authed(http.HandlerFunc(clientsH.Update)))
+	mux.Handle("PATCH /api/v1/clients/{id}", written(http.HandlerFunc(clientsH.Update)))
 	mux.Handle("GET /api/v1/clients/{id}/contacts", authed(http.HandlerFunc(clientsH.ListContacts)))
-	mux.Handle("POST /api/v1/clients/{id}/contacts", authed(http.HandlerFunc(clientsH.CreateContact)))
+	mux.Handle("POST /api/v1/clients/{id}/contacts", written(http.HandlerFunc(clientsH.CreateContact)))
 	mux.Handle("GET /api/v1/clients/{id}/interactions", authed(http.HandlerFunc(clientsH.ListInteractions)))
-	mux.Handle("POST /api/v1/clients/{id}/interactions", authed(http.HandlerFunc(clientsH.CreateInteraction)))
+	mux.Handle("POST /api/v1/clients/{id}/interactions", written(http.HandlerFunc(clientsH.CreateInteraction)))
 
 	// Plants
 	mux.Handle("GET /api/v1/plants", authed(http.HandlerFunc(plantsH.List)))
-	mux.Handle("POST /api/v1/plants", authed(http.HandlerFunc(plantsH.Create)))
+	mux.Handle("POST /api/v1/plants", written(http.HandlerFunc(plantsH.Create)))
 	mux.Handle("GET /api/v1/plants/{id}", authed(http.HandlerFunc(plantsH.Get)))
-	mux.Handle("PATCH /api/v1/plants/{id}", authed(http.HandlerFunc(plantsH.Update)))
+	mux.Handle("PATCH /api/v1/plants/{id}", written(http.HandlerFunc(plantsH.Update)))
 	mux.Handle("GET /api/v1/plants/{id}/zones", authed(http.HandlerFunc(plantsH.ListZones)))
-	mux.Handle("POST /api/v1/plants/{id}/zones", authed(http.HandlerFunc(plantsH.CreateZone)))
+	mux.Handle("POST /api/v1/plants/{id}/zones", written(http.HandlerFunc(plantsH.CreateZone)))
 
 	return mux
 }
