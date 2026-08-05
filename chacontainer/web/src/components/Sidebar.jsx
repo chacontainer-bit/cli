@@ -1,29 +1,28 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, ShoppingCart, FolderKanban, MapPin,
-  Calculator, Settings, LogOut, Package, ChevronRight, Bot, Layers
+  Calculator, Settings, LogOut, Package, ChevronRight, Bot, Layers, Warehouse
 } from 'lucide-react'
-import { useApp } from '../context/AppContext'
-import { roles } from '../data/mockData'
+import { useAuth } from '../context/AuthContext'
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/traceability', icon: MapPin, label: 'Activos' },
+  { to: '/backoffice', icon: Settings, label: 'Envíos y Clientes' },
+  { to: '/plants', icon: Warehouse, label: 'Plantas' },
   { to: '/marketplace', icon: ShoppingCart, label: 'Marketplace' },
   { to: '/projects', icon: FolderKanban, label: 'Proyectos' },
-  { to: '/traceability', icon: MapPin, label: 'Trazabilidad' },
   { to: '/calculator', icon: Calculator, label: 'Calculadora' },
-  { to: '/backoffice', icon: Settings, label: 'Backoffice' },
   { to: '/asistente', icon: Bot, label: 'Asistente' },
   { to: '/assets', icon: Layers, label: 'Fábrica de Assets' },
 ]
 
 export default function Sidebar() {
-  const { role, setRole } = useApp()
+  const { user, tenant, logout } = useAuth()
   const navigate = useNavigate()
-  const roleData = roles.find(r => r.id === role)
 
   function handleLogout() {
-    setRole(null)
+    logout()
     navigate('/login')
   }
 
@@ -35,7 +34,7 @@ export default function Sidebar() {
           <Package className="text-[#f97316]" size={22} />
           <span className="text-[#f97316] font-bold tracking-widest text-sm">CHACONTAINER</span>
         </div>
-        <p className="text-[#6b7280] text-xs mt-1 font-mono">ERP v2.4.1</p>
+        <p className="text-[#6b7280] text-xs mt-1 font-mono truncate">{tenant?.name || '—'}</p>
       </div>
 
       {/* Nav */}
@@ -63,19 +62,16 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Role badge + logout */}
+      {/* User + logout */}
       <div className="border-t border-[#1f2937] p-4">
-        {roleData && (
+        {user && (
           <div className="flex items-center gap-3 mb-3">
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-              style={{ backgroundColor: roleData.color }}
-            >
-              {roleData.avatar}
+            <div className="w-8 h-8 rounded-full bg-[#f97316] flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+              {user.name?.[0]?.toUpperCase() || '?'}
             </div>
             <div className="min-w-0">
-              <p className="text-[#f9fafb] text-xs font-medium truncate">{roleData.name}</p>
-              <p className="text-[#6b7280] text-xs truncate font-mono">{roleData.id}</p>
+              <p className="text-[#f9fafb] text-xs font-medium truncate">{user.name}</p>
+              <p className="text-[#6b7280] text-xs truncate font-mono">{user.role}</p>
             </div>
           </div>
         )}

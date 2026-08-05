@@ -42,12 +42,18 @@ func NewRouter(cfg *config.Config, db *sql.DB) http.Handler {
 	dashboardH := handlers.NewDashboardHandler(statsStore)
 	webhooksH := handlers.NewWebhooksHandler(webhookProcessor, cfg.MakeWebhookSecret)
 
-	// Public auth + webhook receivers (no JWT)
-	mux.HandleFunc("POST /api/v1/auth/register", authH.Register)
-	mux.HandleFunc("POST /api/v1/auth/login", authH.Login)
+	// Public (no JWT) — still needs CORS so browsers can call it.
+	public := chain(middleware.Logger, middleware.CORS)
+	mux.Handle("POST /api/v1/auth/register", public(http.HandlerFunc(authH.Register)))
+	mux.Handle("POST /api/v1/auth/login", public(http.HandlerFunc(authH.Login)))
 	mux.HandleFunc("POST /webhooks/make", webhooksH.Make)
 	mux.HandleFunc("POST /webhooks/erp", webhooksH.ERP)
 	mux.HandleFunc("POST /webhooks/airtable", webhooksH.Airtable)
+
+	// CORS preflight: browsers send an OPTIONS request ahead of any call that
+	// carries a JSON body or an Authorization header, for every /api/v1/*
+	// route. Handle it once here rather than per-route.
+	mux.Handle("OPTIONS /api/v1/{path...}", public(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})))
 
 	// Auth middleware
 	authed := chain(

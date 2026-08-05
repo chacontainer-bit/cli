@@ -254,6 +254,30 @@ func TestShipmentLifecycle(t *testing.T) {
 	}
 }
 
+// TestCORSPreflight guards against a real bug found while testing the web
+// app in a browser: JSON POST bodies and the Authorization header both force
+// a CORS preflight OPTIONS request, which needs Access-Control-Allow-Origin
+// on both the public auth routes and every authenticated /api/v1/* route.
+func TestCORSPreflight(t *testing.T) {
+	router := newTestRouter(t)
+
+	for _, path := range []string{"/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/assets", "/api/v1/shipments/abc/transition"} {
+		req := httptest.NewRequest(http.MethodOptions, path, nil)
+		req.Header.Set("Origin", "http://localhost:5173")
+		req.Header.Set("Access-Control-Request-Method", "POST")
+		req.Header.Set("Access-Control-Request-Headers", "content-type,authorization")
+		rec := httptest.NewRecorder()
+		router.ServeHTTP(rec, req)
+
+		if rec.Code != http.StatusNoContent {
+			t.Fatalf("OPTIONS %s: expected 204, got %d", path, rec.Code)
+		}
+		if rec.Header().Get("Access-Control-Allow-Origin") == "" {
+			t.Fatalf("OPTIONS %s: missing Access-Control-Allow-Origin header", path)
+		}
+	}
+}
+
 func TestHealth(t *testing.T) {
 	router := newTestRouter(t)
 	rec := httptest.NewRecorder()

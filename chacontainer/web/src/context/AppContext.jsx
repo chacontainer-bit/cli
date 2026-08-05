@@ -4,7 +4,6 @@ import { recentActivity, alerts as initialAlerts } from '../data/mockData'
 const AppContext = createContext(null)
 
 export function AppProvider({ children }) {
-  const [role, setRole] = useState(null)
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
   const [activity, setActivity] = useState(recentActivity)
@@ -48,7 +47,6 @@ export function AppProvider({ children }) {
 
   return (
     <AppContext.Provider value={{
-      role, setRole,
       cart, cartOpen, setCartOpen,
       addToCart, removeFromCart, updateCartQty, clearCart,
       cartTotal, cartCount,

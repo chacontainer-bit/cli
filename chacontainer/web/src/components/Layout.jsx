@@ -4,13 +4,13 @@ import { Bell, ShoppingCart } from 'lucide-react'
 import Sidebar from './Sidebar'
 import AssistantWidget from './AssistantWidget'
 import { useApp } from '../context/AppContext'
+import { useAuth } from '../context/AuthContext'
 import { useSimulator } from '../hooks/useSimulator'
-import { roles } from '../data/mockData'
 
 function TopBar() {
-  const { alerts, cartCount, setCartOpen, role } = useApp()
+  const { alerts, cartCount, setCartOpen } = useApp()
+  const { user } = useAuth()
   const criticalAlerts = alerts.filter(a => a.type === 'critico').length
-  const roleData = roles.find(r => r.id === role)
 
   const now = new Date()
   const dateStr = now.toLocaleDateString('es-CL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
@@ -40,12 +40,12 @@ function TopBar() {
             </span>
           )}
         </div>
-        {roleData && (
+        {user && (
           <div
-            className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
-            style={{ backgroundColor: roleData.color }}
+            className="w-7 h-7 rounded-full bg-[#f97316] flex items-center justify-center text-xs font-bold text-white"
+            title={user.name}
           >
-            {roleData.avatar}
+            {user.name?.[0]?.toUpperCase() || '?'}
           </div>
         )}
       </div>
@@ -59,14 +59,14 @@ function SimulatorRunner() {
 }
 
 export default function Layout() {
-  const { role } = useApp()
+  const { isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!role) navigate('/login')
-  }, [role, navigate])
+    if (!isAuthenticated) navigate('/login')
+  }, [isAuthenticated, navigate])
 
-  if (!role) return null
+  if (!isAuthenticated) return null
 
   return (
     <div className="min-h-screen bg-[#0a0f1a]">
