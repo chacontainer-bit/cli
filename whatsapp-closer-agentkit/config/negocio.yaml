@@ -1,0 +1,31 @@
+# Sin precios reales todavía: chacontainer/docs/lista-precios-costos.md sigue en
+# `[VALIDAR]` en sus 24 campos. Catálogo vacío a propósito — un precio que no está
+# acá no existe, el agente no lo inventa — y por eso ninguna pregunta de precio se
+# contesta sola: la objeción de precio del playbook la deriva a un humano siempre.
+catalogo: []
+
+# Sin catálogo no hay contra qué comparar un monto, así que el disparador por
+# rango queda apagado. Quedan el enojo y las palabras clave del paso 6.
+rango: null
+
+# Las seis del default más cuatro propias de operación B2B industrial: términos
+# legales o financieros que ningún agente debería inventar. "Cotización formal"
+# no está: cualquier pregunta de precio ya deriva por el playbook, sin falta de
+# palabra clave. "Visita en planta" tampoco: es una reunión más, se agenda con la
+# duración de 60 minutos de Q7, no se escala.
+escalacion:
+  - humano
+  - persona real
+  - reclamo
+  - abogado
+  - estafa
+  - cancelar
+  - contrato
+  - crédito
+  - condiciones de pago
+  - factura
+
+# Pendiente: el número de WhatsApp interno. Sin esto el aviso del paso 6 no sale,
+# pero la escalación ocurre igual — deja de responder y la etapa queda en
+# `escalado` — y el aviso se agrega después con /configurar.
+canal_interno: null

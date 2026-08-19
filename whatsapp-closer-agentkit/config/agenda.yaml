@@ -1,0 +1,81 @@
+# Lunes a viernes 9:00-14:00 y 16:00-18:00, America/Mexico_City (UTC-6 todo el
+# año: México eliminó el horario de verano en el territorio central en 2022).
+# Duración estándar: 30 minutos. Las visitas técnicas o diagnósticos en planta
+# duran 60: el contrato de agenda no distingue tipo de reunión por franja —sólo
+# inicio y duracion_min—, así que esa distinción la maneja quien agenda a mano
+# hasta que el kit soporte tipos de reunión.
+#
+# Esto envejece en cinco días hábiles por diseño (blueprint/25-playbook.md):
+# una fecha concreta acá no se actualiza sola. Se regenera con /configurar.
+franjas:
+  - inicio: 2026-08-20T09:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-20T10:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-20T11:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-20T12:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-20T13:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-20T16:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-20T17:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-21T09:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-21T10:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-21T11:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-21T12:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-21T13:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-21T16:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-21T17:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-24T09:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-24T10:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-24T11:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-24T12:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-24T13:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-24T16:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-24T17:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-25T09:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-25T10:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-25T11:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-25T12:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-25T13:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-25T16:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-25T17:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-26T09:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-26T10:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-26T11:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-26T12:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-26T13:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-26T16:00:00-06:00
+    duracion_min: 30
+  - inicio: 2026-08-26T17:00:00-06:00
+    duracion_min: 30
+opciones: 3
