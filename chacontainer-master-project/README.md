@@ -23,6 +23,14 @@
 - ✅ [Reglas operativas](./reglas-operativas.md) — paso 9.
 - ✅ [Arquitectura de CHACONTAINER OS](./arquitectura-os.md) — paso 10.
 
+**Entregables de la FASE III · Producto:**
+
+- ✅ [MVP — alcance](./mvp.md) — paso 11.
+- ✅ [QR — el escaneo como disparador del ciclo](./qr.md) — paso 12.
+- ✅ [Dashboard — indicadores y vistas](./dashboard.md) — paso 13.
+- ✅ [Alertas — de la regla a la acción](./alertas.md) — paso 14.
+- ✅ [Piloto — plan de ejecución](./piloto.md) — paso 15.
+
 ## 1. Tesis estratégica
 
 CHACONTAINER se estructura alrededor de una sola idea:
