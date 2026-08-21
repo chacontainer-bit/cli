@@ -2,24 +2,24 @@ import { useEffect, useRef } from 'react'
 import { useApp } from '../context/AppContext'
 
 const scanEvents = [
-  { containerId: 'CHC-0421', location: 'Bodega Norte', user: 'Carlos M.' },
-  { containerId: 'CHC-0422', location: 'Taller Santiago', user: 'Operador R.' },
-  { containerId: 'CHC-0430', location: 'Taller Concepción', user: 'María T.' },
-  { containerId: 'CHC-0426', location: 'Planta Concepción', user: 'Guardia A.' },
-  { containerId: 'CHC-0433', location: 'Bodega Norte', user: 'Sistema QR' },
-  { containerId: 'CHC-0439', location: 'Bodega Valparaíso', user: 'Juan P.' },
+  { containerId: 'CHC-0421', location: 'Bodega Estado de México', user: 'Carlos M.' },
+  { containerId: 'CHC-0422', location: 'Taller Querétaro', user: 'Operador R.' },
+  { containerId: 'CHC-0430', location: 'Taller Villa de Reyes', user: 'María T.' },
+  { containerId: 'CHC-0426', location: 'Planta Cliente Puebla', user: 'Guardia A.' },
+  { containerId: 'CHC-0433', location: 'Bodega Estado de México', user: 'Sistema QR' },
+  { containerId: 'CHC-0439', location: 'Bodega Querétaro', user: 'Juan P.' },
 ]
 
 const orderEvents = [
-  { order: 'ORD-2852', detail: '10x IBC 600L → BASF RM', user: 'Sistema' },
-  { order: 'ORD-2853', detail: '30x Tambor 200L → Codelco Andina', user: 'Sistema' },
-  { order: 'ORD-2854', detail: '5x IBC 1000L → ENAP Concón', user: 'Sistema' },
+  { order: 'ORD-2852', detail: '10x Contenedor Colapsable → Valeo México Querétaro', user: 'Sistema' },
+  { order: 'ORD-2853', detail: '30x KLT → Denso Puebla', user: 'Sistema' },
+  { order: 'ORD-2854', detail: '5x Tarima/Pallet → Continental Guanajuato', user: 'Sistema' },
 ]
 
 const washEvents = [
-  { containerId: 'CHC-0419', cycle: 9, user: 'Taller Stgo' },
-  { containerId: 'CHC-0438', cycle: 11, user: 'Taller Rancagua' },
-  { containerId: 'CHC-0430', cycle: 12, user: 'Taller CCP' },
+  { containerId: 'CHC-0419', cycle: 9, user: 'Taller Qro' },
+  { containerId: 'CHC-0438', cycle: 11, user: 'Taller Puebla' },
+  { containerId: 'CHC-0430', cycle: 12, user: 'Taller VdR' },
 ]
 
 function getRandomInt(min, max) {
@@ -78,8 +78,8 @@ export function useSimulator() {
         // Random alert
         const alertTypes = [
           { type: 'info', message: `Despacho completado: ${getRandomInt(5, 20)} contenedores → Cliente`, module: 'marketplace' },
-          { type: 'advertencia', message: `Stock bajo en Bodega Sur: IBC 600L (${getRandomInt(2, 8)} un)`, module: 'marketplace' },
-          { type: 'info', message: `Ciclo de lavado #${getRandomInt(8, 15)} completado en Taller Santiago`, module: 'trazabilidad' },
+          { type: 'advertencia', message: `Stock bajo en Bodega Puebla: Contenedor Colapsable (${getRandomInt(2, 8)} un)`, module: 'marketplace' },
+          { type: 'info', message: `Ciclo de lavado #${getRandomInt(8, 15)} completado en Taller Querétaro`, module: 'trazabilidad' },
         ]
         const alert = alertTypes[getRandomInt(0, alertTypes.length - 1)]
         addAlert({ id: `A${Date.now()}`, ...alert, time })

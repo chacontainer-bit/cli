@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AppProvider } from './context/AppContext'
 import Layout from './components/Layout'
+import MarketingLanding from './pages/MarketingLanding'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Marketplace from './pages/Marketplace'
@@ -16,9 +17,10 @@ export default function App() {
     <AppProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<MarketingLanding />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="/app" element={<Layout />}>
+            <Route index element={<Navigate to="/app/dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="marketplace" element={<Marketplace />} />
             <Route path="projects" element={<Projects />} />
@@ -28,7 +30,7 @@ export default function App() {
             <Route path="asistente" element={<Asistente />} />
             <Route path="assets" element={<AssetFactory />} />
           </Route>
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>

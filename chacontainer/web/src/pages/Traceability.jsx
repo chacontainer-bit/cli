@@ -61,47 +61,49 @@ function EventTimeline({ containerId }) {
   )
 }
 
-// Simple Chile region map SVG
-function ChileMap({ containers }) {
+// Distribución de activos por hub regional (Bajío / Centro de México).
+function HubDistribution({ containers }) {
   const statusCounts = {}
   containers.forEach(c => {
     statusCounts[c.status] = (statusCounts[c.status] || 0) + 1
   })
 
-  const regions = [
-    { label: 'Antofagasta', y: 80, count: containers.filter(c => c.location.includes('Antofagasta')).length },
-    { label: 'Valparaíso', y: 170, count: containers.filter(c => c.location.includes('Valp')).length },
-    { label: 'R. Metropolitana', y: 210, count: containers.filter(c => c.location.includes('Santiago') || c.location.includes('Norte') || c.location.includes('Sur')).length },
-    { label: 'Rancagua', y: 250, count: containers.filter(c => c.location.includes('Rancagua')).length },
-    { label: 'Concepción', y: 320, count: containers.filter(c => c.location.includes('Concep') || c.location.includes('Arauco')).length },
-    { label: 'Nacimiento', y: 360, count: containers.filter(c => c.location.includes('Nacim')).length },
+  const hubs = [
+    { label: 'Querétaro', count: containers.filter(c => c.location.includes('Querétaro')).length },
+    { label: 'Puebla', count: containers.filter(c => c.location.includes('Puebla')).length },
+    { label: 'Estado de México', count: containers.filter(c => c.location.includes('Estado de México')).length },
+    { label: 'Villa de Reyes', count: containers.filter(c => c.location.includes('Villa de Reyes')).length },
+    { label: 'Toluca', count: containers.filter(c => c.location.includes('Toluca')).length },
+    { label: 'Guanajuato', count: containers.filter(c => c.location.includes('Guanajuato')).length },
+    { label: 'San Luis Potosí', count: containers.filter(c => c.location.includes('San Luis Potosí')).length },
   ]
+  const maxCount = Math.max(1, ...hubs.map(h => h.count))
 
   return (
     <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-4">
       <h3 className="text-sm font-semibold text-[#f9fafb] mb-4 flex items-center gap-2">
         <MapPin size={14} className="text-[#f97316]" />
-        Distribución Geográfica
+        Distribución por Hub
       </h3>
-      <svg viewBox="0 0 180 450" className="w-full max-h-72">
-        {/* Chile shape (simplified) */}
-        <path d="M90,20 L110,30 L115,80 L112,130 L118,180 L115,230 L120,280 L115,330 L110,380 L105,420 L95,430 L85,420 L80,380 L78,330 L82,280 L80,230 L78,180 L82,130 L80,80 L82,30 Z"
-          fill="#1a2235" stroke="#1f2937" strokeWidth="1" />
 
-        {regions.map((r, i) => (
-          <g key={i}>
-            <circle cx="97" cy={r.y} r={r.count > 0 ? Math.max(6, Math.min(14, r.count * 3)) : 4}
-              fill={r.count > 0 ? '#f97316' : '#374151'} opacity="0.8" />
-            {r.count > 0 && (
-              <text x="97" y={r.y + 1} textAnchor="middle" fill="white" fontSize="8" fontWeight="bold">{r.count}</text>
-            )}
-            <text x="125" y={r.y + 4} fill="#9ca3af" fontSize="9">{r.label}</text>
-            <line x1="112" y1={r.y} x2="122" y2={r.y} stroke="#374151" strokeWidth="0.5" />
-          </g>
+      <div className="space-y-2.5">
+        {hubs.map(h => (
+          <div key={h.label}>
+            <div className="flex items-center justify-between text-xs mb-1">
+              <span className="text-[#9ca3af]">{h.label}</span>
+              <span className="text-[#f9fafb] font-mono">{h.count}</span>
+            </div>
+            <div className="h-1.5 bg-[#0a0f1a] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#f97316] rounded-full"
+                style={{ width: `${h.count > 0 ? Math.max(6, (h.count / maxCount) * 100) : 0}%` }}
+              />
+            </div>
+          </div>
         ))}
-      </svg>
+      </div>
 
-      <div className="mt-3 space-y-1.5">
+      <div className="mt-4 pt-3 border-t border-[#1f2937] space-y-1.5">
         {Object.entries(statusConfig).slice(0, 4).map(([key, cfg]) => (
           <div key={key} className="flex items-center justify-between text-xs">
             <div className="flex items-center gap-1.5">
@@ -238,9 +240,9 @@ export default function Traceability() {
           <p className="text-xs text-[#6b7280] font-mono">{filtered.length} de {containers.length} contenedores</p>
         </div>
 
-        {/* Map sidebar */}
+        {/* Hub distribution sidebar */}
         <div className="xl:col-span-1">
-          <ChileMap containers={containers} />
+          <HubDistribution containers={containers} />
         </div>
       </div>
     </div>
