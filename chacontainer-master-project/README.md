@@ -12,7 +12,7 @@
 - ✅ [Catálogo definitivo Packaging Solutions](./catalogo-solutions.md) — paso 1.
 - ✅ [Catálogo definitivo Packaging Systems](./catalogo-systems.md) — paso 2.
 - ✅ [Ciclo de vida del activo](./ciclo-de-vida-del-activo.md) — paso 3.
-- ⬜ Estados del activo — paso 4.
+- ✅ [Estados del activo](./estados-del-activo.md) — paso 4.
 - ⬜ SOP del ciclo del activo — paso 5.
 - ⬜ KPI — paso 6.
 
