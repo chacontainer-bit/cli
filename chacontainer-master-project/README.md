@@ -7,6 +7,12 @@
 > operador del ciclo de vida del empaque retornable — no es código ni documentación de producto
 > del SaaS existente.
 
+**→ [Pendientes de validación — lista maestra](./pendientes-de-validacion.md)**:
+las 254 decisiones y confirmaciones que el proyecto dejó marcadas `[VALIDAR]`
+en los 44 documentos, organizadas en 4 niveles por quién decide y qué tan
+bloqueante es. Punto de partida recomendado antes de operar cualquiera de
+las fases.
+
 **Entregables de la FASE I · Fundación:**
 
 - ✅ [Catálogo definitivo Packaging Solutions](./catalogo-solutions.md) — paso 1.
