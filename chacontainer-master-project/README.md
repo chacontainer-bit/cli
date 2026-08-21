@@ -7,6 +7,15 @@
 > operador del ciclo de vida del empaque retornable — no es código ni documentación de producto
 > del SaaS existente.
 
+**Entregables de la FASE I · Fundación:**
+
+- ✅ [Catálogo definitivo Packaging Solutions](./catalogo-solutions.md) — paso 1.
+- ⬜ Catálogo definitivo Packaging Systems — paso 2.
+- ⬜ Ciclo de vida del activo — paso 3.
+- ⬜ Estados del activo — paso 4.
+- ⬜ SOP del ciclo del activo — paso 5.
+- ⬜ KPI — paso 6.
+
 ## 1. Tesis estratégica
 
 CHACONTAINER se estructura alrededor de una sola idea:
