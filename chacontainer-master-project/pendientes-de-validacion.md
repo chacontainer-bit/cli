@@ -1,9 +1,15 @@
 # Pendientes de validación — lista maestra
 
-El proyecto tiene **254 marcas `[VALIDAR]`** repartidas en 44 documentos (24
-documentos estratégicos + 20 SOP-ACTIVO). Ninguna es un placeholder vacío:
-cada una es un punto donde el proyecto necesita un dato real, una decisión,
-o una confirmación que este documento no tiene autoridad para inventar.
+El proyecto arrancó con **254 marcas `[VALIDAR]`** repartidas en 44
+documentos (24 documentos estratégicos + 20 SOP-ACTIVO). Ninguna es un
+placeholder vacío: cada una es un punto donde el proyecto necesita un dato
+real, una decisión, o una confirmación que este documento no tiene
+autoridad para inventar.
+
+**Estado actual: 4 de las 17 decisiones del Nivel 1 ya están resueltas**
+(compromiso sobre KPI, participación en ahorro, estructura del fee por
+activo, y modelo de partner) — quedan **252 marcas abiertas**. El resto de
+este documento refleja el estado vigente.
 
 Esta lista no es para leer de corrido. Es un **checklist de trabajo**,
 organizado en 4 niveles según quién puede resolverlo y qué tan bloqueante es.
@@ -25,38 +31,42 @@ mismo tipo de pregunta — se resuelven en bloque, no una por una.
 
 ---
 
-## Nivel 1 · Decisiones estratégicas (17)
+## Nivel 1 · Decisiones estratégicas (13 abiertas, 4 resueltas)
 
 Ordenadas por impacto en lo que se le puede prometer a un cliente hoy.
 
+### Resueltas
+
+- ✅ **Compromiso sobre KPI en la Oferta 4**: compromiso blando con piso de responsabilidad — proyección basada en el piloto, revisada trimestralmente en el comité de gobernanza, sin penalización contractual — [oferta-systems.md, Oferta 4](./oferta-systems.md#oferta-4--gobernanza-del-sistema-nivel-5).
+- ✅ **Participación en el ahorro medido**: no se ofrece por ahora; queda reservada como componente adicional posible en cuentas grandes y maduras — [pricing.md §1](./pricing.md#1-la-decisión-que-ordena-todo-la-métrica-de-valor).
+- ✅ **Estructura del fee "por activo administrado"**: piso fijo por la vigencia del contrato, recalculado al renovar — [pricing.md §2](./pricing.md#2-el-incentivo-perverso-que-hay-que-resolver). Queda abierto solo el número de meses/años del piso (ver más abajo).
+- ✅ **Subcontratista vs. franquicia/red para partners**: subcontratista — CHACONTAINER mantiene la facturación con el cliente y con ella la palanca para exigir cobertura de escaneo — [escala-hubs-y-partners.md §3](./escala-hubs-y-partners.md#3-modelo-de-partner-decidido).
+
 ### Modelo comercial y de riesgo
 
-1. **¿Se aceptan compromisos sobre KPI en la Oferta 4, y con qué límite de responsabilidad?** — [oferta-systems.md](./oferta-systems.md#oferta-4--gobernanza-del-sistema-nivel-5). Es la diferencia entre vender un servicio y vender una garantía.
-2. **¿La participación en el ahorro medido entra como componente de pricing, o se descarta?** — [pricing.md §1](./pricing.md#1-la-decisión-que-ordena-todo-la-métrica-de-valor). Alineación perfecta pero exige una línea base indiscutible.
-3. **Estructura de piso y vigencia para el fee "por activo administrado"** (para corregir el incentivo perverso de que Systems gane menos cuando funciona mejor) — [pricing.md §2](./pricing.md#2-el-incentivo-perverso-que-hay-que-resolver).
-4. **Indicador de mezcla Solutions/Systems por cuenta**, para medir si Systems canibaliza ingreso transaccional o lo sustituye por algo mejor — [pricing.md §3](./pricing.md#3-la-pregunta-incómoda-systems-canibaliza-a-solutions).
-5. **Descuento máximo autorizado sin aprobación** — ya estaba pendiente en el SOP-07 comercial del SaaS; se hereda aquí — [pricing.md §5](./pricing.md#5-lo-que-falta-decidir-antes-de-cotizar).
+1. **Vigencia mínima del piso del fee** (en meses/años) que hace rentable el setup — [pricing.md §2](./pricing.md#2-el-incentivo-perverso-que-hay-que-resolver).
+2. **Indicador de mezcla Solutions/Systems por cuenta**, para medir si Systems canibaliza ingreso transaccional o lo sustituye por algo mejor — [pricing.md §3](./pricing.md#3-la-pregunta-incómoda-systems-canibaliza-a-solutions).
+3. **Descuento máximo autorizado sin aprobación** — ya estaba pendiente en el SOP-07 comercial del SaaS; se hereda aquí — [pricing.md §5](./pricing.md#5-lo-que-falta-decidir-antes-de-cotizar).
 
 ### Piloto pagado
 
-6. **Extensión máxima si no se cumple el umbral de mejora acordado**, y **porcentaje/plazo de acreditación al contrato si se firma rápido** — [piloto-pagado.md §3](./piloto-pagado.md#3-reversión-de-riesgo-qué-ofrecer-y-qué-no).
-7. **Fijar el umbral de mejora con el cliente antes de empezar el piloto**, no al cierre — [piloto.md §4](./piloto.md#4-criterios-de-éxito). Es una práctica a instalar, no un número a decidir una sola vez.
-8. **Encuadre de la línea base como diagnóstico, no auditoría de responsabilidades**, acordado explícitamente con cada cliente — [piloto.md §6](./piloto.md#6-riesgos).
+4. **Extensión máxima si no se cumple el umbral de mejora acordado**, y **porcentaje/plazo de acreditación al contrato si se firma rápido** — [piloto-pagado.md §3](./piloto-pagado.md#3-reversión-de-riesgo-qué-ofrecer-y-qué-no).
+5. **Fijar el umbral de mejora con el cliente antes de empezar el piloto**, no al cierre — [piloto.md §4](./piloto.md#4-criterios-de-éxito). Es una práctica a instalar, no un número a decidir una sola vez.
+6. **Encuadre de la línea base como diagnóstico, no auditoría de responsabilidades**, acordado explícitamente con cada cliente — [piloto.md §6](./piloto.md#6-riesgos).
 
 ### Gobernanza
 
-9. **Quién es "Gobernanza" exactamente, por cliente** (¿siempre el fundador? ¿un responsable de cuenta cuando haya más de un cliente en Nivel 5?) — [modelo-de-gobernanza.md §1](./modelo-de-gobernanza.md#1-los-tres-niveles-de-gobernanza).
-10. **Periodicidad real del comité de gobernanza** (el documento asume mensual) — [modelo-de-gobernanza.md §3](./modelo-de-gobernanza.md#3-ritual-de-gobernanza-propuesto).
-11. **Umbral de recurrencia y monto económico que dispara escalada de Nivel 2 a Nivel 3** — [modelo-de-gobernanza.md §4](./modelo-de-gobernanza.md#4-qué-activa-una-escalada-de-nivel-2-a-nivel-3).
+7. **Quién es "Gobernanza" exactamente, por cliente** (¿siempre el fundador? ¿un responsable de cuenta cuando haya más de un cliente en Nivel 5?) — [modelo-de-gobernanza.md §1](./modelo-de-gobernanza.md#1-los-tres-niveles-de-gobernanza).
+8. **Periodicidad real del comité de gobernanza** (el documento asume mensual) — [modelo-de-gobernanza.md §3](./modelo-de-gobernanza.md#3-ritual-de-gobernanza-propuesto).
+9. **Umbral de recurrencia y monto económico que dispara escalada de Nivel 2 a Nivel 3** — [modelo-de-gobernanza.md §4](./modelo-de-gobernanza.md#4-qué-activa-una-escalada-de-nivel-2-a-nivel-3).
 
 ### Escala (decisiones que aún no urgen, pero conviene tener presentes)
 
-12. **Subcontratista vs. franquicia/red para partners** — [escala-hubs-y-partners.md §3](./escala-hubs-y-partners.md#3-la-decisión-que-conviene-no-tomar-todavía). No decidir todavía, pero saber que el segundo modelo es más difícil de sostener con las obligaciones de datos.
-13. **Umbral de cobertura de escaneo bajo el cual no se renueva un partner** — [escala-hubs-y-partners.md §2](./escala-hubs-y-partners.md#2-partners-paso-22).
-14. **% de alertas atendidas vs. generadas aceptable antes de escalar a operación nacional** — [escala-geografica.md §2](./escala-geografica.md#2-operación-nacional-paso-26).
-15. **Consultar con asesor aduanal antes de operar cruces México–EE.UU.** — el régimen de importación temporal puede restringir la decisión de baja/scrap de un activo — [escala-geografica.md §3.2](./escala-geografica.md#32-el-régimen-aduanal-restringe-el-ciclo-de-vida).
-16. **Moneda de reporte cuando un ciclo cruza frontera** (única vs. por segmento) — [escala-geografica.md §3.4](./escala-geografica.md#34-moneda).
-17. **Definir el criterio de disparo del hub/partner una vez haya datos de ruta reales** — [escala-hubs-y-partners.md §1](./escala-hubs-y-partners.md#1-hubs-paso-21). No es una decisión aislada: depende de que el sistema ya esté midiendo tiempo de ciclo por ruta.
+10. **Umbral de cobertura de escaneo bajo el cual no se renueva un partner** — [escala-hubs-y-partners.md §2](./escala-hubs-y-partners.md#2-partners-paso-22).
+11. **% de alertas atendidas vs. generadas aceptable antes de escalar a operación nacional** — [escala-geografica.md §2](./escala-geografica.md#2-operación-nacional-paso-26).
+12. **Consultar con asesor aduanal antes de operar cruces México–EE.UU.** — el régimen de importación temporal puede restringir la decisión de baja/scrap de un activo — [escala-geografica.md §3.2](./escala-geografica.md#32-el-régimen-aduanal-restringe-el-ciclo-de-vida).
+13. **Moneda de reporte cuando un ciclo cruza frontera** (única vs. por segmento) — [escala-geografica.md §3.4](./escala-geografica.md#34-moneda).
+14. **Definir el criterio de disparo del hub/partner una vez haya datos de ruta reales** — [escala-hubs-y-partners.md §1](./escala-hubs-y-partners.md#1-hubs-paso-21). No es una decisión aislada: depende de que el sistema ya esté midiendo tiempo de ciclo por ruta.
 
 ---
 

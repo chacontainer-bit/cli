@@ -72,7 +72,7 @@ No son planes de software: son alcances de servicio.
 | **Capacidades** | Oferta 3 + [Incidencias](./catalogo-systems.md#10-gestión-de-incidencias), [Indicadores](./catalogo-systems.md#13-indicadores), [Analítica](./catalogo-systems.md#14-analítica), [Gobernanza](./catalogo-systems.md#15-gobernanza) |
 | **Entregable** | Comité mensual, reporte de gobernanza, ajuste continuo de reglas, y un responsable nombrado del lado de CHACONTAINER ([modelo-de-gobernanza.md §3](./modelo-de-gobernanza.md#3-ritual-de-gobernanza-propuesto)) |
 | **Qué la distingue de Oferta 3** | En la 3 vendemos que el cliente se entere; en la 4 vendemos que nosotros actuemos. Es la diferencia entre un tablero y un responsable |
-| **Compromiso** | Es la única oferta donde CHACONTAINER puede comprometerse a un indicador, no solo a una actividad `[VALIDAR: si se aceptan compromisos sobre KPI y con qué límite de responsabilidad]` |
+| **Compromiso** | **Decidido:** compromiso blando con piso de responsabilidad. Con base en los resultados del piloto, CHACONTAINER proyecta un rango de mejora (p. ej. "disponibilidad real de entre 15-25% en 12 meses"). El rango es una proyección, no una garantía contractual con penalización, y se revisa trimestralmente en el [comité de gobernanza](./modelo-de-gobernanza.md#3-ritual-de-gobernanza-propuesto). Es la única oferta donde CHACONTAINER se compromete a un indicador, no solo a una actividad — pero sin cláusula de penalización. |
 
 El **Nivel 6 (Plataforma)** de la escalera —el cliente usando CHACONTAINER OS
 como infraestructura propia, con sus propios usuarios— no se ofrece todavía:

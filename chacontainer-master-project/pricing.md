@@ -27,11 +27,11 @@ cosmética: define qué comportamiento premia el modelo.
 | **Fee de gobernanza** | Monto mensual por administrar el sistema | Refleja lo que realmente se entrega en la [Oferta 4](./oferta-systems.md#oferta-4--gobernanza-del-sistema-nivel-5) | Difícil de anclar sin referencia; se negocia caso por caso |
 | **Participación en ahorro** | % del ahorro medido contra línea base | Alineación perfecta; el cliente no arriesga | Exige acuerdo sobre cómo se mide el ahorro — fuente garantizada de disputa; y flujo impredecible para CHACONTAINER |
 
-**Recomendación:** por activo/mes como base para las Ofertas 2 y 3, y fee de
-gobernanza para la Oferta 4. La participación en ahorro es atractiva
-conceptualmente pero requiere una línea base indiscutible y una relación
-madura; conviene reservarla, si acaso, como componente adicional en cuentas
-grandes y nunca como el modelo principal `[VALIDAR con el fundador]`.
+**Decidido:** por activo/mes como base para las Ofertas 2 y 3, y fee de
+gobernanza para la Oferta 4. La participación en ahorro **no se ofrece por
+ahora**: queda reservada como componente adicional posible en cuentas
+grandes y maduras, una vez que exista una línea base indiscutible — nunca
+como modelo principal ni disponible desde el primer piloto.
 
 ## 2. El incentivo perverso que hay que resolver
 
@@ -57,8 +57,14 @@ Tres formas de corregirlo, en orden de preferencia:
 3. **Fee de gobernanza fijo**, desacoplado del conteo. Simple y sin
    perversión, pero pierde la escalabilidad automática.
 
-La opción 1 es la más simple de vender y la que menos fricción genera en la
-negociación `[VALIDAR estructura de piso y vigencia]`.
+**Decidido: opción 1**, piso fijo por la vigencia del contrato — el fee se
+calcula sobre el parque al firmar y no baja aunque el parque se reduzca
+durante el contrato; al renovar se recalcula sobre el parque vigente en ese
+momento. Es la más simple de vender y de facturar, y no depende de que
+`asset_state_detail`/`asset_custody` (aún sin construir) existan para poder
+contar ciclos con confiabilidad — a diferencia de la opción 2. Queda
+pendiente solo fijar la cifra de vigencia mínima del piso
+`[VALIDAR: número de meses/años]`.
 
 ## 3. La pregunta incómoda: ¿Systems canibaliza a Solutions?
 

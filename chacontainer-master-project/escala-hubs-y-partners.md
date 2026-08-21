@@ -93,18 +93,24 @@ es asumir en el código o en las reglas que "planta propia" y "bajo control
 de CHACONTAINER" son lo mismo: con partners dejan de serlo, y esa distinción
 importa para saber a quién se le exige un retorno.
 
-## 3. La decisión que conviene no tomar todavía
+## 3. Modelo de partner: decidido
 
-Si los partners se manejan como **subcontratistas** (CHACONTAINER factura al
-cliente, el partner factura a CHACONTAINER) o como **franquicia/red**
-(el partner factura al cliente bajo estándar CHACONTAINER) cambia el modelo
-de ingresos, la relación con el cliente y la exigibilidad del dato.
+Entre **subcontratista** (CHACONTAINER factura al cliente, el partner
+factura a CHACONTAINER) y **franquicia/red** (el partner factura al cliente
+bajo estándar CHACONTAINER), **se opta por subcontratista**.
 
-No hace falta decidirlo ahora, pero sí conviene tener presente que el
-segundo modelo es mucho más difícil de sostener con las obligaciones de
-datos de §2: un partner que factura directo al cliente tiene menos incentivo
-a alimentar un sistema que no es suyo `[VALIDAR con el fundador cuando haya
-un primer candidato real]`.
+Razón directa con §2: en el modelo de franquicia, el partner factura al
+cliente y tiene menos incentivo a alimentar un sistema que no es suyo —
+justo la obligación de captura de datos que §2 exige como condición
+contractual. Con subcontratista, CHACONTAINER mantiene la relación de
+facturación con el cliente y con ella la palanca real para exigir cobertura
+de escaneo: si un partner no cumple, se le retiene pago o no se renueva,
+sin depender de que el cliente final presione por su cuenta.
+
+Esto no cierra la puerta a franquicia/red más adelante, una vez que el
+modelo de datos y la marca estén lo bastante maduros como para que ceder la
+facturación directa no ponga en riesgo la integridad del dato — pero esa es
+una decisión de una etapa posterior, no del arranque de esta iniciativa.
 
 ---
 
