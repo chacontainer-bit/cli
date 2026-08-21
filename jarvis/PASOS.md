@@ -1,440 +1,374 @@
-# JARVIS — Pasos para el ordenador
+# JARVIS — Pasos para el ordenador (Windows nativo)
 
-Guía de ejecución. Cada fase termina con una **prueba**: no pases a la siguiente
-sin superarla.
+Guía de ejecución en **Windows sin WSL**: PowerShell, winget, voz SAPI y
+Programador de tareas.
 
-Asunciones: usas macOS, Linux o Windows con WSL2. Si estás en Windows nativo sin
-WSL, dímelo y adapto los comandos (PowerShell + Task Scheduler en vez de bash +
-cron).
+Cada fase termina con una **prueba**. No pases a la siguiente sin superarla.
 
-En toda la guía, `~/boveda` es la carpeta de la bóveda. Cámbiala si prefieres
-otra ruta.
+> **Atajo:** las fases 1 y 2 ya están construidas en
+> [`scaffold/`](./scaffold/). Si quieres saltarte el copiar y pegar, ve directo
+> a [«Instalación rápida»](#instalación-rápida) y vuelve luego a leer las fases
+> para entender qué se ha instalado.
+
+En toda la guía la bóveda vive en `C:\Users\<tú>\boveda`, que en PowerShell se
+escribe `$HOME\boveda`.
+
+---
+
+## Instalación rápida
+
+Con los requisitos de la fase 0 ya puestos:
+
+```powershell
+git clone https://github.com/chacontainer-bit/cli.git $HOME\cli
+cd $HOME\cli\jarvis\scaffold
+powershell -ExecutionPolicy Bypass -File .\instalar.ps1
+```
+
+Eso deja la bóveda en `$HOME\boveda` con `CLAUDE.md`, permisos y las cuatro
+skills, monta el entorno de Python en `$HOME\jarvis` y añade los atajos `jarvis`
+y `boveda` a tu perfil de PowerShell. No pisa nada que ya exista.
+
+Opciones: `-Boveda D:\ruta`, `-SinVoz` (solo fases 1 y 2), `-Sobrescribir`.
+
+Luego sigue desde la [prueba de la fase 2](#prueba-de-la-fase-2).
 
 ---
 
 ## Fase 0 — Requisitos (30 min)
 
-### 0.1 Instalar lo básico
+### 0.1 Instalar
 
-| Pieza | macOS | Linux / WSL2 | Windows nativo |
-|---|---|---|---|
-| Node 18+ | `brew install node` | `sudo apt install nodejs npm` | instalador de nodejs.org |
-| Python 3.11+ | `brew install python@3.11` | `sudo apt install python3 python3-pip python3-venv` | instalador de python.org |
-| ffmpeg | `brew install ffmpeg` | `sudo apt install ffmpeg` | `winget install ffmpeg` |
-| Obsidian | `brew install --cask obsidian` | AppImage de obsidian.md | `winget install Obsidian.Obsidian` |
-| Claude Code | `npm i -g @anthropic-ai/claude-code` | igual | igual |
+Abre **PowerShell como administrador** y pega:
 
-### 0.2 Autenticar Claude Code
+```powershell
+winget install --id Git.Git -e
+winget install --id OpenJS.NodeJS.LTS -e
+winget install --id Python.Python.3.12 -e
+winget install --id Obsidian.Obsidian -e
+```
 
-```bash
+Git no es opcional: Claude Code lo usa en Windows para su herramienta de shell.
+
+**Cierra y vuelve a abrir PowerShell** (ahora ya sin administrador) para que
+tome el PATH nuevo.
+
+### 0.2 Instalar y autenticar Claude Code
+
+```powershell
+npm install -g @anthropic-ai/claude-code
 claude
-# sigue el login en el navegador, luego /exit
 ```
 
-**Prueba de fase 0:**
-```bash
-claude --version && claude -p "responde solo: ok"
+Se abre el navegador para el login. Cuando termine, `/exit`.
+
+### 0.3 Permitir scripts
+
+Solo hace falta si vas a usar `instalar.ps1`:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
-Debe imprimir la versión y `ok`.
+
+### 0.4 Voz en español de Windows
+
+Comprueba que tienes una voz `es-ES` o `es-MX` instalada:
+
+```powershell
+Add-Type -AssemblyName System.Speech
+(New-Object System.Speech.Synthesis.SpeechSynthesizer).GetInstalledVoices() |
+  ForEach-Object { $_.VoiceInfo.Name + '  [' + $_.VoiceInfo.Culture.Name + ']' }
+```
+
+Si no aparece ninguna con `[es-...]`:
+**Configuración → Hora e idioma → Idioma y región → Español → ⋯ → Opciones de
+idioma → Voz → Descargar.** Reinicia la terminal después.
+
+### 0.5 Permiso de micrófono
+
+**Configuración → Privacidad y seguridad → Micrófono →** activa *"Permitir que
+las aplicaciones de escritorio accedan al micrófono"*. Si está apagado, Python
+grabará silencio sin dar ningún error, y perderás media tarde buscando el fallo.
+
+**Prueba de la fase 0:**
+```powershell
+claude --version
+claude -p "responde solo: ok"
+```
 
 ---
 
 ## Fase 1 — Cablea el cerebro y la memoria (30 min)
 
-### 1.1 Crear la bóveda
+Qué instala el andamiaje, y por qué.
 
-```bash
-mkdir -p ~/boveda/{raw,wiki,outputs,.claude/skills}
-cd ~/boveda
-git init          # opcional pero recomendado: historial de tu memoria
+### 1.1 La bóveda
+
+```powershell
+New-Item -ItemType Directory -Force $HOME\boveda\raw, $HOME\boveda\wiki, `
+    $HOME\boveda\outputs, $HOME\boveda\.claude\skills | Out-Null
+cd $HOME\boveda
+git init      # opcional, pero tener historial de tu memoria vale mucho
 ```
 
-Abre Obsidian → *Open folder as vault* → `~/boveda`.
+Abre Obsidian → *Open folder as vault* → `C:\Users\<tú>\boveda`.
 
-### 1.2 `~/boveda/CLAUDE.md` — las reglas de la casa
+### 1.2 `boveda\CLAUDE.md`
 
-Este fichero se carga en cada sesión. Es lo que convierte a Claude Code en JARVIS.
+Se carga en cada sesión: es lo que convierte a Claude Code en JARVIS. Fija el
+tono (frases cortas, para leer en voz alta), el mapa de carpetas y las reglas
+duras (buscar antes de responder, no inventar enlaces, no rellenar huecos).
 
-```markdown
-# JARVIS — instrucciones operativas
+→ Fichero listo: [`scaffold/boveda/CLAUDE.md`](./scaffold/boveda/CLAUDE.md)
 
-Eres mi asistente personal. Respondes en español, en frases cortas,
-pensadas para ser **leídas en voz alta**: sin markdown, sin listas con viñetas,
-sin bloques de código, salvo que se pida explícitamente por escrito.
+### 1.3 `boveda\.claude\settings.json`
 
-## La bóveda
+Sin esto, el bucle de voz se queda colgado pidiendo confirmación. Con esto,
+JARVIS puede leer toda la bóveda y escribir **solo** en `raw/` y `outputs/`.
+`wiki/` queda denegado por escrito.
 
-- `raw/`     — capturas en bruto. Puedes escribir aquí libremente.
-- `outputs/` — informes y entregables que generas. Puedes escribir aquí.
-- `wiki/`    — conocimiento curado. **Solo lectura.** Si crees que algo debe ir
-               al wiki, propónlo; no lo escribas.
+→ Fichero listo: [`scaffold/boveda/dot-claude/settings.json`](./scaffold/boveda/dot-claude/settings.json)
 
-## Reglas
+> Nunca uses `--permission-mode bypassPermissions` en el bucle de voz. El
+> dictado se equivoca, y con permisos totales ejecutaría lo que *crea* haber
+> oído.
 
-1. Antes de responder algo que dependa de mi contexto, busca en la bóveda con
-   Grep. No leas la bóveda entera nunca.
-2. Toda nota nueva lleva frontmatter: `fecha`, `tipo`, `tags`.
-3. Enlaza con wikilinks `[[nota]]` a notas que ya existan. No inventes enlaces.
-4. Si no encuentras algo en la bóveda, dilo. No rellenes huecos.
-5. Respuesta por defecto: máximo 4 frases. Si hace falta más, escribe el detalle
-   en `outputs/` y resume en voz alta dónde lo dejaste.
+### 1.4 `boveda\wiki\contexto.md`
 
-## Nombres de fichero
+Quién eres, proyectos activos, objetivos del trimestre, cómo quieres que te
+hable, nombres propios que el dictado suele fallar. **Es la nota más rentable
+del sistema entero**: quince minutos aquí ahorran una pregunta tonta en cada
+conversación.
 
-`raw/AAAA-MM-DD-tema.md`, `outputs/AAAA-MM-DD-tipo.md`.
+→ Plantilla: [`scaffold/boveda/wiki/contexto.md`](./scaffold/boveda/wiki/contexto.md)
+
+**Prueba de la fase 1:**
+```powershell
+cd $HOME\boveda
+claude -p "que sabes de mi? responde en dos frases"
 ```
-
-### 1.3 `~/boveda/.claude/settings.json` — permisos acotados
-
-Sin esto, el bucle de voz se bloqueará pidiendo confirmación. Con esto, queda
-limitado a la bóveda.
-
-```json
-{
-  "permissions": {
-    "allow": [
-      "Read",
-      "Grep",
-      "Glob",
-      "Write(./raw/**)",
-      "Write(./outputs/**)",
-      "Edit(./raw/**)",
-      "Edit(./outputs/**)",
-      "Bash(date:*)",
-      "Bash(ls:*)"
-    ],
-    "deny": [
-      "Write(./wiki/**)",
-      "Edit(./wiki/**)",
-      "Bash(rm:*)",
-      "Bash(curl:*)"
-    ]
-  }
-}
-```
-
-> No uses `--permission-mode bypassPermissions` en el bucle de voz. El STT se
-> equivoca y ejecutaría lo que crea haber oído.
-
-### 1.4 Una nota semilla
-
-```bash
-cat > ~/boveda/wiki/contexto.md <<'EOF'
----
-fecha: 2026-08-12
-tipo: contexto
-tags: [personal]
----
-# Contexto
-
-Quién soy, en qué trabajo, qué proyectos tengo activos y qué me importa esta
-semana. JARVIS lee esto para no preguntar lo obvio.
-EOF
-```
-Edítala con tu contexto real. Es la nota más rentable de todo el sistema.
-
-**Prueba de fase 1:**
-```bash
-cd ~/boveda && claude -p "¿qué sabes de mí? Responde en dos frases."
-```
-Debe responder usando `wiki/contexto.md`, no genéricamente.
+Debe responder desde `wiki/contexto.md`, no en genérico. Si responde en
+genérico, es que no has rellenado la nota.
 
 ---
 
 ## Fase 2 — Las skills (1–2 h)
 
-Cada skill es una carpeta con un `SKILL.md`. El frontmatter `description` es lo
-que hace que Claude la elija sola: **escríbelo como se dispararía en voz**.
+Cada skill es una carpeta con un `SKILL.md`. El `description` del frontmatter es
+lo que hace que Claude la elija solo: **escríbelo con las palabras que dirías en
+voz alta**, no con las que usarías en documentación.
 
-### 2.1 `plan-hoy`
+Las cuatro del andamiaje, todas sin integraciones externas:
 
-```bash
-mkdir -p ~/boveda/.claude/skills/plan-hoy
-cat > ~/boveda/.claude/skills/plan-hoy/SKILL.md <<'EOF'
----
-name: plan-hoy
-description: Fija las tres prioridades del día y las escribe en la bóveda. Úsala cuando pida "plan de hoy", "qué hago hoy", "prioridades", "organiza mi día" o "empecemos el día".
----
+| Skill | Se dispara con | Qué hace |
+|---|---|---|
+| [`plan-hoy`](./scaffold/boveda/dot-claude/skills/plan-hoy/SKILL.md) | "qué hago hoy", "prioridades", "empecemos el día" | Busca lo abierto en `raw/`, propone 3 prioridades, las escribe |
+| [`cierre-dia`](./scaffold/boveda/dot-claude/skills/cierre-dia/SKILL.md) | "cierra el día", "qué he hecho hoy" | Te pregunta prioridad a prioridad y escribe el cierre en `outputs/` |
+| [`nota-rapida`](./scaffold/boveda/dot-claude/skills/nota-rapida/SKILL.md) | "apunta", "anota", "recuérdame" | Captura al fichero del día sin interrumpirte |
+| [`buscar-boveda`](./scaffold/boveda/dot-claude/skills/buscar-boveda/SKILL.md) | "qué dije sobre", "dónde apunté" | Grep, lee 3 ficheros como mucho, responde con fecha |
 
-# Plan de hoy
+Instalación manual (si no usaste `instalar.ps1`): copia cada carpeta de
+`scaffold/boveda/dot-claude/skills/` a `$HOME\boveda\.claude\skills\`.
 
-1. Lee `raw/` de los últimos 3 días y `outputs/` de ayer con Grep, buscando
-   tareas pendientes o compromisos sin cerrar.
-2. Lee `wiki/contexto.md`.
-3. Propón exactamente 3 prioridades, ordenadas por impacto. Nada más.
-4. Escribe `raw/AAAA-MM-DD-plan.md` con frontmatter `tipo: plan` y las 3
-   prioridades como checklist.
-5. Léelas en voz alta en una sola frase por prioridad.
-
-Si ya existe el plan de hoy, no lo dupliques: léelo y pregunta si hay cambios.
-EOF
+```powershell
+Copy-Item -Recurse -Force `
+  $HOME\cli\jarvis\scaffold\boveda\dot-claude\skills\* `
+  $HOME\boveda\.claude\skills\
 ```
 
-### 2.2 `cierre-dia`
+### Prueba de la fase 2
 
-```bash
-mkdir -p ~/boveda/.claude/skills/cierre-dia
-cat > ~/boveda/.claude/skills/cierre-dia/SKILL.md <<'EOF'
----
-name: cierre-dia
-description: Cierra el día, registra qué se hizo y deja encolado mañana. Úsala cuando pida "cierra el día", "resumen del día", "qué he hecho hoy" o "terminemos".
----
+Todavía **sin voz**. Así separas los fallos de skill de los fallos de micro:
 
-# Cierre del día
-
-1. Lee `raw/AAAA-MM-DD-plan.md` de hoy.
-2. Pregúntame en voz alta, una por una, qué pasó con cada prioridad. Espera
-   respuesta antes de pasar a la siguiente.
-3. Escribe `outputs/AAAA-MM-DD-cierre.md`: qué se cerró, qué quedó abierto, una
-   línea de reflexión, y lo que arrastra a mañana.
-4. Enlaza al plan del día con `[[AAAA-MM-DD-plan]]`.
-5. Termina con una sola frase: qué es lo primero de mañana.
-EOF
+```powershell
+cd $HOME\boveda
+claude -p "apunta que hay que renovar el seguro del almacen en octubre"
+claude -p "que hago hoy"
+claude -p "que dije sobre el seguro"
 ```
 
-### 2.3 `nota-rapida`
+Las tres deben disparar la skill correcta y dejar ficheros en `raw\`.
+Ábrelos en Obsidian y compruébalo.
 
-```bash
-mkdir -p ~/boveda/.claude/skills/nota-rapida
-cat > ~/boveda/.claude/skills/nota-rapida/SKILL.md <<'EOF'
----
-name: nota-rapida
-description: Captura una idea, recordatorio o dato suelto en la bóveda sin interrumpir. Úsala cuando diga "apunta", "anota", "guarda esto", "recuérdame" o suelte una idea sin pedir nada más.
----
-
-# Nota rápida
-
-1. Escribe lo dicho en `raw/AAAA-MM-DD-notas.md` (añade al fichero del día, no
-   crees uno nuevo por nota).
-2. Añádele un `tipo` inferido: idea, tarea, contacto, dato.
-3. Si menciona algo que ya existe en `wiki/`, enlázalo con wikilink.
-4. Confirma en **una sola frase corta**. No repitas la nota entera.
-EOF
-```
-
-### 2.4 `buscar-boveda`
-
-```bash
-mkdir -p ~/boveda/.claude/skills/buscar-boveda
-cat > ~/boveda/.claude/skills/buscar-boveda/SKILL.md <<'EOF'
----
-name: buscar-boveda
-description: Responde preguntas sobre lo que ya está guardado en la bóveda. Úsala cuando pregunte "qué dije sobre", "cuándo hablamos de", "búscame", "qué sé de" o cualquier pregunta sobre mi propio historial.
----
-
-# Buscar en la bóveda
-
-1. Grep por los términos clave. Prueba sinónimos si no hay resultados.
-2. Lee como mucho los 3 ficheros más relevantes. Nunca más.
-3. Responde con la conclusión primero y la fecha de la nota después.
-4. Si no hay nada, dilo claramente: "no hay nada en la bóveda sobre eso".
-   No respondas de conocimiento general.
-EOF
-```
-
-**Prueba de fase 2** (por teclado, todavía sin voz):
-```bash
-cd ~/boveda
-claude -p "apunta que hay que renovar el seguro del almacén en octubre"
-claude -p "qué hago hoy"
-claude -p "qué dije sobre el seguro"
-```
-Las tres deben disparar la skill correcta y dejar ficheros en `raw/`.
-Si una skill no se dispara: el problema está en su `description`, amplíala con
-más formas de pedirlo.
+**Si una skill no se dispara**, el problema está en su `description`: añádele
+más maneras de pedir lo mismo. Es el ajuste que más veces vas a repetir.
 
 ---
 
 ## Fase 3 — La voz (1–2 h)
 
-### 3.1 Entorno Python
+### 3.1 Entorno
 
-```bash
-mkdir -p ~/jarvis && cd ~/jarvis
-python3 -m venv .venv && source .venv/bin/activate
+```powershell
+mkdir $HOME\jarvis -Force
+cd $HOME\jarvis
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
 pip install faster-whisper sounddevice numpy
 ```
 
-### 3.2 TTS
+La primera ejecución descarga el modelo de Whisper (unos 500 MB para `small`) y
+tarda. Las siguientes arrancan en segundos.
 
-- **macOS:** nada que instalar, usa `say -v Monica "hola"`.
-- **Linux / WSL / Windows:**
-  ```bash
-  pip install piper-tts
-  mkdir -p ~/jarvis/voces && cd ~/jarvis/voces
-  # descarga es_ES-davefx-medium.onnx y .onnx.json desde
-  # https://huggingface.co/rhasspy/piper-voices/tree/main/es/es_ES/davefx/medium
-  ```
+### 3.2 El bucle
 
-### 3.3 El bucle
+→ Fichero listo: [`scaffold/jarvis.py`](./scaffold/jarvis.py)
 
-```bash
-cat > ~/jarvis/jarvis.py <<'PY'
-#!/usr/bin/env python3
-"""Bucle mínimo de voz: grabar -> STT local -> Claude Code -> TTS local."""
-import json, os, platform, queue, subprocess, sys, wave
-import sounddevice as sd
-from faster_whisper import WhisperModel
-
-VAULT = os.path.expanduser("~/boveda")
-SR, WAV_IN, WAV_OUT = 16000, "/tmp/jarvis_in.wav", "/tmp/jarvis_out.wav"
-ES_MAC = platform.system() == "Darwin"
-
-print("cargando modelo de voz…")
-stt = WhisperModel("small", device="cpu", compute_type="int8")
-
-
-def grabar(path):
-    q = queue.Queue()
-    with sd.InputStream(samplerate=SR, channels=1, dtype="int16",
-                        callback=lambda d, *_: q.put(bytes(d))):
-        input("  grabando… ENTER para parar ")
-    with wave.open(path, "wb") as w:
-        w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR)
-        while not q.empty():
-            w.writeframes(q.get())
-
-
-def transcribir(path):
-    segs, _ = stt.transcribe(path, language="es")
-    return " ".join(s.text for s in segs).strip()
-
-
-def preguntar(texto):
-    r = subprocess.run(
-        ["claude", "-p", texto, "--output-format", "json"],
-        cwd=VAULT, capture_output=True, text=True)
-    if r.returncode != 0:
-        return f"Error del motor: {r.stderr.strip()[:200]}"
-    return json.loads(r.stdout).get("result", "").strip()
-
-
-def hablar(texto):
-    if ES_MAC:
-        subprocess.run(["say", "-v", "Monica", texto])
-        return
-    subprocess.run(["piper", "--model",
-                    os.path.expanduser("~/jarvis/voces/es_ES-davefx-medium.onnx"),
-                    "--output_file", WAV_OUT], input=texto, text=True)
-    subprocess.run(["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", WAV_OUT])
-
-
-def main():
-    print("JARVIS listo. Ctrl+C para salir.")
-    while True:
-        input("\nENTER para hablar ")
-        grabar(WAV_IN)
-        texto = transcribir(WAV_IN)
-        if not texto:
-            print("  (no te he oído)"); continue
-        print(f"  tú: {texto}")
-        respuesta = preguntar(texto)
-        print(f"  jarvis: {respuesta}")
-        hablar(respuesta)
-
-
-if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        print("\nhasta luego.")
-PY
-chmod +x ~/jarvis/jarvis.py
+```powershell
+Copy-Item $HOME\cli\jarvis\scaffold\jarvis.py $HOME\jarvis\
 ```
 
-### 3.4 Alias
+Qué hace, en orden: graba mientras hablas → transcribe en local con
+faster-whisper → lanza `claude -p` con `cwd` en la bóveda → lee la respuesta en
+voz alta con la voz SAPI de Windows. Sin `--continue`: cada comando es una
+sesión limpia, y la memoria vive en la bóveda.
 
-```bash
-echo "alias jarvis='~/jarvis/.venv/bin/python ~/jarvis/jarvis.py'" >> ~/.zshrc
-source ~/.zshrc     # usa ~/.bashrc si tu shell es bash
+Tres modos:
+
+```powershell
+python jarvis.py --voces    # lista las voces instaladas y sale
+python jarvis.py --texto    # escribes en vez de hablar (para depurar)
+python jarvis.py            # el bucle completo
+python jarvis.py --modelo base   # más rápido, algo menos preciso
 ```
 
-**Prueba de fase 3:** ejecuta `jarvis`, di *"apunta que mañana hay que llamar al
-transportista"*, y comprueba que responde en voz alta y que aparece la nota en
-`~/boveda/raw/`.
+### 3.3 Atajo permanente
 
-Si el micrófono no se detecta: `python -c "import sounddevice; print(sounddevice.query_devices())"`
-y fija el dispositivo con `sd.default.device = <índice>`.
+```powershell
+notepad $PROFILE
+```
+
+Añade al final (ajusta las rutas si cambiaste algo):
+
+```powershell
+function jarvis {
+    $env:JARVIS_VAULT = "$HOME\boveda"
+    & "$HOME\jarvis\.venv\Scripts\python.exe" "$HOME\jarvis\jarvis.py" @args
+}
+function boveda { Set-Location "$HOME\boveda" }
+```
+
+Abre una terminal **nueva** y ya tienes `jarvis` y `boveda` en cualquier sitio.
+
+**Prueba de la fase 3:** ejecuta `jarvis`, di *"apunta que mañana hay que llamar
+al transportista"*, y comprueba que responde en voz alta y que la nota aparece
+en `boveda\raw\`.
+
+### 3.4 Si algo falla
+
+| Síntoma | Causa casi siempre | Arreglo |
+|---|---|---|
+| Graba silencio, no te oye | Permiso de micro de apps de escritorio | Fase 0.5 |
+| `PortAudioError` al abrir el micro | Dispositivo por defecto equivocado | `python -c "import sounddevice; print(sounddevice.query_devices())"` y fija `sd.default.device = <n>` en `jarvis.py` |
+| Habla en inglés o con acento raro | No hay voz `es-*` instalada | Fase 0.4, o `jarvis --voces` para ver cuál coge |
+| Acentos rotos en la consola | Página de códigos | `chcp 65001` antes de lanzarlo |
+| "No encuentro el comando claude" | PATH sin refrescar | Cierra y reabre PowerShell |
+| Tarda más de 25 s por respuesta | Una skill está leyendo demasiado | Acota la skill: Grep primero, tres ficheros máximo |
 
 ---
 
 ## Fase 4 — El HUD (una tarde)
 
-Tienes dos caminos. **Recomiendo el A**, porque ya tienes el stack montado.
+Dos caminos. **Recomiendo el A**, porque el stack ya lo tienes montado en este
+mismo repo.
 
-### Camino A — ruta nueva en `chacontainer/web` (React + Vite + Tailwind)
+### Camino A — ruta `/hud` en `chacontainer/web`
 
-1. Añade en el servidor Go (`chacontainer/cmd/server`) un endpoint
-   `GET /api/vault` que devuelva, leyendo `~/boveda`:
-   - las 10 notas más recientes (nombre, fecha, primeras 200 letras),
-   - el plan de hoy si existe,
-   - conteos: notas totales, notas de esta semana, tamaño de la bóveda.
-2. Crea la ruta `/hud` en la app web con cuatro paneles: vitales, panel de
-   comandos, agenda de hoy, últimas notas.
-3. Que escuche solo en `127.0.0.1`. Es tu máquina, no publiques la bóveda.
+Ya tienes React + Vite + Tailwind en `chacontainer/web` y un servidor Go en
+`chacontainer/cmd/server`. El HUD es una ruta más, no un proyecto aparte.
 
-Prompt para arrancarlo, ejecutado desde la raíz del repo:
+1. Endpoint `GET /api/vault` en el servidor Go que lea la carpeta de la bóveda y
+   devuelva: las 10 notas más recientes (nombre, fecha, primeras 200 letras), el
+   plan de hoy si existe, y conteos (notas totales, de esta semana, tamaño).
+2. Ruta `/hud` con cuatro paneles: vitales, panel de comandos, agenda de hoy,
+   últimas notas.
+3. Que escuche **solo en `127.0.0.1`**. Es tu máquina; no publiques tu memoria.
+
+Prompt para arrancarlo, desde la raíz del repo:
 
 ```
 Añade un HUD en chacontainer/web: ruta /hud, tema terminal oscuro, cuatro
 paneles — vitales del sistema, panel de comandos, agenda de hoy y últimas notas.
 Los datos vienen de un endpoint nuevo GET /api/vault en cmd/server que lee la
-carpeta ~/boveda. Sin dependencias nuevas de frontend; usa el Tailwind que ya
-está configurado. El servidor escucha solo en 127.0.0.1.
+carpeta de la bóveda (ruta configurable por variable de entorno JARVIS_VAULT).
+Sin dependencias nuevas de frontend: usa el Tailwind que ya está configurado.
+El servidor escucha solo en 127.0.0.1.
 ```
 
-### Camino B — HUD independiente de un solo fichero
+### Camino B — un solo fichero
 
-`~/jarvis/hud.html` + `python3 -m http.server 8787 --directory ~/boveda`.
-Cero dependencias, cero integración. Úsalo si quieres verlo funcionando hoy.
+`hud.html` servido con `python -m http.server 8787 --directory $HOME\boveda`.
+Cero dependencias, cero integración, lo tienes hoy mismo.
 
-**Prueba de fase 4:** abres el HUD y ves el plan de hoy que generaste en la fase 2.
+**Prueba de la fase 4:** abres el HUD y ves el plan de hoy que generaste en la
+fase 2.
 
 ---
 
 ## Fase 5 — Rutinas y crecimiento (continuo)
 
-### 5.1 Rutinas programadas
+### 5.1 Tareas programadas
 
-`crontab -e` (macOS/Linux/WSL):
+En Windows, con `schtasks`. Ojo: la tarea necesita ejecutarse **dentro** de la
+bóveda, así que va envuelta en un `cmd /c`:
 
-```cron
-0 7 * * 1-5 cd ~/boveda && claude -p "resumen matutino" >> ~/boveda/outputs/cron.log 2>&1
-0 19 * * 1-5 cd ~/boveda && claude -p "cierra el día" >> ~/boveda/outputs/cron.log 2>&1
+```powershell
+# Resumen matutino, laborables a las 7:00
+schtasks /create /tn "JARVIS resumen matutino" /sc weekly /d MON,TUE,WED,THU,FRI /st 07:00 `
+  /tr "cmd /c cd /d %USERPROFILE%\boveda && claude -p \"resumen matutino\" >> outputs\cron.log 2>&1"
+
+# Cierre automático, laborables a las 19:00
+schtasks /create /tn "JARVIS cierre" /sc weekly /d MON,TUE,WED,THU,FRI /st 19:00 `
+  /tr "cmd /c cd /d %USERPROFILE%\boveda && claude -p \"cierre automatico\" >> outputs\cron.log 2>&1"
 ```
 
-En Windows nativo, lo mismo con el Programador de tareas.
+> `cierre-dia` es conversacional: te pregunta. Para la tarea programada necesitas
+> una variante `cierre-auto` que no espere respuestas y registre solo lo
+> observable en las notas del día. Créala copiando `cierre-dia` y quitándole el
+> paso 2.
 
-> Ojo: `cierre-dia` es conversacional (te pregunta). Para cron, escribe una
-> variante `cierre-auto` que no espere respuestas y solo registre lo observable.
+Para revisar o borrar: `schtasks /query /tn "JARVIS*"`, `schtasks /delete /tn "JARVIS cierre"`.
 
-### 5.2 Siguientes skills, por orden de rentabilidad
+### 5.2 Siguientes skills, por rentabilidad
 
 1. `resumen-bandeja` — necesita el conector de Gmail.
 2. `agenda-hoy` — conector de Google Calendar.
 3. `metricas` — solo si publicas contenido y tienes las APIs a mano.
-4. Skills de CHACONTAINER: presupuestos, seguimiento de envíos, informes de
-   inventario. Aquí es donde el sistema empieza a pagar por sí mismo, porque
-   ya tienes los scripts en `chacontainer/scripts/`.
+4. **Skills de CHACONTAINER**: presupuestos, seguimiento de envíos, informes de
+   inventario. Aquí es donde el sistema empieza a pagarse solo, porque los
+   scripts ya existen en `chacontainer/scripts/`.
 
 ### 5.3 Higiene semanal
 
 Una skill `revisar-boveda` que una vez por semana proponga qué notas de `raw/`
-merecen promoverse a `wiki/`. Tú apruebas; ella no escribe en `wiki/` sola.
+merecen subir a `wiki/`. Tú apruebas; ella no escribe en `wiki/` por su cuenta —
+los permisos no se lo permiten, y esa es la idea.
 
 ---
 
 ## Resumen de un vistazo
 
 ```
-Fase 0  30 min   requisitos            → claude -p responde
-Fase 1  30 min   bóveda + CLAUDE.md    → te conoce
-Fase 2   1-2 h   4 skills              → se disparan solas por teclado
-Fase 3   1-2 h   voz local             → hablas y responde
-Fase 4   1 tarde HUD                   → una pantalla
-Fase 5  continuo cron + integraciones  → funciona sin ti
+Fase 0   30 min   requisitos + voz es-ES   -> claude -p responde
+Fase 1   30 min   bóveda + CLAUDE.md       -> te conoce
+Fase 2    1-2 h   4 skills                 -> se disparan solas, por teclado
+Fase 3    1-2 h   voz local                -> hablas y te responde
+Fase 4  1 tarde   HUD                      -> una pantalla
+Fase 5 continuo   tareas + integraciones   -> funciona sin ti
 ```
 
-Si solo tienes una hora esta semana, haz las fases 0, 1 y 2. Es el 80 % del
-valor. La voz y el HUD son la parte vistosa, y sin skills buenas no sirven de
-nada.
+Si solo tienes una hora esta semana: fases 0, 1 y 2. Son el 80 % del valor. La
+voz y el HUD son la capa vistosa, y sin skills buenas no sirven de nada.
+
+---
+
+## Apéndice — si acabas migrando a WSL2 o macOS
+
+Solo cambian tres cosas: los instaladores (`apt`/`brew` en vez de `winget`), el
+TTS (Piper o el comando `say` de macOS en vez de SAPI) y las rutinas (`cron` en
+vez de `schtasks`). La bóveda, el `CLAUDE.md`, los permisos y las skills son
+idénticos: son ficheros de texto.
+
+Aviso concreto sobre WSL2: el micrófono se accede desde Windows, no desde WSL.
+Si migras, deja el bucle de voz en Windows y apunta `JARVIS_VAULT` a la bóveda
+por `\\wsl$\...`, o al revés. Es la parte que más rompe.

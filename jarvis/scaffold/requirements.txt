@@ -1,0 +1,4 @@
+# Capa de voz de JARVIS (Windows)
+faster-whisper>=1.0.3   # STT local
+sounddevice>=0.4.6      # captura de micrófono (PortAudio)
+numpy>=1.24

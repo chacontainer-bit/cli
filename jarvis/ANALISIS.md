@@ -79,9 +79,11 @@ Piezas y decisión técnica de cada una:
 - **STT:** `faster-whisper` (Python, `pip install`) es el camino más corto.
   `whisper.cpp` es más rápido en CPU pero hay que compilarlo. Modelo `small`
   con español: buena relación precisión/velocidad.
-- **TTS:** en macOS el comando `say` ya viene instalado y es instantáneo — úsalo
-  en la v1. En Windows/Linux, **Piper** (voces `es_ES-davefx-medium` o
-  `es_MX-claude-high`).
+- **TTS:** en Windows, **SAPI** ya viene con el sistema y se invoca desde
+  PowerShell: cero instalación y latencia mínima. Es la elección para la v1. Si
+  la voz de Windows te resulta demasiado robótica, **Piper**
+  (`es_ES-davefx-medium`) suena bastante mejor a cambio de descargar el modelo.
+  En macOS el equivalente sin instalar nada es el comando `say`.
 - **Push-to-talk:** la v1 usa ENTER para empezar y parar. Los atajos globales de
   teclado y la detección de voz (VAD) son la fuente número uno de tiempo perdido
   al principio. Se añaden después, cuando el resto funciona.

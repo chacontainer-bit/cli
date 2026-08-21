@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Write(./raw/**)",
+      "Write(./outputs/**)",
+      "Edit(./raw/**)",
+      "Edit(./outputs/**)"
+    ],
+    "deny": [
+      "Write(./wiki/**)",
+      "Edit(./wiki/**)",
+      "Write(./.claude/**)",
+      "Edit(./.claude/**)",
+      "Bash(rm:*)",
+      "Bash(del:*)",
+      "Bash(curl:*)",
+      "Bash(Invoke-WebRequest:*)",
+      "WebFetch"
+    ]
+  }
+}
