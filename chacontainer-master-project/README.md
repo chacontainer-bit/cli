@@ -13,7 +13,7 @@
 - ✅ [Catálogo definitivo Packaging Systems](./catalogo-systems.md) — paso 2.
 - ✅ [Ciclo de vida del activo](./ciclo-de-vida-del-activo.md) — paso 3.
 - ✅ [Estados del activo](./estados-del-activo.md) — paso 4.
-- ⬜ SOP del ciclo del activo — paso 5.
+- ✅ [SOP del ciclo del activo](./sop/README.md) (20 SOP-ACTIVO) — paso 5.
 - ⬜ KPI — paso 6.
 
 ## 1. Tesis estratégica

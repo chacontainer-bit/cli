@@ -66,7 +66,7 @@ Reincorporación                          Baja / Scrap / Recuperación de valor 
 | Alta | SOP-01 | Venta | Registro | Capa 1 | — (activo nace en el sistema) |
 | Identificación | SOP-02 | — | Identificación, QR, RFID | Capa 1 | Identificado |
 | Inspección | SOP-03 | Inspección | Trazabilidad (registra el evento) | Capa 4 | Condición evaluada |
-| Clasificación (si aplica, lotes) | SOP-04 | Clasificación | Inventario digital | Capa 1 + Capa 4 | Clasificado por categoría |
+| Clasificación (si aplica, lotes) | SOP-04 | Clasificación | Inventario digital | Capa 1 + Capa 4 | `En inspección` (categorizado)¹ |
 | Limpieza | SOP-05 | Lavado | Trazabilidad | Capa 4 | Sucio → limpio |
 | Reparación / reacondicionamiento | SOP-06 | Reparación, Reacondicionamiento | Gestión de incidencias (si viene de una) | Capa 4 | Dañado → apto |
 | Reetiquetado / reconfiguración | SOP-07 | Reetiquetado, Modificación, Dunnage | Registro (variante) | Capa 1 | Reconfigurado |
@@ -83,6 +83,15 @@ Reincorporación                          Baja / Scrap / Recuperación de valor 
 | Baja | SOP-18 | Compra de scrap | Registro (cierre) | Capa 1 | Baja |
 | Scrap | SOP-19 | Compra de scrap, Recuperación de valor | Registro (cierre) | Capa 1 | Scrap |
 | Disposición final | SOP-20 | Disposición final | Registro (cierre) | Capa 1 | Dispuesto (fin del ciclo) |
+
+¹ La columna "Estado resultante" de esta tabla es descriptiva, no la lista
+canónica — esa vive en [estados-del-activo.md](./estados-del-activo.md), que
+formaliza 16 estados a partir de esta tabla y de la ETAPA 3. En particular,
+**Clasificación no genera un estado propio**: categoriza un lote y cada
+activo individual queda en `En inspección` con su categoría asignada,
+para luego tomar la transición que le corresponda (`Sucio`, `En reparación`,
+`Liberado` o, si el lote lo determina no recuperable, directo a `Baja`) — ver
+[estados-del-activo.md §1](./estados-del-activo.md#1-catálogo-de-estados).
 
 ## 3. Lo que no es un paso puntual: trazabilidad y gobernanza
 

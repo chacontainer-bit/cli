@@ -12,18 +12,14 @@ vida y la [máquina de estados](../estados-del-activo.md) — **no a partir de
 una entrevista real con el responsable operativo**. No debe declararse
 estándar hasta validar en operación los puntos marcados `[VALIDAR]`.
 
-**Nota de consistencia entre documentos `[VALIDAR con el equipo de datos]`:**
-la tabla del [§2 de ciclo-de-vida-del-activo.md](../ciclo-de-vida-del-activo.md#2-tabla-de-trazabilidad-cruzada-por-etapa)
-lista "Clasificado por categoría" como estado resultante de Capa 4 para esta
-etapa, pero el [catálogo de 16 estados](../estados-del-activo.md#1-catálogo-de-estados)
-no incluye `Clasificado` como estado formal de la máquina de estados. Este
-SOP resuelve la discrepancia tratando el resultado de la clasificación como
-un **metadato/atributo del lote** (categoría + conteo), no como un estado de
-Capa 4 de cada activo individual — cada activo conserva o adopta su estado
-real (p. ej. `En inspección`) al ser enrutado al proceso siguiente (ver
-[§6, paso 8](#6-sop-paso-a-paso)). Esto queda marcado `[VALIDAR]` porque
-depende de una decisión de modelo de datos que este documento no tiene
-autoridad para cerrar.
+**Nota de consistencia entre documentos (resuelta):** la tabla del [§2 de
+ciclo-de-vida-del-activo.md](../ciclo-de-vida-del-activo.md#2-tabla-de-trazabilidad-cruzada-por-etapa)
+ya deja explícito que Clasificación no genera un estado propio de Capa 4:
+el resultado de la clasificación es un **metadato/atributo del lote**
+(categoría + conteo), y cada activo individual conserva o adopta su estado
+real del [catálogo de 16 estados](../estados-del-activo.md#1-catálogo-de-estados)
+(p. ej. `En inspección`) al ser enrutado al proceso siguiente (ver
+[§6, paso 8](#6-sop-paso-a-paso)).
 
 ---
 
