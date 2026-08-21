@@ -10,7 +10,7 @@
 **Entregables de la FASE I · Fundación:**
 
 - ✅ [Catálogo definitivo Packaging Solutions](./catalogo-solutions.md) — paso 1.
-- ⬜ Catálogo definitivo Packaging Systems — paso 2.
+- ✅ [Catálogo definitivo Packaging Systems](./catalogo-systems.md) — paso 2.
 - ⬜ Ciclo de vida del activo — paso 3.
 - ⬜ Estados del activo — paso 4.
 - ⬜ SOP del ciclo del activo — paso 5.
