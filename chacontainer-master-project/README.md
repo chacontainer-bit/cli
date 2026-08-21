@@ -31,6 +31,14 @@
 - ✅ [Alertas — de la regla a la acción](./alertas.md) — paso 14.
 - ✅ [Piloto — plan de ejecución](./piloto.md) — paso 15.
 
+**Entregables de la FASE IV · Comercial:**
+
+- ✅ [Oferta Packaging Systems](./oferta-systems.md) — paso 16.
+- ✅ [Pricing — modelo, no tarifas](./pricing.md) — paso 17.
+- ✅ [Diagnóstico comercial](./diagnostico-comercial.md) — paso 18.
+- ✅ [Piloto pagado — estructura comercial](./piloto-pagado.md) — paso 19.
+- ✅ [Conversión Solutions → Systems](./conversion-solutions-systems.md) — paso 20.
+
 ## 1. Tesis estratégica
 
 CHACONTAINER se estructura alrededor de una sola idea:
