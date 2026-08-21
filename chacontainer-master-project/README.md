@@ -39,6 +39,18 @@
 - ✅ [Piloto pagado — estructura comercial](./piloto-pagado.md) — paso 19.
 - ✅ [Conversión Solutions → Systems](./conversion-solutions-systems.md) — paso 20.
 
+**Entregables de la FASE V · Escala** (agrupados por afinidad; los 7 pasos quedan cubiertos):
+
+- ✅ [Hubs y partners](./escala-hubs-y-partners.md) — pasos 21-22.
+- ✅ [RFID](./escala-rfid.md) — paso 23.
+- ✅ [Integraciones ERP/MES](./escala-integraciones.md) — paso 24.
+- ✅ [Escala geográfica](./escala-geografica.md) — pasos 25-27 (multi-planta, nacional, México–EE.UU.).
+
+> Los documentos de la FASE V están escritos como **condiciones de activación**
+> —qué dispara cada iniciativa, qué decisión de hoy la haría imposible, y cuál
+> es la restricción real— y no como planes detallados: dependen de que las
+> fases I-IV hayan ocurrido.
+
 ## 1. Tesis estratégica
 
 CHACONTAINER se estructura alrededor de una sola idea:
