@@ -14,7 +14,14 @@
 - ✅ [Ciclo de vida del activo](./ciclo-de-vida-del-activo.md) — paso 3.
 - ✅ [Estados del activo](./estados-del-activo.md) — paso 4.
 - ✅ [SOP del ciclo del activo](./sop/README.md) (20 SOP-ACTIVO) — paso 5.
-- ⬜ KPI — paso 6.
+- ✅ [KPI del sistema](./kpi.md) — paso 6.
+
+**Entregables de la FASE II · Sistema:**
+
+- ✅ [Modelo de gobernanza](./modelo-de-gobernanza.md) — paso 7.
+- ✅ [Modelo de datos](./modelo-de-datos.md) — paso 8.
+- ✅ [Reglas operativas](./reglas-operativas.md) — paso 9.
+- ✅ [Arquitectura de CHACONTAINER OS](./arquitectura-os.md) — paso 10.
 
 ## 1. Tesis estratégica
 
