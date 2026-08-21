@@ -30,6 +30,7 @@ boveda/
     skills/
       plan-hoy/          3 prioridades del día, escritas en la bóveda
       cierre-dia/        repaso conversacional y cierre en outputs/
+      cierre-auto/       el mismo cierre sin nadie delante, para schtasks
       nota-rapida/       captura sin interrumpir
       buscar-boveda/     preguntas sobre tu propio historial
 jarvis.py                bucle de voz: micro -> Whisper -> claude -p -> SAPI

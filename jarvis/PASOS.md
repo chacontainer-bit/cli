@@ -158,12 +158,13 @@ Cada skill es una carpeta con un `SKILL.md`. El `description` del frontmatter es
 lo que hace que Claude la elija solo: **escríbelo con las palabras que dirías en
 voz alta**, no con las que usarías en documentación.
 
-Las cuatro del andamiaje, todas sin integraciones externas:
+Las cinco del andamiaje, todas sin integraciones externas:
 
 | Skill | Se dispara con | Qué hace |
 |---|---|---|
 | [`plan-hoy`](./scaffold/boveda/dot-claude/skills/plan-hoy/SKILL.md) | "qué hago hoy", "prioridades", "empecemos el día" | Busca lo abierto en `raw/`, propone 3 prioridades, las escribe |
 | [`cierre-dia`](./scaffold/boveda/dot-claude/skills/cierre-dia/SKILL.md) | "cierra el día", "qué he hecho hoy" | Te pregunta prioridad a prioridad y escribe el cierre en `outputs/` |
+| [`cierre-auto`](./scaffold/boveda/dot-claude/skills/cierre-auto/SKILL.md) | "cierre automático" (tarea programada) | El mismo cierre pero sin preguntar nada, solo con lo observable |
 | [`nota-rapida`](./scaffold/boveda/dot-claude/skills/nota-rapida/SKILL.md) | "apunta", "anota", "recuérdame" | Captura al fichero del día sin interrumpirte |
 | [`buscar-boveda`](./scaffold/boveda/dot-claude/skills/buscar-boveda/SKILL.md) | "qué dije sobre", "dónde apunté" | Grep, lee 3 ficheros como mucho, responde con fecha |
 
@@ -322,10 +323,17 @@ schtasks /create /tn "JARVIS cierre" /sc weekly /d MON,TUE,WED,THU,FRI /st 19:00
   /tr "cmd /c cd /d %USERPROFILE%\boveda && claude -p \"cierre automatico\" >> outputs\cron.log 2>&1"
 ```
 
-> `cierre-dia` es conversacional: te pregunta. Para la tarea programada necesitas
-> una variante `cierre-auto` que no espere respuestas y registre solo lo
-> observable en las notas del día. Créala copiando `cierre-dia` y quitándole el
-> paso 2.
+> Fíjate en que la tarea de la tarde llama a **`cierre-auto`**, no a
+> `cierre-dia`. La segunda es conversacional: te pregunta prioridad por
+> prioridad, y sin nadie delante se quedaría hablando sola. `cierre-auto` no
+> pregunta nada, registra solo lo observable en las notas del día y distingue
+> «sin señal» de «no hecho», que no es lo mismo.
+>
+> Las dos escriben en `outputs\AAAA-MM-DD-cierre.md` y no se pisan: el
+> automático marca `origen: automatico` y se aparta si ya hay uno manual; el
+> manual lo reemplaza siempre, porque tú estabas delante confirmando. Puedes
+> dejar la tarea programada puesta y cerrar el día a mano igualmente cuando te
+> apetezca.
 
 Para revisar o borrar: `schtasks /query /tn "JARVIS*"`, `schtasks /delete /tn "JARVIS cierre"`.
 
