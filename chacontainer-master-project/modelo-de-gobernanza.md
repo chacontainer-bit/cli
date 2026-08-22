@@ -27,11 +27,20 @@ correspondientes a la [ETAPA 9 · Escalera comercial](./README.md#etapa-9--escal
 |---|---|---|---|
 | **1 · Automático** | El sistema (Reglas operativas + Alertas, ver [paso 9](./reglas-operativas.md)) | Excepciones con acción predefinida sin ambigüedad (activo excede tiempo máximo fuera → pasa a `Retenido` y notifica) | Tiempo real |
 | **2 · Operativo** | Responsable de planta / operador designado `[VALIDAR rol exacto]` | Excepciones que requieren una decisión de campo, pero dentro de un criterio ya definido (¿reparar o dar de baja este activo según el criterio de costo ya acordado?) | Diaria / por turno |
-| **3 · Estratégico** | Gobernanza (fundador/responsable de cuenta) `[VALIDAR quién exactamente por cliente]` | Decisiones que ajustan el criterio mismo: cambiar un umbral, renegociar condiciones con un custodio recurrentemente moroso, decidir si un patrón de pérdida amerita rediseñar la ruta o el contrato | Semanal / mensual (ver §3) |
+| **3 · Estratégico** | Gobernanza — **decidido: el fundador, delegable cuenta por cuenta según tamaño** | Decisiones que ajustan el criterio mismo: cambiar un umbral, renegociar condiciones con un custodio recurrentemente moroso, decidir si un patrón de pérdida amerita rediseñar la ruta o el contrato | Semanal / mensual (ver §3) |
 
 El nivel 1 depende de que existan reglas configuradas (ver
 [reglas-operativas.md](./reglas-operativas.md)); sin regla, toda excepción
 sube por defecto al nivel 2 — nunca debe quedar sin dueño.
+
+**Modelo de delegación (decidido):** el fundador es Gobernanza por defecto
+en toda cuenta. Cuentas grandes o estratégicas se quedan con el fundador de
+forma permanente; cuentas menores pueden delegarse a un responsable de
+cuenta una vez que el criterio de gobernanza esté probado con el fundador
+al frente. Falta fijar el umbral de tamaño/valor de cuenta que dispara la
+delegación `[VALIDAR: umbral de tamaño de cuenta para delegar]` — no
+conviene definirlo antes de tener al menos un par de cuentas en Nivel 5
+para calibrarlo contra datos reales, no contra una intuición.
 
 ## 2. Las 16 preguntas, con dueño y cadencia
 
@@ -68,7 +77,7 @@ reparación) son revisión estratégica mensual de nivel 3.
 | Ritual | Frecuencia | Participantes `[VALIDAR]` | Insumo | Salida |
 |---|---|---|---|---|
 | Revisión de excepciones abiertas | Diaria | Responsable de planta | Alertas activas, incidencias abiertas (SOP-ACTIVO-15/16/17) | Excepciones resueltas o escaladas a nivel 3 |
-| Comité de gobernanza | Mensual `[VALIDAR periodicidad real deseada]` | Gobernanza + responsables de planta | Indicadores (ETAPA 6), Analítica, bitácora de excepciones del mes | Ajustes a reglas operativas, decisiones de baja masiva, escalamiento comercial a clientes/custodios problemáticos |
+| Comité de gobernanza | **Mensual (decidido)** | Gobernanza + responsables de planta | Indicadores (ETAPA 6), Analítica, bitácora de excepciones del mes | Ajustes a reglas operativas, decisiones de baja masiva, escalamiento comercial a clientes/custodios problemáticos |
 | Reporte de gobernanza al cliente | Mensual (si el contrato es Nivel 5/6) | Gobernanza + contacto del cliente | Mismo insumo que el comité, filtrado a los activos de ese cliente | Reporte entregable (evidencia del [Módulo 12 de CHACONTAINER OS](./catalogo-systems.md#16-chacontainer-os)) — este reporte es en sí mismo la prueba de valor que sostiene el Nivel 5/6 de la escalera comercial |
 
 ## 4. Qué activa una escalada de nivel 2 a nivel 3

@@ -62,13 +62,24 @@ se quiere firmar un contrato recurrente.
 
 1. **Umbral de mejora acordado por escrito antes de empezar**, sobre el
    indicador ligado al problema que el cliente declaró. Si no se alcanza,
-   CHACONTAINER extiende el piloto sin costo adicional en lugar de devolver
-   `[VALIDAR: extensión máxima]`. Convierte el riesgo en tiempo, no en
-   dinero.
-2. **Acreditar parte del piloto al contrato.** Si se firma dentro de un
-   plazo tras el cierre, una porción de lo pagado se abona al primer
-   período `[VALIDAR: porcentaje y plazo]`. Premia la decisión rápida sin
-   regalar el trabajo.
+   CHACONTAINER extiende el piloto sin costo adicional en lugar de devolver.
+   **Decidido: 30 días de extensión.** Suficiente para un ajuste rápido si
+   la causa es adopción (operadores no escaneando) más que diseño del
+   sistema; si a los 30 días adicionales tampoco se alcanza el umbral, ahí
+   sí corresponde el cierre con entrega descrito en
+   [piloto.md §5](./piloto.md#5-conversión-a-contrato), no una segunda
+   extensión. Convierte el riesgo en tiempo acotado, no en dinero ni en un
+   compromiso indefinido.
+2. **Acreditar parte del piloto al contrato.** **Decidido: un porcentaje
+   fijo del total pagado en el piloto** (no solo del componente de
+   plataforma) se acredita al primer período del contrato, si se firma
+   dentro de 30-60 días del cierre. Es la opción más agresiva de las
+   consideradas frente a acreditar solo el componente de plataforma/
+   gobernanza — reduce más el margen del piloto si el cliente convierte,
+   a cambio de un incentivo más claro para decidir rápido. Falta fijar el
+   porcentaje exacto `[VALIDAR: % de acreditación]`; debe calcularse contra
+   el margen real del piloto (§2) para no volver la conversión rápida más
+   cara que no convertir.
 3. **Sin permanencia después del piloto.** El contrato que sigue puede
    cancelarse con aviso razonable. Es barato de ofrecer —si el sistema
    funciona, nadie lo cancela— y elimina el miedo al amarre.
