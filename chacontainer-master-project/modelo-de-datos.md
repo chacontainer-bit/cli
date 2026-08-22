@@ -90,15 +90,40 @@ más allá de "cliente". No alcanza para [SOP-ACTIVO-12](./sop/SOP-ACTIVO-12-tra
 (transferencias sin pasar por CHACONTAINER) ni para responder "¿qué
 proveedor retiene activos?" ([ETAPA 4](./README.md#etapa-4--modelo-de-gobernanza)).
 
+**Decidido: tabla `custodians` unificada, no FK polimórfica.** Una FK que
+apunte a `clients.id` o a otra tabla según `custodian_type` no se puede
+declarar como `REFERENCES` real en Postgres — obliga a triggers o a
+renunciar a la integridad referencial, justo el tipo de brecha silenciosa
+que este proyecto lleva insistiendo en cerrar (ver el mismo argumento
+aplicado a estados en [estados-del-activo.md, invariante 5](./estados-del-activo.md#4-invariantes-reglas-que-el-sistema-debe-garantizar)).
+Una tabla `custodians` unificada —con `client_id UUID REFERENCES clients(id)`
+nullable para el caso `cliente`, y campos propios (`nombre`, `tipo`,
+`contacto`) para `proveedor`/`operador`/`transportista`/`planta_propia`/`usuario`—
+mantiene la integridad referencial real y permite un solo join limpio desde
+`asset_custody`, en vez de resolver el tipo en código de aplicación cada
+vez que se consulta.
+
 | Columna | Tipo | Nota |
 |---|---|---|
 | `id` | UUID | PK |
 | `asset_id` | UUID (FK) | — |
-| `custodian_type` | VARCHAR(20) | `cliente`, `proveedor`, `operador`, `transportista`, `planta_propia`, `usuario` |
-| `custodian_ref_id` | UUID | FK polimórfica a `clients.id` u otra tabla según `custodian_type` `[VALIDAR: modelo polimórfico vs. tabla `custodians` unificada — decisión de diseño pendiente]` |
+| `custodian_id` | UUID (FK `custodians.id`) | reemplaza `custodian_type` + `custodian_ref_id`; el tipo vive en `custodians.tipo` |
 | `desde` | TIMESTAMPTZ | — |
 | `hasta` | TIMESTAMPTZ (nullable) | NULL = custodia vigente |
 | `origen_evento` | VARCHAR(20) | `asignacion` (SOP-ACTIVO-10) o `transferencia` (SOP-ACTIVO-12) |
+
+```sql
+CREATE TABLE custodians (
+    id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    tenant_id  UUID        NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    tipo       VARCHAR(20) NOT NULL
+                 CHECK (tipo IN ('cliente','proveedor','operador','transportista','planta_propia','usuario')),
+    client_id  UUID        REFERENCES clients(id),   -- solo si tipo = 'cliente'
+    nombre     VARCHAR(200) NOT NULL,                 -- denormalizado: útil aun cuando client_id es NULL
+    contacto   JSONB       NOT NULL DEFAULT '{}',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+```
 
 ### `operational_rules` (Capa 5 · Gobierno — no existe hoy)
 
@@ -138,12 +163,35 @@ Respalda [SOP-ACTIVO-15](./sop/SOP-ACTIVO-15-incidencias.md),
 
 `assets.qr_code` y `qr_scans` cubren bien [catalogo-systems.md #4 (QR)](./catalogo-systems.md#4-qr).
 No hay ningún campo ni tabla para [RFID (#5)](./catalogo-systems.md#5-rfid).
-Propuesta mínima: agregar `assets.rfid_tag VARCHAR(100)` y una tabla
-`rfid_reads` paralela a `qr_scans` (mismas columnas relevantes: `asset_id`,
-`plant_id`, `zone_id`, `read_at`), o generalizar `qr_scans` a
-`identifier_reads` con un campo `method` (`qr`/`rfid`) — **decisión de
-diseño para quien mantiene el SaaS, no de este proyecto** `[VALIDAR con el
-equipo técnico]`.
+Decisión y plan de migración diferido: [escala-rfid.md §4](./escala-rfid.md#4-impacto-en-el-modelo-de-datos)
+(generalizar a `identifier_reads` con campo `method`, ejecutado solo cuando
+se dispare la Fase F de RFID — no antes).
+
+## Actor de sistema para eventos automáticos
+
+`asset_events.user_id` y `qr_scans.scanned_by` son `NOT NULL REFERENCES users(id)`
+en el esquema real. Las transiciones automáticas del MVP (Fase C del
+[roadmap](./arquitectura-os.md#3-roadmap-de-implementación-propuesto):
+reglas operativas + alertas, ver [reglas-operativas.md](./reglas-operativas.md))
+y las lecturas de portal RFID futuras necesitan escribir estos eventos sin
+que haya una persona detrás.
+
+**Decidido: usuario sistema reservado por tenant, no relajar el `NOT NULL`.**
+Cada tenant tiene, desde su alta, una fila en `users` de tipo sistema:
+
+```sql
+-- Se agrega 'system' al CHECK de users.role, y se inserta una fila
+-- reservada por tenant en el mismo flujo que crea el tenant:
+INSERT INTO users (tenant_id, email, name, role, active)
+VALUES ($tenant_id, 'system@' || $tenant_slug || '.internal', 'Sistema (automático)', 'system', TRUE);
+```
+
+Toda transición o lectura automática usa el `id` de esa fila como
+`user_id`/`scanned_by`. Ventajas sobre permitir `NULL`: la integridad
+referencial se mantiene sin excepción, ningún reporte ni vista downstream
+necesita un `COALESCE` o un caso especial para "sin usuario", y el propio
+registro de auditoría distingue automático de manual con el mismo campo que
+ya usa para todo lo demás — sin agregar una columna booleana aparte.
 
 ## 5. Resumen: qué falta construir
 

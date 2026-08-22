@@ -17,7 +17,9 @@ dejó esbozada.
 Una regla operativa es la versión configurable de un parámetro de **Capa 5
 · Gobierno** ([ETAPA 3](./README.md#etapa-3--modelo-de-packaging-systems)):
 un umbral que, al cruzarse, dispara una acción del sistema sin intervención
-humana. Cuatro tipos, tomados directamente de esa capa:
+humana. Los cuatro tipos originales de la Capa 5, más un quinto agregado
+para cerrar [qr.md §3](./qr.md#3-validación-de-transición-en-el-escaneo)
+(rechazos de escaneo no son un caso especial — son otra regla más):
 
 | Tipo de regla | Parámetro | Ejemplo de acción disparada |
 |---|---|---|
@@ -25,6 +27,7 @@ humana. Cuatro tipos, tomados directamente de esa capa:
 | Punto de retorno | Evento o fecha que marca "debería regresar" (fin de proyecto, vencimiento de renta) | Genera una alerta anticipada antes de llegar al umbral de tiempo máximo |
 | Nivel mínimo de inventario | Cantidad disponible por tipo de activo / planta | Alerta a Inventario digital cuando `Disponible` cae bajo el mínimo |
 | Condición permitida | Criterio de aceptación por tipo de activo/cliente | Determina si `En inspección` deriva a `Liberado`, `Sucio` o `En reparación` |
+| Rechazos acumulados | Número de escaneos con transición inválida por operador/turno | Alerta a Gobernanza — puede indicar entrenamiento insuficiente o intento de saltarse un paso del SOP |
 
 ## 2. Esquema de una regla
 

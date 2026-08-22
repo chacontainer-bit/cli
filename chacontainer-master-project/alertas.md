@@ -68,10 +68,15 @@ Por cada alerta activa cuya condición ya no se cumple:
   Cerrar como 'atendida' (§1.2)
 ```
 
-**Frecuencia**: cada hora `[VALIDAR]`. Los umbrales del modelo se miden en
-días, así que evaluar cada minuto no aporta precisión y sí carga; evaluar
-una vez al día introduce hasta 24 h de retraso en detectar un activo
-detenido, que es justo lo que el piloto quiere reducir.
+**Decidido: cada hora.** Los umbrales del modelo se miden en días, así que
+evaluar cada minuto no aporta precisión y sí carga; evaluar una vez al día
+introduce hasta 24 h de retraso en detectar un activo detenido, que es
+justo lo que el piloto quiere reducir. Cada hora dentro de esa ventana:
+retraso máximo aceptable y carga de cómputo despreciable frente al volumen
+de un piloto (200-500 activos). Si el volumen crece varios órdenes de
+magnitud (escala nacional, [escala-geografica.md §2](./escala-geografica.md#2-operación-nacional-paso-26)),
+revisar si conviene evaluar por lotes segmentados en vez de bajar la
+frecuencia — pero no antes de tener esa escala real.
 
 **Idempotencia**: el job debe poder correr dos veces seguidas sin duplicar
 alertas ni re-aplicar transiciones. La restricción de unicidad de §1.1 lo

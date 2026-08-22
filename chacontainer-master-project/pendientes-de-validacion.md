@@ -6,14 +6,13 @@ placeholder vacío: cada una es un punto donde el proyecto necesita un dato
 real, una decisión, o una confirmación que este documento no tiene
 autoridad para inventar.
 
-**Estado actual: 8 de las 17 decisiones del Nivel 1 ya están resueltas**
-(compromiso sobre KPI, participación en ahorro, estructura del fee por
-activo, modelo de partner, extensión y acreditación del piloto pagado,
-quién es Gobernanza por cliente, y periodicidad del comité). Quedan 9
-decisiones abiertas de Nivel 1 — de las cuales 3 son solo la cifra exacta
-de una decisión de dirección ya tomada (vigencia del piso, % de
-acreditación, umbral de tamaño para delegar Gobernanza). El resto de este
-documento refleja el estado vigente.
+**Estado actual: 8 de 17 decisiones de Nivel 1 resueltas** (modelo
+comercial y de riesgo, piloto pagado, gobernanza) y **5 de 6 de Nivel 3
+resueltas** (diseño técnico — estas no necesitaban datos de negocio, se
+resolvieron directamente con criterio de arquitectura). Quedan 245 marcas
+`[VALIDAR]` abiertas en total, la mayoría (201) en los SOP y agrupables por
+patrón, no por resolver una por una. El resto de este documento refleja el
+estado vigente.
 
 Esta lista no es para leer de corrido. Es un **checklist de trabajo**,
 organizado en 4 niveles según quién puede resolverlo y qué tan bloqueante es.
@@ -125,17 +124,25 @@ fijarlos por separado en cada documento.
 
 ---
 
-## Nivel 3 · Decisiones de diseño técnico (6)
+## Nivel 3 · Decisiones de diseño técnico (1 abierta, 5 resueltas)
 
 Para quien construya sobre `chacontainer/` — no cambian el modelo de
-negocio, sí cómo se implementa.
+negocio, sí cómo se implementa. A diferencia del Nivel 1, estas no
+dependían de datos reales de negocio, así que se resolvieron directamente
+con criterio de arquitectura.
 
-1. **`asset_custody.custodian_ref_id`: FK polimórfica vs. tabla `custodians` unificada** — [modelo-de-datos.md §3](./modelo-de-datos.md#asset_custody-capa-3--custodia--no-existe-hoy).
-2. **RFID: generalizar `qr_scans` a `identifier_reads`, o mantener tabla paralela `rfid_reads`** — [escala-rfid.md §4](./escala-rfid.md#4-impacto-en-el-modelo-de-datos). El documento recomienda generalizar.
-3. **Dónde se guardan hoy las fotos de evidencia** (Airtable, S3, en ningún lado) — [arquitectura-os.md, módulo 12](./arquitectura-os.md#2-los-12-módulos-del-mvp-mapeados).
-4. **Comportamiento cuando falta una regla operativa para una transición automática**: ya resuelto en el diseño ([reglas-operativas.md §4](./reglas-operativas.md#4-qué-pasa-cuando-falta-la-regla-resuelve-el-validar-de-estados-del-activomd)) — falta implementarlo, no decidirlo de nuevo.
-5. **Frecuencia del evaluador de alertas** (el documento asume cada hora) — [alertas.md §3](./alertas.md#3-el-evaluador).
-6. **Si conviene generar alerta cuando un operador acumula N escaneos rechazados** (transición inválida intentada) — [qr.md §3](./qr.md#3-validación-de-transición-en-el-escaneo).
+### Resueltas
+
+- ✅ **`asset_custody`: tabla `custodians` unificada**, no FK polimórfica — Postgres no puede declarar una FK real que apunte a distintas tablas según un discriminador. Incluye el DDL de la tabla — [modelo-de-datos.md §3](./modelo-de-datos.md#asset_custody-capa-3--custodia--no-existe-hoy).
+- ✅ **RFID: generalizar `qr_scans` a `identifier_reads`** — pero **no migrar todavía**: como RFID es Fase F (sin condición de activación cumplida), migrar ahora sería costo de esquema sin necesidad inmediata. Queda el DDL de migración listo para ejecutarse cuando se dispare esa fase — [escala-rfid.md §4](./escala-rfid.md#4-impacto-en-el-modelo-de-datos).
+- ✅ **Actor de sistema para eventos sin usuario humano** (`asset_events.user_id`, `qr_scans.scanned_by`, ambos `NOT NULL`): usuario sistema reservado por tenant, no relajar el `NOT NULL` — mantiene integridad referencial sin `NULL` especial en cada consulta downstream. Resuelve el mismo problema para RFID y para las transiciones automáticas del MVP a la vez — [modelo-de-datos.md, Actor de sistema](./modelo-de-datos.md#actor-de-sistema-para-eventos-automáticos).
+- ✅ **Comportamiento cuando falta una regla operativa**: ya estaba resuelto en el diseño — [reglas-operativas.md §4](./reglas-operativas.md#4-qué-pasa-cuando-falta-la-regla-resuelve-el-validar-de-estados-del-activomd). Queda pendiente implementarlo, no decidirlo de nuevo (eso es trabajo de ingeniería, no una entrada de esta lista).
+- ✅ **Frecuencia del evaluador de alertas: cada hora**, confirmado — [alertas.md §3](./alertas.md#3-el-evaluador).
+- ✅ **Alerta por escaneos rechazados acumulados: sí**, tratada como una [regla operativa](./reglas-operativas.md#1-qué-es-una-regla) más (quinto tipo agregado: "Rechazos acumulados"), no como caso especial — [qr.md §3](./qr.md#3-validación-de-transición-en-el-escaneo).
+
+### Abierta
+
+1. **Dónde se guardan hoy las fotos de evidencia** (Airtable, S3, en ningún lado) — [arquitectura-os.md, módulo 12](./arquitectura-os.md#2-los-12-módulos-del-mvp-mapeados). Esta es la única de las 6 que no es una decisión de diseño — es una pregunta sobre el estado real de la operación, y solo tú (o quien administre hoy la evidencia) puede responderla.
 
 ---
 

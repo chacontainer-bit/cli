@@ -75,7 +75,7 @@ Comportamiento propuesto:
 1. Resolver el activo (ya lo hace el flujo actual).
 2. Leer su `estado_detalle` vigente en `asset_state_detail` ([modelo-de-datos.md](./modelo-de-datos.md#asset_state_detail-extiende-capa-4)).
 3. Verificar que `(estado_actual, action)` exista en la tabla de transiciones.
-4. Si no existe: responder error explicando qué transiciones sí son válidas desde ese estado, y **registrar el intento** en `qr_scans` con un marcador de rechazo — un operador intentando una transición inválida es información de gobernanza, no ruido `[VALIDAR: si conviene además generar alerta al superarse N rechazos]`.
+4. Si no existe: responder error explicando qué transiciones sí son válidas desde ese estado, y **registrar el intento** en `qr_scans` con un marcador de rechazo — un operador intentando una transición inválida es información de gobernanza, no ruido. **Decidido: sí, generar alerta al superarse un umbral de rechazos** — no como caso especial, sino como una [regla operativa](./reglas-operativas.md#1-qué-es-una-regla) más (tipo nuevo: "rechazos acumulados", scope por operador/turno), tratada exactamente igual que las demás en el [evaluador de alertas](./alertas.md#3-el-evaluador). El número exacto de rechazos que dispara la alerta es un valor de esa regla, no una decisión de diseño aparte — se fija con el resto de los umbrales operativos ([pendientes-de-validacion.md, Nivel 2 §2.2](./pendientes-de-validacion.md#22-umbrales-de-tiempo-y-económicos)).
 5. Si existe: aplicar la transición, escribir en `asset_events` (estado detallado y agregado) y actualizar `asset_state_detail`.
 
 Esto convierte las [invariantes 1 y 2 de estados-del-activo.md](./estados-del-activo.md#4-invariantes-reglas-que-el-sistema-debe-garantizar)

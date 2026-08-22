@@ -82,21 +82,32 @@ o se agrega `assets.rfid_tag` con una tabla `rfid_reads` paralela a
 `qr_scans`, o se generaliza `qr_scans` a `identifier_reads` con un campo
 `method`.
 
-Recomendación, a la luz de §1: **generalizar**. Si RFID y QR alimentan
-tablas distintas, toda consulta de trazabilidad tendrá que unir dos fuentes
-para siempre, y las acciones "de paso" quedarán partidas por método de
-lectura en vez de por significado. Un solo flujo de lecturas con un campo
-que indique cómo se leyó mantiene la línea de tiempo íntegra
-`[VALIDAR con el equipo técnico: costo de migrar `qr_scans` vs. mantener
-dos tablas]`.
+**Decidido: generalizar — pero no migrar todavía.** El destino es un solo
+flujo de lecturas con un campo `method` (`qr`/`rfid`), no dos tablas
+paralelas que obligarían a unir dos fuentes en cada consulta de
+trazabilidad. Como RFID es Fase F (opcional, sin condición de activación
+todavía cumplida — ver [§2](#2-qué-lo-dispara)), **no se justifica migrar
+`qr_scans` ahora**: sería costo de esquema sobre una tabla que ya opera,
+para un método de lectura que no se va a usar en el corto plazo. La
+migración queda definida para ejecutarse en el momento en que se dispare
+la Fase F, no antes:
+
+```sql
+ALTER TABLE qr_scans RENAME TO identifier_reads;
+ALTER TABLE identifier_reads ADD COLUMN method VARCHAR(10) NOT NULL DEFAULT 'qr'
+    CHECK (method IN ('qr','rfid'));
+-- filas existentes quedan method='qr' por el DEFAULT; sin backfill manual necesario
+```
 
 ## 5. Qué no hay que romper hoy
 
 - **No hardcodear "QR" en la lógica de negocio.** Las validaciones de transición ([qr.md §3](./qr.md#3-validación-de-transición-en-el-escaneo)) deben operar sobre "una lectura de identificador con una acción", no sobre "un escaneo QR". Si esa abstracción se respeta desde el MVP, RFID entra sin tocar la máquina de estados.
-- **No asumir que toda lectura tiene un usuario humano asociado.** Hoy `qr_scans.scanned_by` referencia a `users`. Una lectura de portal RFID no tiene persona detrás — necesitará un actor de tipo sistema, igual que las transiciones automáticas de [reglas-operativas.md](./reglas-operativas.md).
+- **No asumir que toda lectura tiene un usuario humano asociado.** Hoy `qr_scans.scanned_by` referencia a `users` con `NOT NULL` — el mismo patrón que `asset_events.user_id`. **Decidido: no relajar el `NOT NULL`.** La solución es un "usuario sistema" reservado por tenant (fila en `users` con `role` distinto, p. ej. `system`, sin login) que actúa como actor en toda transición o lectura automática — ver [modelo-de-datos.md, actor de sistema](./modelo-de-datos.md#actor-de-sistema-para-eventos-automáticos). Mantiene la integridad referencial y evita un `NULL` que cada consulta downstream tendría que manejar como caso especial.
 
-El segundo punto es el más fácil de olvidar y el más caro de corregir
-después, porque `scanned_by` es `NOT NULL` en el esquema actual.
+Este segundo punto no es exclusivo de RFID — ya es necesario para las
+transiciones automáticas del MVP ([reglas-operativas.md](./reglas-operativas.md)
+y [alertas.md](./alertas.md)), que también escriben en `asset_events` sin
+un humano detrás. Queda resuelto ahí, no solo para cuando llegue RFID.
 
 ---
 
