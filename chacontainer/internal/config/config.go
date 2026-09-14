@@ -23,6 +23,9 @@ type Config struct {
 	QRBaseURL string
 
 	RedisURL string
+
+	SymphonyBaseURL  string
+	SymphonyAPIToken string
 }
 
 func Load() (*Config, error) {
@@ -57,6 +60,8 @@ func Load() (*Config, error) {
 		MakeWebhookSecret: os.Getenv("MAKE_WEBHOOK_SECRET"),
 		QRBaseURL:         getEnv("QR_BASE_URL", "https://api.chacontainer.com/qr"),
 		RedisURL:          getEnv("REDIS_URL", "redis://localhost:6379"),
+		SymphonyBaseURL:   getEnv("SYMPHONY_BASE_URL", "https://symphony.wix.com/individuals-chat/poc/agent"),
+		SymphonyAPIToken:  os.Getenv("SYMPHONY_API_TOKEN"),
 	}, nil
 }
 
