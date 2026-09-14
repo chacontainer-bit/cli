@@ -7,6 +7,7 @@ import (
 	"github.com/cli/cli/v2/chacontainer/internal/api/handlers"
 	"github.com/cli/cli/v2/chacontainer/internal/api/middleware"
 	"github.com/cli/cli/v2/chacontainer/internal/config"
+	"github.com/cli/cli/v2/chacontainer/internal/integrations/symphony"
 )
 
 // NewRouter wires all routes. Dependencies (stores, integrations) are injected
@@ -35,6 +36,14 @@ func NewRouter(cfg *config.Config) http.Handler {
 	plantsH := handlers.NewPlantsHandler(plantStore)
 	dashboardH := handlers.NewDashboardHandler(statsStore)
 	webhooksH := handlers.NewWebhooksHandler(webhookProcessor, cfg.MakeWebhookSecret)
+
+	// Symphony (AI business agents) — nil agent until SYMPHONY_API_TOKEN is set,
+	// in which case the handler responds 503 rather than failing to start.
+	var symphonyAgent handlers.SymphonyAgent
+	if cfg.SymphonyAPIToken != "" {
+		symphonyAgent = symphony.NewClient(cfg.SymphonyAPIToken, symphony.WithBaseURL(cfg.SymphonyBaseURL))
+	}
+	symphonyH := handlers.NewSymphonyHandler(symphonyAgent)
 
 	// Public webhook receivers (no JWT)
 	mux.HandleFunc("POST /webhooks/make", webhooksH.Make)
@@ -90,6 +99,9 @@ func NewRouter(cfg *config.Config) http.Handler {
 	mux.Handle("PATCH /api/v1/plants/{id}", authed(http.HandlerFunc(plantsH.Update)))
 	mux.Handle("GET /api/v1/plants/{id}/zones", authed(http.HandlerFunc(plantsH.ListZones)))
 	mux.Handle("POST /api/v1/plants/{id}/zones", authed(http.HandlerFunc(plantsH.CreateZone)))
+
+	// Symphony
+	mux.Handle("POST /api/v1/symphony/ask", authed(http.HandlerFunc(symphonyH.Ask)))
 
 	return mux
 }
