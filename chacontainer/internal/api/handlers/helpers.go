@@ -27,10 +27,8 @@ func intParam(s string, fallback int) int {
 	return n
 }
 
-// pathParam extracts a named parameter from the route pattern, e.g. "id"
-// from "GET /api/v1/shipments/{id}/lines". Go 1.22+'s net/http ServeMux
-// resolves these via r.PathValue; every route registered in router.go
-// uses the {name} pattern syntax so this always matches.
+// pathParam extracts a named wildcard from the route pattern (e.g. "{id}"
+// in "/resource/{id}/sub"), as registered with http.ServeMux.
 func pathParam(r *http.Request, name string) string {
 	return r.PathValue(name)
 }

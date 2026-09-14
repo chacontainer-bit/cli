@@ -78,6 +78,11 @@ func (h *WebhooksHandler) ERP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *WebhooksHandler) Airtable(w http.ResponseWriter, r *http.Request) {
+	if !h.verifySignature(r, "X-Airtable-Signature") {
+		writeError(w, http.StatusUnauthorized, "invalid signature")
+		return
+	}
+
 	var event WebhookEvent
 	if err := json.NewDecoder(r.Body).Decode(&event); err != nil {
 		writeError(w, http.StatusBadRequest, "invalid JSON")
@@ -95,9 +100,12 @@ func (h *WebhooksHandler) Airtable(w http.ResponseWriter, r *http.Request) {
 }
 
 // verifySignature reads the body, verifies HMAC, then resets r.Body for later reading.
+// A webhook is rejected outright if no secret is configured; an unsigned
+// endpoint should never be reachable, not silently unauthenticated.
 func (h *WebhooksHandler) verifySignature(r *http.Request, header string) bool {
 	if h.secret == "" {
-		return true
+		log.Printf("webhook %s rejected: no signing secret configured", header)
+		return false
 	}
 	sig := r.Header.Get(header)
 	if sig == "" {
