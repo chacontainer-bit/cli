@@ -165,6 +165,72 @@ export const statusConfig = {
   perdido: { label: 'Perdido', color: '#6b7280', bg: 'bg-gray-900/40', text: 'text-gray-400', border: 'border-gray-600' },
 }
 
+// ─── Circuito ERT — caso real Alpha Industry Querétaro ───────────────────────
+// Cargado desde el workbook CHC-ERT-WBK-LI-001 (Rev.00). A diferencia de los
+// datos de arriba (prospectos ilustrativos), este es un caso real verificado
+// por el usuario: cliente, universo reportado y valor histórico son datos
+// reales; el circuito sigue PARCIAL y no hay todavía ciclo cerrado.
+export const ertPilot = {
+  pilotCode: 'CHC-ERT-PIL-LI-001',
+  caseCode: 'CHC-ERT-CASE-AIQ-001',
+  client: 'Alpha Industry Querétaro',
+  program: 'P33C NNA / GRIP ASSY 1029201',
+  family: 'Contenedor plástico retornable',
+  measure: '24×15×11.5',
+  circuitPoolTotal: 5040,
+  sampleAssetsTarget: 30,
+  startDate: '2026-08-07',
+  circuitStatus: 'PARCIAL',
+  circuitStatusNote: 'Circuito parcial cargado; loop OEM completo aún no demostrado.',
+  historicalValueMXN: 8500,
+  historicalValueNote: 'Valor comercial histórico (lavado + trazabilidad de 30 piezas). No es costo del piloto ni entra al ROI.',
+  followUpRequest: '50 piezas limpieza + 1 recolección/entrega — señal de continuidad operativa (26-ago-2026)',
+  roiPolicy: 'Solo ahorro realizado + costo evitado verificado. Excluye exposición patrimonial recuperada y oportunidad potencial.',
+}
+
+export const ertAssets = Array.from({ length: 30 }, (_, i) => ({
+  id: `AIQ-P33C-PIL-${String(i + 1).padStart(3, '0')}`,
+  family: 'Contenedor plástico retornable',
+  measure: '24×15×11.5',
+  owner: 'Alpha Industry',
+  plant: 'Querétaro',
+  altaDate: '2026-08-07',
+  status: 'SIN_INSPECCION',
+  reconciled: false,
+}))
+
+// Los 12 hitos obligatorios del primer ciclo (09_CASO_ALPHA). "available"
+// refleja el estatus real cargado en el workbook — no se infiere.
+export const ertMilestones = [
+  { n: 1, name: 'Despacho origen', dataRequired: 'Fecha/hora de salida + Asset_ID', available: 'NO', responsible: 'Operación', source: 'Scan / remisión', impactIfMissing: 'No inicia Cycle Time', targetField: '05_CICLOS · 03_EVENTOS' },
+  { n: 2, name: 'Recepción destino', dataRequired: 'Fecha/hora + ubicación + custodio', available: 'NO', responsible: 'Cliente / operador', source: 'Scan / recibo', impactIfMissing: 'No mide tránsito de salida', targetField: '05_CICLOS' },
+  { n: 3, name: 'Activo vacío', dataRequired: 'Fecha/hora en que queda vacío', available: 'NO', responsible: 'Cliente', source: 'Scan / evento', impactIfMissing: 'No separa uso de dwell', targetField: '05_CICLOS' },
+  { n: 4, name: 'Listo para retorno', dataRequired: 'Fecha/hora', available: 'NO', responsible: 'Cliente', source: 'Scan / aviso', impactIfMissing: 'No mide preparación de retorno', targetField: '05_CICLOS' },
+  { n: 5, name: 'Recolección', dataRequired: 'Fecha/hora + transportista', available: 'NO', responsible: 'Logística', source: 'TMS / POD', impactIfMissing: 'No mide dwell real', targetField: '05_CICLOS' },
+  { n: 6, name: 'Recepción retorno', dataRequired: 'Fecha/hora + conteo', available: 'NO', responsible: 'CHACONTAINER', source: 'Recepción / scan', impactIfMissing: 'No mide tránsito inverso', targetField: '05_CICLOS' },
+  { n: 7, name: 'Inspección', dataRequired: 'Condición + daño + evidencia', available: 'PARCIAL', responsible: 'CHACONTAINER', source: 'Formato inspección', impactIfMissing: 'No cuantifica recuperación', targetField: '04_INSPECCION' },
+  { n: 8, name: 'Liberación', dataRequired: 'Fecha/hora + condición salida', available: 'NO', responsible: 'CHACONTAINER', source: 'Liberación / scan', impactIfMissing: 'No cierra ciclo', targetField: '05_CICLOS' },
+  { n: 9, name: 'Costo reposición', dataRequired: 'MXN por activo vigente', available: 'NO', responsible: 'Cliente / Compras', source: 'OC / cotización', impactIfMissing: 'No monetiza activos', targetField: '01_CONFIG' },
+  { n: 10, name: 'Demanda diaria', dataRequired: 'ERT requeridos/día', available: 'NO', responsible: 'Materiales / Producción', source: 'Plan de producción', impactIfMissing: 'No calcula capacidad liberable', targetField: '01_CONFIG' },
+  { n: 11, name: 'Baseline Cycle Time', dataRequired: 'Días actuales promedio', available: 'NO', responsible: 'Supply Chain', source: 'Histórico / medición', impactIfMissing: 'No prueba mejora', targetField: '01_CONFIG' },
+  { n: 12, name: 'Costos piloto', dataRequired: 'Costos reales CHACONTAINER', available: 'NO', responsible: 'Finanzas', source: 'Facturas / costeo', impactIfMissing: 'No calcula ROI real', targetField: '01_CONFIG' },
+]
+
+export const ertRoiGate = {
+  criteria: [
+    { name: 'Trazabilidad', target: '≥95% eventos obligatorios completos', status: 'ABIERTO' },
+    { name: 'Cycle time', target: 'Mejora demostrable vs. baseline', status: 'ABIERTO' },
+    { name: 'Valor', target: 'Beneficio verificable > costo piloto', status: 'ABIERTO' },
+    { name: 'Control', target: 'Excepciones con dueño y cierre', status: 'ABIERTO' },
+    { name: 'Escalamiento', target: 'Caso económico documentado', status: 'ABIERTO' },
+  ],
+  startupRules: [
+    { condition: 'Identidad', criterion: 'Los 30 Asset_ID provisionales deben conciliarse con ID físico/QR/RFID real', status: 'ABIERTO' },
+    { condition: 'Ciclo', criterion: 'No calcular ROI hasta cerrar al menos un ciclo con timestamps completos', status: 'ABIERTO' },
+    { condition: 'Finanzas', criterion: 'No declarar ahorro hasta validar costo base, costo real y evidencia', status: 'ABIERTO' },
+  ],
+}
+
 export const chartDataContainers = [
   { name: 'Disponible', value: 8, fill: '#10b981' },
   { name: 'En Lavado', value: 3, fill: '#3b82f6' },

@@ -28,6 +28,9 @@ func NewRouter(cfg *config.Config) http.Handler {
 	plantStore := &stubPlantStore{}
 	statsStore := &stubStatsStore{}
 	webhookProcessor := &stubWebhookProcessor{}
+	cycleStore := &stubCycleStore{}
+	inspectionStore := &stubInspectionStore{}
+	recoveryStore := &stubRecoveryStore{}
 
 	assetsH := handlers.NewAssetsHandler(assetStore)
 	shipmentsH := handlers.NewShipmentsHandler(shipmentStore)
@@ -35,6 +38,9 @@ func NewRouter(cfg *config.Config) http.Handler {
 	plantsH := handlers.NewPlantsHandler(plantStore)
 	dashboardH := handlers.NewDashboardHandler(statsStore)
 	webhooksH := handlers.NewWebhooksHandler(webhookProcessor, cfg.MakeWebhookSecret)
+	cyclesH := handlers.NewCyclesHandler(cycleStore)
+	inspectionsH := handlers.NewInspectionsHandler(inspectionStore)
+	recoveryH := handlers.NewRecoveryHandler(recoveryStore)
 
 	// Public webhook receivers (no JWT)
 	mux.HandleFunc("POST /webhooks/make", webhooksH.Make)
@@ -90,6 +96,29 @@ func NewRouter(cfg *config.Config) http.Handler {
 	mux.Handle("PATCH /api/v1/plants/{id}", authed(http.HandlerFunc(plantsH.Update)))
 	mux.Handle("GET /api/v1/plants/{id}/zones", authed(http.HandlerFunc(plantsH.ListZones)))
 	mux.Handle("POST /api/v1/plants/{id}/zones", authed(http.HandlerFunc(plantsH.CreateZone)))
+
+	// ERT circuit — pilot config
+	mux.Handle("GET /api/v1/pilot-configs", authed(http.HandlerFunc(recoveryH.ListPilotConfigs)))
+	mux.Handle("POST /api/v1/pilot-configs", authed(http.HandlerFunc(recoveryH.CreatePilotConfig)))
+	mux.Handle("GET /api/v1/pilot-configs/{id}", authed(http.HandlerFunc(recoveryH.GetPilotConfig)))
+	mux.Handle("GET /api/v1/pilot-configs/{id}/roi", authed(http.HandlerFunc(recoveryH.ROISummary)))
+
+	// ERT circuit — cycles
+	mux.Handle("GET /api/v1/cycles", authed(http.HandlerFunc(cyclesH.List)))
+	mux.Handle("POST /api/v1/cycles", authed(http.HandlerFunc(cyclesH.Create)))
+	mux.Handle("GET /api/v1/cycles/{id}", authed(http.HandlerFunc(cyclesH.Get)))
+	mux.Handle("POST /api/v1/cycles/{id}/milestones", authed(http.HandlerFunc(cyclesH.RecordMilestone)))
+
+	// ERT circuit — inspections
+	mux.Handle("GET /api/v1/inspections", authed(http.HandlerFunc(inspectionsH.List)))
+	mux.Handle("POST /api/v1/inspections", authed(http.HandlerFunc(inspectionsH.Create)))
+	mux.Handle("GET /api/v1/inspections/{id}", authed(http.HandlerFunc(inspectionsH.Get)))
+	mux.Handle("POST /api/v1/inspections/{id}/release", authed(http.HandlerFunc(inspectionsH.Release)))
+
+	// ERT circuit — value recovery ledger
+	mux.Handle("GET /api/v1/value-recovery", authed(http.HandlerFunc(recoveryH.ListEntries)))
+	mux.Handle("POST /api/v1/value-recovery", authed(http.HandlerFunc(recoveryH.CreateEntry)))
+	mux.Handle("POST /api/v1/value-recovery/{id}/validate", authed(http.HandlerFunc(recoveryH.ValidateEntry)))
 
 	return mux
 }
