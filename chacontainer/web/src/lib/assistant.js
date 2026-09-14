@@ -6,9 +6,9 @@ const BUDGET_WARNING_RATIO = 0.85
 const WORKSHOP_BUSY_RATIO = 0.75
 
 const WAREHOUSE_LABELS = {
-  bodega_norte: 'Bodega Norte',
-  bodega_sur: 'Bodega Sur',
-  bodega_valpo: 'Bodega Valparaíso',
+  bodega_edomex: 'Bodega Estado de México',
+  bodega_queretaro: 'Bodega Querétaro',
+  bodega_puebla: 'Bodega Puebla',
 }
 
 export function getGreeting(date = new Date()) {

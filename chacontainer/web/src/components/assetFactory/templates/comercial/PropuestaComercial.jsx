@@ -11,7 +11,7 @@ const pageStyle = {
 }
 
 function today() {
-  return new Date().toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })
+  return new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 // registerPage(index, domNode) permite exportar múltiples páginas a un solo

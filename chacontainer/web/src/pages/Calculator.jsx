@@ -19,7 +19,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         <p className="text-[#9ca3af] text-xs mb-1">{label}</p>
         {payload.map((p, i) => (
           <p key={i} className="text-sm font-mono" style={{ color: p.fill || p.color }}>
-            {p.name}: {typeof p.value === 'number' ? p.value.toLocaleString('es-CL') : p.value}
+            {p.name}: {typeof p.value === 'number' ? p.value.toLocaleString('es-MX') : p.value}
           </p>
         ))}
       </div>
@@ -137,7 +137,7 @@ export default function CalculatorPage() {
                       : 'bg-[#0a0f1a] border-[#1f2937] text-[#9ca3af] hover:border-[#374151]'
                   }`}>
                   <div className="font-semibold">{t.label}</div>
-                  <div className="opacity-70 mt-0.5">${t.priceReuse.toLocaleString('es-CL')}/un</div>
+                  <div className="opacity-70 mt-0.5">${t.priceReuse.toLocaleString('es-MX')}/un</div>
                 </button>
               ))}
             </div>
@@ -177,9 +177,9 @@ export default function CalculatorPage() {
               <p className="text-xs text-[#6b7280] font-semibold uppercase tracking-wide">Tipo seleccionado</p>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div><span className="text-[#6b7280]">Precio nuevo: </span>
-                  <span className="text-[#f9fafb] font-mono">${result.type.priceNew.toLocaleString('es-CL')}</span></div>
+                  <span className="text-[#f9fafb] font-mono">${result.type.priceNew.toLocaleString('es-MX')}</span></div>
                 <div><span className="text-[#6b7280]">Precio reuse: </span>
-                  <span className="text-[#f9fafb] font-mono">${result.type.priceReuse.toLocaleString('es-CL')}</span></div>
+                  <span className="text-[#f9fafb] font-mono">${result.type.priceReuse.toLocaleString('es-MX')}</span></div>
                 <div><span className="text-[#6b7280]">CO₂ nuevo: </span>
                   <span className="text-red-400 font-mono">{result.type.co2New} kg/un</span></div>
                 <div><span className="text-[#6b7280]">CO₂ reuse: </span>
@@ -198,9 +198,9 @@ export default function CalculatorPage() {
                 icon={DollarSign}
                 label="Ahorro Total"
                 value={`$${(result.totalSavings / 1000000).toFixed(1)}M`}
-                unit="CLP acumulado"
+                unit="MXN acumulado"
                 color="#10b981"
-                sub={`$${Math.round(result.annualSavings / 1000).toLocaleString('es-CL')}K / año`}
+                sub={`$${Math.round(result.annualSavings / 1000).toLocaleString('es-MX')}K / año`}
               />
               <ResultCard
                 icon={TrendingUp}
@@ -213,7 +213,7 @@ export default function CalculatorPage() {
               <ResultCard
                 icon={Leaf}
                 label="CO₂ Evitado"
-                value={`${Math.round(result.co2Saved / 1000).toLocaleString('es-CL')}t`}
+                value={`${Math.round(result.co2Saved / 1000).toLocaleString('es-MX')}t`}
                 unit="toneladas CO₂ eq."
                 color="#10b981"
                 sub={`≈ ${Math.round(result.co2Saved / 200)} árboles/año`}
@@ -224,7 +224,7 @@ export default function CalculatorPage() {
                 value={`${Math.round(result.paybackMonths)}`}
                 unit="meses para recuperar inversión"
                 color="#3b82f6"
-                sub={`Inversión inicial: $${Math.round(Number(form.quantity) * result.type.priceReuse / 1000).toLocaleString('es-CL')}K`}
+                sub={`Inversión inicial: $${Math.round(Number(form.quantity) * result.type.priceReuse / 1000).toLocaleString('es-MX')}K`}
               />
             </div>
           </div>
@@ -235,13 +235,13 @@ export default function CalculatorPage() {
       {result && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-4">
-            <h3 className="text-sm font-semibold text-[#f9fafb] mb-4">Comparación de Costo Total (CLP miles)</h3>
+            <h3 className="text-sm font-semibold text-[#f9fafb] mb-4">Comparación de Costo Total (MXN miles)</h3>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={barData} barCategoryGap="40%">
                 <XAxis dataKey="name" tick={{ fill: '#9ca3af', fontSize: 12 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
-                <Bar dataKey="costo" name="Costo (K CLP)" radius={[4, 4, 0, 0]}>
+                <Bar dataKey="costo" name="Costo (K MXN)" radius={[4, 4, 0, 0]}>
                   {barData.map((entry, index) => (
                     <Cell key={index} fill={entry.fill} />
                   ))}
@@ -250,7 +250,7 @@ export default function CalculatorPage() {
             </ResponsiveContainer>
             <div className="mt-3 p-3 bg-emerald-900/20 border border-emerald-900/40 rounded-lg">
               <p className="text-emerald-400 text-sm font-bold font-mono">
-                Ahorro: ${(result.totalSavings / 1000).toLocaleString('es-CL')}K CLP
+                Ahorro: ${(result.totalSavings / 1000).toLocaleString('es-MX')}K MXN
               </p>
               <p className="text-[#9ca3af] text-xs mt-0.5">
                 Los contenedores reutilizables cuestan {Math.round((result.totalCostReuse / result.totalCostNew) * 100)}% del precio de nuevos

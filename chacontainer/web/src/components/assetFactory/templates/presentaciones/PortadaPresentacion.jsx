@@ -38,7 +38,7 @@ const PortadaPresentacion = forwardRef(function PortadaPresentacion({ data }, re
         {subtitulo && <p style={{ color: BRAND.textMuted, fontSize: 26, marginTop: 22, maxWidth: 780 }}>{subtitulo}</p>}
       </div>
       <p style={{ position: 'relative', color: BRAND.textFaint, fontSize: 14, margin: 0 }}>
-        {new Date().toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })}
+        {new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
       </p>
     </div>
   )

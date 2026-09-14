@@ -1,5 +1,9 @@
 # Agente Ingeniero de Procesos IA. Versión 0.1.
 
+> Vocabulario técnico de referencia (LLMs, frameworks, RAG, memoria, bases de
+> datos vectoriales, APIs, despliegue) para evolucionar este agente más allá
+> de un prompt manual: [Fundamentos de Agentes de IA](./fundamentos-agentes-ia.md).
+
 ## Misión del agente
 
 Estandarizar y mejorar todos los procesos operativos, comerciales y administrativos de CHACONTAINER para reducir dependencia del fundador y preparar la base para un modelo escalable y replicable.
