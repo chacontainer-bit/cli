@@ -10,7 +10,10 @@ import (
 	"github.com/cli/cli/v2/chacontainer/internal/api/handlers"
 	"github.com/cli/cli/v2/chacontainer/internal/domain/asset"
 	"github.com/cli/cli/v2/chacontainer/internal/domain/client"
+	"github.com/cli/cli/v2/chacontainer/internal/domain/cycle"
+	"github.com/cli/cli/v2/chacontainer/internal/domain/inspection"
 	"github.com/cli/cli/v2/chacontainer/internal/domain/plant"
+	"github.com/cli/cli/v2/chacontainer/internal/domain/recovery"
 	"github.com/cli/cli/v2/chacontainer/internal/domain/shipment"
 )
 
@@ -115,6 +118,80 @@ func (s *stubPlantStore) Update(_, id string, _ map[string]interface{}) (*plant.
 }
 func (s *stubPlantStore) CreateZone(_ string, _ *plant.Zone) error     { return nil }
 func (s *stubPlantStore) ListZones(_, _ string) ([]*plant.Zone, error) { return nil, nil }
+
+// ── Cycle stub ────────────────────────────────────────────────────────────────
+
+type stubCycleStore struct{}
+
+func (s *stubCycleStore) Create(_ string, c *cycle.Cycle) error {
+	c.ID = newID()
+	c.CreatedAt = time.Now()
+	c.UpdatedAt = time.Now()
+	return nil
+}
+func (s *stubCycleStore) GetByID(_, id string) (*cycle.Cycle, error) {
+	return nil, fmt.Errorf("not found: %s", id)
+}
+func (s *stubCycleStore) List(_ string, _ handlers.CycleFilter) ([]*cycle.Cycle, int, error) {
+	return []*cycle.Cycle{}, 0, nil
+}
+func (s *stubCycleStore) RecordMilestone(_, id string, _ cycle.Milestone, _ time.Time) (*cycle.Cycle, error) {
+	return nil, fmt.Errorf("not found: %s", id)
+}
+
+// ── Inspection stub ──────────────────────────────────────────────────────────
+
+type stubInspectionStore struct{}
+
+func (s *stubInspectionStore) Create(_ string, insp *inspection.Inspection) error {
+	insp.ID = newID()
+	insp.CreatedAt = time.Now()
+	return nil
+}
+func (s *stubInspectionStore) GetByID(_, id string) (*inspection.Inspection, error) {
+	return nil, fmt.Errorf("not found: %s", id)
+}
+func (s *stubInspectionStore) List(_ string, _ handlers.InspectionFilter) ([]*inspection.Inspection, int, error) {
+	return []*inspection.Inspection{}, 0, nil
+}
+func (s *stubInspectionStore) Release(_, id string, _ inspection.Condition, _ time.Time) (*inspection.Inspection, error) {
+	return nil, fmt.Errorf("not found: %s", id)
+}
+
+// ── Recovery stub (pilot config, value recovery ledger, ROI) ───────────────────
+
+type stubRecoveryStore struct{}
+
+func (s *stubRecoveryStore) CreatePilotConfig(_ string, pc *recovery.PilotConfig) error {
+	pc.ID = newID()
+	pc.CreatedAt = time.Now()
+	pc.UpdatedAt = time.Now()
+	return nil
+}
+func (s *stubRecoveryStore) GetPilotConfig(_, id string) (*recovery.PilotConfig, error) {
+	return nil, fmt.Errorf("not found: %s", id)
+}
+func (s *stubRecoveryStore) ListPilotConfigs(_ string) ([]*recovery.PilotConfig, error) {
+	return []*recovery.PilotConfig{}, nil
+}
+func (s *stubRecoveryStore) CreateEntry(_ string, e *recovery.Entry) error {
+	e.ID = newID()
+	e.CreatedAt = time.Now()
+	return nil
+}
+func (s *stubRecoveryStore) ListEntries(_ string, _ handlers.EntryFilter) ([]*recovery.Entry, int, error) {
+	return []*recovery.Entry{}, 0, nil
+}
+func (s *stubRecoveryStore) ValidateEntry(_, id, _ string, _ recovery.ValidationStatus) (*recovery.Entry, error) {
+	return nil, fmt.Errorf("not found: %s", id)
+}
+func (s *stubRecoveryStore) GetROISummary(_, pilotConfigID string) (*recovery.Summary, error) {
+	return &recovery.Summary{
+		PilotConfigID: pilotConfigID,
+		Gate:          recovery.DecisionGate{},
+		GeneratedAt:   time.Now(),
+	}, nil
+}
 
 // ── Stats stub ────────────────────────────────────────────────────────────────
 

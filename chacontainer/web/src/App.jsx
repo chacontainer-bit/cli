@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Marketplace from './pages/Marketplace'
 import Projects from './pages/Projects'
 import Traceability from './pages/Traceability'
+import CircuitoERT from './pages/CircuitoERT'
 import Calculator from './pages/Calculator'
 import Backoffice from './pages/Backoffice'
 import Asistente from './pages/Asistente'
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="marketplace" element={<Marketplace />} />
             <Route path="projects" element={<Projects />} />
             <Route path="traceability" element={<Traceability />} />
+            <Route path="circuito-ert" element={<CircuitoERT />} />
             <Route path="calculator" element={<Calculator />} />
             <Route path="backoffice" element={<Backoffice />} />
             <Route path="asistente" element={<Asistente />} />

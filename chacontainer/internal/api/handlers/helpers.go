@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 func writeJSON(w http.ResponseWriter, status int, v interface{}) {
@@ -28,12 +27,10 @@ func intParam(s string, fallback int) int {
 	return n
 }
 
-// pathParam extracts the last segment of the URL path as the named param.
-// Works without an external router by convention: /resource/{id}.
-func pathParam(r *http.Request, _ string) string {
-	parts := strings.Split(strings.TrimSuffix(r.URL.Path, "/"), "/")
-	if len(parts) == 0 {
-		return ""
-	}
-	return parts[len(parts)-1]
+// pathParam extracts a named parameter from the route pattern, e.g. "id"
+// from "GET /api/v1/shipments/{id}/lines". Go 1.22+'s net/http ServeMux
+// resolves these via r.PathValue; every route registered in router.go
+// uses the {name} pattern syntax so this always matches.
+func pathParam(r *http.Request, name string) string {
+	return r.PathValue(name)
 }

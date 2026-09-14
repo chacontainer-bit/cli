@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, ShoppingCart, FolderKanban, MapPin,
-  Calculator, Settings, LogOut, Package, ChevronRight, Bot, Layers
+  Calculator, Settings, LogOut, Package, ChevronRight, Bot, Layers, Recycle
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { roles } from '../data/mockData'
@@ -11,6 +11,7 @@ const navItems = [
   { to: '/app/marketplace', icon: ShoppingCart, label: 'Marketplace' },
   { to: '/app/projects', icon: FolderKanban, label: 'Proyectos' },
   { to: '/app/traceability', icon: MapPin, label: 'Trazabilidad' },
+  { to: '/app/circuito-ert', icon: Recycle, label: 'Circuito ERT' },
   { to: '/app/calculator', icon: Calculator, label: 'Calculadora' },
   { to: '/app/backoffice', icon: Settings, label: 'Backoffice' },
   { to: '/app/asistente', icon: Bot, label: 'Asistente' },
