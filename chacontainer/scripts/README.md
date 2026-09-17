@@ -57,6 +57,15 @@ pip install -r requirements.txt
 
 Para salir del entorno virtual en cualquier plataforma: `deactivate`.
 
+### VS Code
+
+Si abres la raíz del repo (`cli/`) como workspace, `.vscode/settings.json`
+ya apunta al intérprete de este venv en Windows
+(`chacontainer/scripts/.venv/Scripts/python.exe`). En macOS/Linux cambia
+esa ruta a `chacontainer/scripts/.venv/bin/python`, o selecciónalo a mano:
+`Ctrl+Shift+P` → **Python: Select Interpreter** → **Enter interpreter
+path...** y pega la ruta de tu `.venv`.
+
 ## Uso
 
 Con el venv activo:

@@ -1,0 +1,18 @@
+{
+  // Interprete de Python para los jobs batch de chacontainer/scripts.
+  // Windows: .venv\Scripts\python.exe — macOS/Linux: cambia a
+  // "${workspaceFolder}/chacontainer/scripts/.venv/bin/python"
+  "python.defaultInterpreterPath": "${workspaceFolder}/chacontainer/scripts/.venv/Scripts/python.exe",
+  "python.terminal.activateEnvironment": true,
+
+  "files.exclude": {
+    "**/.venv": true,
+    "**/__pycache__": true
+  },
+  "search.exclude": {
+    "**/.venv": true,
+    "**/__pycache__": true,
+    "chacontainer/web/node_modules": true,
+    "vendor": true
+  }
+}
