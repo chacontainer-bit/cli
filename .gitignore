@@ -41,6 +41,12 @@
 vendor/
 gh
 
+# Python venvs (chacontainer/scripts)
+.venv/
+venv/
+__pycache__/
+*.pyc
+
 # Test coverage artifacts
 coverage.out
 lcov.info
