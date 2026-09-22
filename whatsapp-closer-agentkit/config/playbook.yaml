@@ -1,0 +1,116 @@
+playbook:
+
+  tono: |
+    Le hablás de tú al contacto, nunca de usted ni de vos.
+    Dos o tres líneas por mensaje, como escribe una persona en un chat y no como un folleto.
+    Pregunta antes de afirmar, una pregunta por mensaje, y usa el nombre del contacto una vez al
+    principio y no lo repite. Cierra con una pregunta o con horarios, sin admiraciones ni emojis.
+
+  objeciones:
+
+    - objecion: "Está caro / No me alcanza"
+      respuesta: >
+        Puede ser. Prefiero que me lo digas ahora y no dentro de un mes.
+
+        ¿Contra qué lo estás comparando, contra otra opción o contra lo que tenías pensado
+        gastar?
+
+    - objecion: "Lo tengo que pensar / Después te aviso"
+      respuesta: >
+        Está bien, piénsalo. Prefiero eso a que me contestes apurado.
+
+        Para no escribirte cada tres días, ¿qué día te viene bien que retomemos?
+
+    - objecion: "No tengo tiempo"
+      respuesta: >
+        Te entiendo, y es la razón por la que pregunto antes de proponerte nada.
+
+        ¿Cuánto tiempo por semana le podrías dedicar a esto?
+
+    - objecion: "Lo tengo que consultar con mi socio o mi pareja"
+      respuesta: >
+        Me parece bien que lo vean los dos, y no te voy a apurar.
+
+        Te lo puedo dejar por escrito en cuatro renglones para que se lo pases tal cual.
+
+        ¿Qué es lo primero que te va a preguntar?
+
+    - objecion: "Ya probé algo parecido y no funcionó"
+      respuesta: >
+        Entonces eso es lo primero que necesito saber, así no te repito lo mismo.
+
+        ¿Qué fue lo que falló ahí, cómo estaba armado, el acompañamiento o el momento?
+
+    - objecion: "Mándame información"
+      respuesta: >
+        Te la mando, y prefiero mandarte lo que te sirve y no un folleto entero.
+
+        ¿Qué necesitas saber para tomar la decisión?
+
+    - objecion: "¿Cuánto cuesta? / ¿Me haces un descuento?"
+      respuesta: >
+        Los precios los confirma una persona de CHACONTAINER, caso por caso: dependen del tipo
+        de activo y del volumen. No te los voy a inventar por acá.
+
+        Te paso con esa persona hoy mismo, ¿te queda bien un horario entre las 9 y las 14, o
+        entre las 16 y las 18, de lunes a viernes?
+
+    - objecion: "¿Y si no me funciona? / ¿Tienen garantía?"
+      respuesta: >
+        Es la pregunta correcta, y no te la voy a contestar de memoria.
+
+        Las condiciones las confirma una persona de CHACONTAINER, con lo que esté por escrito.
+
+        ¿Te agendo con esa persona un horario entre las 9 y las 14, o entre las 16 y las 18,
+        de lunes a viernes?
+
+piso:
+  descuento: "¿Cuánto cuesta? / ¿Me haces un descuento?"
+  garantia: "¿Y si no me funciona? / ¿Tienen garantía?"
+
+rubrica:
+
+  presupuesto:
+    puntos: 40
+    senales:
+      - "40 · dice un monto o un rango, y cae adentro de `rango_precio`"
+      - "25 · pregunta por pagos en partes o por formas de pago"
+      - "20 · dice que ya pagó algo parecido antes, sin decir cuánto"
+      - "10 · dice un monto abajo del mínimo de `rango_precio`. El paso 6 mira si escala"
+    nulo: |
+      Si no lo dijeron y no se deduce del mensaje, el campo `presupuesto` de la salida va nulo y
+      este factor no entra. El score se calcula sobre los 60 puntos que quedan y se lleva a
+      escala de 100: score = redondeo(crudo / 60 * 100). Inventar el número es fallo aunque el
+      score quede razonable, y es lo que mide la aserción 2 de `pruebas/caso-01.md`.
+    evidencia: |
+      Para poner un monto hay que citar una subcadena literal del mensaje. El código la busca
+      adentro del mensaje recibido: si no está, fuerza `presupuesto` a nulo y aplica la regla de
+      arriba. Ojo con los dos nombres: el campo `presupuesto` de la salida es el monto, y estos
+      40 son los puntos que ese factor aporta al score.
+
+  urgencia:
+    puntos: 30
+    senales:
+      - "30 · nombra una fecha o un plazo suyo: «este mes», «antes de que empiece»"
+      - "25 · pide un horario antes de que se lo ofrezcan"
+      - "15 · dice que lo está viendo o comparando, sin plazo"
+      - "5 · dice «más adelante» o «el año que viene»"
+
+  encaje:
+    puntos: 30
+    senales:
+      - "30 · nombra un ítem del catálogo y para qué lo quiere"
+      - "20 · describe un problema que el catálogo resuelve, sin nombrar el ítem"
+      - "10 · pregunta por algo del mismo rubro que no está en el catálogo"
+      - "0 · pide algo que no se vende. El paso 3 lo dice y no lo improvisa"
+
+  score: |
+    Los tres factores suman 100 con presupuesto adentro y 60 cuando va nulo. En ese caso se
+    reescala, no se rellena. Urgencia y encaje siempre se leen del mensaje: cuando el mensaje no
+    alcanza, van al piso del factor y el motivo lo dice. El corte de temperatura lo decide el
+    código con `umbrales` de la entrada, y acá no se repite ese número: uno repetido en dos
+    archivos algún día dice dos cosas distintas.
+
+  motivo: |
+    Una línea, con lo que se leyó en el mensaje y no con una conclusión. «Pidió horario y nombró
+    el producto, no dijo presupuesto» sirve. «Lead calificado» no dice nada.

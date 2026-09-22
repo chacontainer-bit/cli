@@ -7,75 +7,76 @@
 #
 # Esto envejece en cinco días hábiles por diseño (blueprint/25-playbook.md):
 # una fecha concreta acá no se actualiza sola. Se regenera con /configurar.
+# Generado el 2026-09-22, próximos 5 días hábiles desde esa fecha.
 franjas:
-  - inicio: 2026-08-20T09:00:00-06:00
+  - inicio: 2026-09-23T09:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-20T10:00:00-06:00
+  - inicio: 2026-09-23T10:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-20T11:00:00-06:00
+  - inicio: 2026-09-23T11:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-20T12:00:00-06:00
+  - inicio: 2026-09-23T12:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-20T13:00:00-06:00
+  - inicio: 2026-09-23T13:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-20T16:00:00-06:00
+  - inicio: 2026-09-23T16:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-20T17:00:00-06:00
+  - inicio: 2026-09-23T17:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-21T09:00:00-06:00
+  - inicio: 2026-09-24T09:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-21T10:00:00-06:00
+  - inicio: 2026-09-24T10:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-21T11:00:00-06:00
+  - inicio: 2026-09-24T11:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-21T12:00:00-06:00
+  - inicio: 2026-09-24T12:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-21T13:00:00-06:00
+  - inicio: 2026-09-24T13:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-21T16:00:00-06:00
+  - inicio: 2026-09-24T16:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-21T17:00:00-06:00
+  - inicio: 2026-09-24T17:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-24T09:00:00-06:00
+  - inicio: 2026-09-25T09:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-24T10:00:00-06:00
+  - inicio: 2026-09-25T10:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-24T11:00:00-06:00
+  - inicio: 2026-09-25T11:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-24T12:00:00-06:00
+  - inicio: 2026-09-25T12:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-24T13:00:00-06:00
+  - inicio: 2026-09-25T13:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-24T16:00:00-06:00
+  - inicio: 2026-09-25T16:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-24T17:00:00-06:00
+  - inicio: 2026-09-25T17:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-25T09:00:00-06:00
+  - inicio: 2026-09-28T09:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-25T10:00:00-06:00
+  - inicio: 2026-09-28T10:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-25T11:00:00-06:00
+  - inicio: 2026-09-28T11:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-25T12:00:00-06:00
+  - inicio: 2026-09-28T12:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-25T13:00:00-06:00
+  - inicio: 2026-09-28T13:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-25T16:00:00-06:00
+  - inicio: 2026-09-28T16:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-25T17:00:00-06:00
+  - inicio: 2026-09-28T17:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-26T09:00:00-06:00
+  - inicio: 2026-09-29T09:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-26T10:00:00-06:00
+  - inicio: 2026-09-29T10:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-26T11:00:00-06:00
+  - inicio: 2026-09-29T11:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-26T12:00:00-06:00
+  - inicio: 2026-09-29T12:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-26T13:00:00-06:00
+  - inicio: 2026-09-29T13:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-26T16:00:00-06:00
+  - inicio: 2026-09-29T16:00:00-06:00
     duracion_min: 30
-  - inicio: 2026-08-26T17:00:00-06:00
+  - inicio: 2026-09-29T17:00:00-06:00
     duracion_min: 30
 opciones: 3
