@@ -1,22 +1,39 @@
 name: Triage Scheduled Tasks
 on:
   workflow_dispatch:
+    inputs:
+      diagnostic_only:
+        description: 'Check runner only; do not modify issues'
+        type: boolean
+        required: false
+        default: true
   issue_comment:
     types: [created]
   schedule:
-    - cron: '5 * * * *'   # Hourly — no-response close
-    - cron: '0 3 * * *'   # Daily at 3 AM UTC — stale issues
-    - cron: '0 14 1 * *'  # Monthly on the 1st at 2 PM UTC — pitch surfacing
+    - cron: '17 * * * *'  # Hourly, staggered to reduce queue contention
+    - cron: '13 3 * * *' # Daily at 03:13 UTC — stale issues
+    - cron: '23 14 1 * *' # Monthly, day 1 at 14:23 UTC — pitch surfacing
 
 jobs:
+  diagnostic:
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnostic_only
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Verify GitHub Actions runner without issue mutations
+        shell: bash
+        run: |
+          echo "Diagnostics completed: runner available; no issue changes requested."
+
   no-response:
-    if: github.event_name == 'issue_comment' || github.event.schedule == '5 * * * *'
+    if: github.event_name == 'issue_comment' || github.event.schedule == '17 * * * *'
     uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/triage-no-response-close.yml@main
     permissions:
       issues: write
 
   stale:
-    if: github.event.schedule == '0 3 * * *'
+    if: github.event.schedule == '13 3 * * *'
     uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/triage-stale-issues.yml@main
     with:
       days_before_stale: 30
@@ -28,7 +45,7 @@ jobs:
       issues: write
 
   pitch-surface:
-    if: github.event.schedule == '0 14 1 * *' || github.event_name == 'workflow_dispatch'
+    if: github.event.schedule == '23 14 1 * *' || (github.event_name == 'workflow_dispatch' && !inputs.diagnostic_only)
     uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/pitch-surface-top-issues.yml@main
     permissions:
       issues: write
