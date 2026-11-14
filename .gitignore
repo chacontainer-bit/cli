@@ -23,8 +23,10 @@
 /internal/licenses/embed/*/*
 !/internal/licenses/embed/*/PLACEHOLDER
 
-# VS Code
-.vscode
+# VS Code (solo se versiona settings.json y extensions.json compartidos)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 
 # IntelliJ
 .idea
@@ -40,6 +42,12 @@
 
 vendor/
 gh
+
+# Python venvs (chacontainer/scripts)
+.venv/
+venv/
+__pycache__/
+*.pyc
 
 # Test coverage artifacts
 coverage.out
