@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -49,15 +50,15 @@ func (c *Client) List(table string, filterFormula string) ([]*Record, error) {
 	var all []*Record
 	offset := ""
 	for {
-		url := fmt.Sprintf("%s/%s/%s?pageSize=100", baseURL, c.baseID, table)
+		reqURL := fmt.Sprintf("%s/%s/%s?pageSize=100", baseURL, c.baseID, table)
 		if filterFormula != "" {
-			url += "&filterByFormula=" + filterFormula
+			reqURL += "&filterByFormula=" + url.QueryEscape(filterFormula)
 		}
 		if offset != "" {
-			url += "&offset=" + offset
+			reqURL += "&offset=" + url.QueryEscape(offset)
 		}
 
-		body, err := c.get(url)
+		body, err := c.get(reqURL)
 		if err != nil {
 			return nil, err
 		}
