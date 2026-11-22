@@ -10,15 +10,13 @@ en el mismo repo:
   - `chacontainer/web/` — frontend React 19 + Vite + Tailwind (`npm run lint`, no hay `npm test` todavía — no asumas cobertura)
   - `chacontainer/scripts/*.py` — jobs batch (Airtable sync, alertas, reportes)
   - `chacontainer/migrations/*.sql` — Postgres, multi-tenant por `tenant_id`
-  - `chacontainer/docs/sop/` — SOPs del ciclo comercial (12 pasos), formato fijo:
-    Resumen ejecutivo, Objetivo, Alcance, Roles, Diagrama de flujo, SOP paso a
-    paso, Checklist, KPI, Riesgos y controles. Sigue este formato SIEMPRE al
-    documentar un proceso nuevo.
+  - `chacontainer/docs/sop/` — SOPs del ciclo comercial (SOP-01 a SOP-13).
+    Al documentar un proceso usa SIEMPRE la skill `/sop-chacontainer`
+    (plantilla completa: Marco de decisión + 12 secciones).
 
 ## Antes de terminar cualquier cambio en chacontainer/
-- Go: `go build ./chacontainer/...` y `go vet ./chacontainer/...`
-- Web: `cd chacontainer/web && npm run lint`
-- No des una tarea por completa si el build/lint no corrió.
+- Corre la skill `/verify` (build/vet de Go + lint web). No des una tarea por
+  completa si el build/lint no corrió.
 
 ## Límites de este entorno (Claude Code Remote)
 - NO tengo acceso a tu computadora/disco local, solo a este repo clonado.
