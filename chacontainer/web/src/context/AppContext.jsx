@@ -1,7 +1,6 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
+import { AppContext } from './useApp'
 import { recentActivity, alerts as initialAlerts } from '../data/mockData'
-
-const AppContext = createContext(null)
 
 export function AppProvider({ children }) {
   const [role, setRole] = useState(null)
@@ -59,10 +58,4 @@ export function AppProvider({ children }) {
       {children}
     </AppContext.Provider>
   )
-}
-
-export function useApp() {
-  const ctx = useContext(AppContext)
-  if (!ctx) throw new Error('useApp must be used within AppProvider')
-  return ctx
 }

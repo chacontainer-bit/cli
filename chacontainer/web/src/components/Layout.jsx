@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { Bell, ShoppingCart, AlertTriangle } from 'lucide-react'
 import Sidebar from './Sidebar'
 import AssistantWidget from './AssistantWidget'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import { useSimulator } from '../hooks/useSimulator'
 import { roles } from '../data/mockData'
 

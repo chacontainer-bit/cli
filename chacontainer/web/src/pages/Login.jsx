@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Package, ChevronRight, Shield, Truck, Wrench, BarChart3, Leaf, AlertTriangle } from 'lucide-react'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import { roles } from '../data/mockData'
 
 const roleIcons = {
