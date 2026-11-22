@@ -3,7 +3,7 @@ import {
   LayoutDashboard, ShoppingCart, FolderKanban, MapPin,
   Calculator, Settings, LogOut, Package, ChevronRight, Bot, Layers, Recycle
 } from 'lucide-react'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import { roles } from '../data/mockData'
 
 const navItems = [

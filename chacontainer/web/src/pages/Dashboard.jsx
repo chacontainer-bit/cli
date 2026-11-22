@@ -6,9 +6,9 @@ import {
 } from 'lucide-react'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend
+  PieChart, Pie, Cell
 } from 'recharts'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import { kpis, chartDataContainers, monthlyData, roles } from '../data/mockData'
 
 const iconMap = {

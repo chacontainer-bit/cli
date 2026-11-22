@@ -1,5 +1,5 @@
 import { Settings, CheckCircle, XCircle, Package, Wrench, Truck } from 'lucide-react'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import { workshops, containers, products } from '../data/mockData'
 
 function CapacityBar({ current, capacity }) {

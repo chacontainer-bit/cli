@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { ShoppingCart, X, Plus, Minus, Package, CheckCircle, Truck, ChevronDown } from 'lucide-react'
-import { useApp } from '../context/AppContext'
+import { ShoppingCart, X, Plus, Minus, Package, CheckCircle, Truck } from 'lucide-react'
+import { useApp } from '../context/useApp'
 import { products } from '../data/mockData'
 
 const categories = ['Todos', 'Contenedor Colapsable', 'Contenedor / Caja Rígida', 'KLT', 'Rack Metálico', 'Tarima / Pallet', 'Charola', 'Separador', 'Servicios']
@@ -22,13 +22,14 @@ function CartDrawer({ onClose }) {
   const [checkedOut, setCheckedOut] = useState(false)
   const [deliveryDate, setDeliveryDate] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [orderNumber, setOrderNumber] = useState(null)
 
   if (checkedOut) {
     return (
       <div className="fixed right-0 top-0 h-full w-96 bg-[#111827] border-l border-[#1f2937] z-50 flex flex-col items-center justify-center p-8">
         <CheckCircle size={48} className="text-emerald-400 mb-4" />
         <h3 className="text-xl font-bold text-[#f9fafb] mb-2">¡Pedido Confirmado!</h3>
-        <p className="text-[#6b7280] text-sm text-center mb-2">ORD-{Math.floor(Math.random() * 1000 + 2850)}</p>
+        <p className="text-[#6b7280] text-sm text-center mb-2">ORD-{orderNumber}</p>
         <p className="text-[#9ca3af] text-xs text-center mb-6">Recibirá confirmación por email. Tiempo estimado: 24-48 hrs.</p>
         <button onClick={() => { setCheckedOut(false); clearCart(); onClose() }}
           className="bg-[#f97316] text-white px-6 py-2 rounded-lg text-sm font-medium">
@@ -149,7 +150,7 @@ function CartDrawer({ onClose }) {
                   className="flex-1 border border-[#374151] text-[#9ca3af] py-2 rounded-lg text-sm hover:border-[#6b7280]">
                   Cancelar
                 </button>
-                <button onClick={() => { setShowModal(false); setCheckedOut(true) }}
+                <button onClick={() => { setShowModal(false); setOrderNumber(Math.floor(Math.random() * 1000 + 2850)); setCheckedOut(true) }}
                   className="flex-1 bg-[#f97316] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#ea6c0a]">
                   Confirmar
                 </button>

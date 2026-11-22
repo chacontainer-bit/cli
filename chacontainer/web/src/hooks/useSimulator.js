@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 
 const scanEvents = [
   { containerId: 'CHC-0421', location: 'Bodega Estado de México', user: 'Carlos M.' },
